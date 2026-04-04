@@ -1,11 +1,16 @@
-import { Text, View } from "react-native";
+import AppCardComponent from "@/components/HomePage/AppCardComponent"
+import { GreetComponent } from "@/components/HomePage/GreetComponent"
+import { View } from "react-native"
 
-export default function HomeScreen() {
-  return (
-      <View className="flex-1 items-center justify-center bg-slate-100">
-        <Text className="text-2xl font-bold text-blue-600">
-          Tailwind is working!
-        </Text>
-      </View>
-      );
+export default function HomePage() {
+    const handleClick = ()=>{
+        console.log('Clicked!');
+    }
+    return (
+        <View>
+            <GreetComponent username="Chirag" />
+            <AppCardComponent buttonLabel="Plan" iconName="map-outline" onClick={()=>handleClick()} />
+        </View>
+    )
 }
+
