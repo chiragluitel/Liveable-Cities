@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .safe-area-pt {
+    padding-top: 70px; /* This prevents content from hiding behind notch */
+  }
+  /* This prevents content from hiding behind tab bar */
+  .tab-bar-pb {
+    padding-bottom: 120px; 
+  }
+}

@@ -6,9 +6,9 @@ interface GreetComponentProps {
 
 export const GreetComponent = ({username}:GreetComponentProps) => {
     return (
-        <View>
-            <Text> Hello, {username} </Text>
-            <Text> Welcome to Casey Smart Hub </Text>
+        <View className="gap-y-1">
+            <Text className="text-4xl font-bold text-black"> Hello, {username} </Text>
+            <Text className="text-4xl font-light text-gray-500"> Welcome to Casey </Text>
         </View>
     )
 }
