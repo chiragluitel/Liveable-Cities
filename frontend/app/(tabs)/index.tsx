@@ -2,12 +2,15 @@ import AnAppComponent from "@/components/HomePage/AnAppComponent";
 import AppCardComponent from "@/components/HomePage/AppIconLabelComponent"
 import { GreetComponent } from "@/components/HomePage/GreetComponent"
 import HomeHeader from "@/components/HomePage/HomeHeader";
+import { useRouter } from "expo-router";
 import { Bell, Map, MapPin } from "lucide-react-native";
 import { ScrollView, View } from "react-native"
 
 export default function HomePage() {
-    const handleClick = (appName: string)=>{
+    const router = useRouter();
+    const handleClick = (appName: string, routePath: any)=>{
         console.log(`${appName} Clicked`);
+        router.push(routePath)
     }
     return (
         <ScrollView className="flex-1 bg-white safe-area-pt tab-bar-pb px-4">
@@ -20,7 +23,7 @@ export default function HomePage() {
                     appName="Smart Walk Planner"
                     appDescription="Plan your walks tailored to your needs"
                     buttonLabel="Plan >"
-                    buttonOnClick={() => handleClick("Walk Planner")}
+                    buttonOnClick={() => handleClick("Walk Planner", "/walkplanner")}
                 />
 
                 {/* 2. Notification Card */}
@@ -29,7 +32,7 @@ export default function HomePage() {
                     appName="Notification Service"
                     appDescription="Get notified about important stuff."
                     buttonLabel="View >"
-                    buttonOnClick={() => handleClick("Notifications")}
+                    buttonOnClick={() => handleClick("Notifications", "/notifications")}
                 />
             </View>
         </ScrollView>
