@@ -1,41 +1,72 @@
-import AnAppComponent from "@/components/HomePage/AnAppComponent";
-import AppCardComponent from "@/components/HomePage/AppIconLabelComponent"
-import { GreetComponent } from "@/components/HomePage/GreetComponent"
-import HomeHeader from "@/components/HomePage/HomeHeader";
+import React from "react";
+import { View, FlatList } from "react-native";
 import { useRouter } from "expo-router";
-import { Bell, Map, MapPin } from "lucide-react-native";
-import { ScrollView, View } from "react-native"
+import { Bell, Book, MapPin } from "lucide-react-native";
+import AnAppComponent from "@/components/HomePage/AnAppComponent";
+import HomeHeader from "@/components/HomePage/HomeHeader";
 
 export default function HomePage() {
     const router = useRouter();
-    const handleClick = (appName: string, routePath: any)=>{
+    const APP_DATA = [
+        {
+            id: "1",
+            appName: "Smart Walk Planner",
+            appDescription: "Plan your walks tailored to your needs",
+            routePath: "/walkplanner",
+            buttonLabel: "Plan >",
+            icon: <MapPin size={60} strokeWidth={1.5} color="black" />,
+        },
+        {
+            id: "2",
+            appName: "Notification Service",
+            appDescription: "Get notified about important stuff.",
+            routePath: "/notifications",
+            buttonLabel: "View >",
+            icon: <Bell size={60} strokeWidth={1.5} color="black" />,
+        },
+        {
+            id: "3",
+            appName: "Permit Manager",
+            appDescription: "Your personal permits manager.",
+            routePath: "/permits",
+            buttonLabel: "View >",
+            icon: <Book size={60} strokeWidth={1.5} color="black" />,
+        },
+    ];
+
+    const handleClick = (appName: string, routePath: any) => {
         console.log(`${appName} Clicked`);
-        router.push(routePath)
-    }
+        router.push(routePath);
+    };
+
     return (
-        <ScrollView className="flex-1 bg-white safe-area-pt tab-bar-pb px-4">
-            <HomeHeader />
-            <View className="flex-row flex-wrap justify-between gap-y-4">
+        <FlatList
+            data={APP_DATA}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
             
-                {/* 1. Walk Planner Card */}
-                <AnAppComponent
-                    appIcon={<MapPin size={60} strokeWidth={1.5} color="black" />}
-                    appName="Smart Walk Planner"
-                    appDescription="Plan your walks tailored to your needs"
-                    buttonLabel="Plan >"
-                    buttonOnClick={() => handleClick("Walk Planner", "/walkplanner")}
-                />
+            className="flex-1 bg-white safe-area-pt tab-bar-pb"
 
-                {/* 2. Notification Card */}
-                <AnAppComponent
-                    appIcon={<Bell size={60} strokeWidth={1.5} color="black" />}
-                    appName="Notification Service"
-                    appDescription="Get notified about important stuff."
-                    buttonLabel="View >"
-                    buttonOnClick={() => handleClick("Notifications", "/notifications")}
-                />
-            </View>
-        </ScrollView>
-    )
+            columnWrapperStyle={{
+                justifyContent: "space-between",
+                marginBottom: 16,
+            }}
+
+            ListHeaderComponent={<HomeHeader />}
+            ListHeaderComponentStyle={{ marginBottom: 20 }}
+
+            renderItem={({ item }) => (
+                <View className="w-[48%]">
+                    <AnAppComponent
+                        appIcon={item.icon}
+                        appName={item.appName}
+                        appDescription={item.appDescription}
+                        buttonLabel={item.buttonLabel}
+                        buttonOnClick={() => handleClick(item.appName, item.routePath)}
+                    />
+                </View>
+            )}
+            showsVerticalScrollIndicator={false}
+        />
+    );
 }
-

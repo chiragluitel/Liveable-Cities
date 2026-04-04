@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { Pressable, Text, View } from "react-native"
 
-const NotificationsPage = () => {
+const NotificationsHomePage = () => {
     return (
         <View>
             <Text> This is Notifications Home Page </Text>
@@ -9,4 +9,4 @@ const NotificationsPage = () => {
     )
 }
 
-export default NotificationsPage;
+export default NotificationsHomePage;
