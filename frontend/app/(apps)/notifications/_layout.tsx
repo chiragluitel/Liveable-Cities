@@ -4,7 +4,7 @@ import { Pressable, Text } from "react-native";
 const NotificationsPageLayout = () =>{
 
     return (
-        <Stack screenOptions={{headerShown: true, headerBackTitle: "Home", headerTitleStyle:{fontWeight:'bold'}}}>
+        <Stack screenOptions={{headerShown: true, headerTitleStyle:{fontWeight:'bold'}}}>
             <Stack.Screen 
                 name="index" 
                 options={{

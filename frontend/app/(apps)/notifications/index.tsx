@@ -5,11 +5,6 @@ const NotificationsPage = () => {
     return (
         <View>
             <Text> This is Notifications Home Page </Text>
-            <Pressable
-            onPress={()=>router.navigate('/notifications/subscribe')}
-            >
-                <Text> Services </Text>
-            </Pressable>
         </View>
     )
 }
