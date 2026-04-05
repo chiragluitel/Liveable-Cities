@@ -10,6 +10,6 @@ public class GetAllPermitsQueryHandler (IPermitRepository permitRepository):
 {
     public async Task<IEnumerable<Permit>> Handle (GetAllPermitsQuery request, CancellationToken cancellationToken)
     {
-        return await permitRepository.GetAllPermitsAsync(cancellationToken);
+        return await permitRepository.ListAllAsync(cancellationToken);
     }
 }

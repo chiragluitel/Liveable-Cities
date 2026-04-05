@@ -29,7 +29,7 @@ public class SaveUserPermitCommandHandler : IRequestHandler<SaveUserPermitComman
                 throw new PermitNotFoundException(request.ApplicationNumber);
             }
 
-            await _permitRepository.AddPermitAsync(permit, cancellationToken);
+            await _permitRepository.AddAsync(permit, cancellationToken);
             await _permitRepository.SaveChangesAsync(cancellationToken);
         }
 
