@@ -27,4 +27,13 @@ public class PermitRepository : AsyncRepository<Permit>, IPermitRepository
     {
         await _context.UserPermits.AddAsync(userPermit, cancellationToken);
     }
+
+    public async Task<IEnumerable<UserPermit>> GetUserSavedPermitsAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await _context.UserPermits
+            .AsNoTracking()
+            .Include(up => up.Permit)
+            .Where (up => up.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
 }

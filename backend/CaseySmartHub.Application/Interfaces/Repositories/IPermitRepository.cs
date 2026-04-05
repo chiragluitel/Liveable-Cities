@@ -9,5 +9,6 @@ public interface IPermitRepository : IAsyncRepository<Permit>
     Task<Permit?> GetPermitByAppNumberAsync(string appNumber, CancellationToken cancellationToken);
     Task<bool> HasUserSavedPermitAsync(Guid userId, Guid permitId, CancellationToken cancellationToken);
     Task AddUserPermitAsync(UserPermit userPermit, CancellationToken cancellationToken);
+    Task<IEnumerable<UserPermit>> GetUserSavedPermitsAsync (Guid UserId, CancellationToken cancellationToken);
 
 }

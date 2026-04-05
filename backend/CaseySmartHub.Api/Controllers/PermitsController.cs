@@ -1,6 +1,9 @@
+using Azure.Core;
 using CaseySmartHub.Application.Features.Permits.Commands;
 using CaseySmartHub.Application.Features.Permits.Commands.SavePermit;
 using CaseySmartHub.Application.Features.Permits.Queries;
+using CaseySmartHub.Application.Features.Permits.Queries.GetAllPermits;
+using CaseySmartHub.Application.Features.Permits.Queries.GetUserSavedPermits;
 using CaseySmartHub.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +21,7 @@ public class PermitsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("save-to-user")]
+    [HttpPost("save-permit-to-user")]
     public async Task<IActionResult> SaveUserPermit([FromBody] SaveUserPermitCommand command)
     {
         try
@@ -40,7 +43,7 @@ public class PermitsController : ControllerBase
         }
     }
 
-    [HttpGet ("get-all-permits")]
+    [HttpGet("/get-all-permits")]
     public async Task<IActionResult> GetAllPermits(CancellationToken cancellationToken)
     {
         try
@@ -49,9 +52,19 @@ public class PermitsController : ControllerBase
             return Ok(permits);
         }catch(Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new {error = "An unexpected error occued" + ex.Message});
+            return StatusCode(StatusCodes.Status500InternalServerError, new {error = "An unexpected error occurred" + ex.Message});
         }
-        
-        
+    }
+    [HttpGet("/get-user-saved-permits")]
+    public async Task<IActionResult> GetUserSavedPermits([FromQuery] GetUserSavedPermitsQuery request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var permits = await _mediator.Send(new GetUserSavedPermitsQuery(request.UserId), cancellationToken);    
+            return Ok(permits);
+        }catch(Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {error = "An unexpected error occurred: " + ex.Message});
+        }
     }
 }
