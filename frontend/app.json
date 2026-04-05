@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "Casey Smart Hub",
+    "slug": "caseysmarthub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "caseysmarthub",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
