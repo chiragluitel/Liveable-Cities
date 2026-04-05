@@ -15,4 +15,6 @@ public interface IPermitRepository
     Task AddUserPermitAsync(UserPermit userPermit, CancellationToken cancellationToken);
     
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    
+    Task<IEnumerable<Permit>> GetAllPermitsAsync (CancellationToken cancellationToken);
 }

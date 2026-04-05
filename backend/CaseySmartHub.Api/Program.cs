@@ -1,4 +1,5 @@
 using CaseySmartHub.Application.Features.Permits.Commands;
+using CaseySmartHub.Application.Features.Permits.Commands.SavePermit;
 using CaseySmartHub.Application.Interfaces.ExternalServices;
 using CaseySmartHub.Application.Interfaces.Repositories;
 using CaseySmartHub.Infrastructure.ExternalServices;

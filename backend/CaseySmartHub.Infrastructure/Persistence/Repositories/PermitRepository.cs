@@ -40,4 +40,9 @@ public class PermitRepository : IPermitRepository
     {
         return await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<IEnumerable<Permit>> GetAllPermitsAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Permits.ToListAsync(cancellationToken);
+    }
 }

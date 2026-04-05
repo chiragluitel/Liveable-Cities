@@ -1,4 +1,6 @@
 using CaseySmartHub.Application.Features.Permits.Commands;
+using CaseySmartHub.Application.Features.Permits.Commands.SavePermit;
+using CaseySmartHub.Application.Features.Permits.Queries;
 using CaseySmartHub.Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,5 +38,20 @@ public class PermitsController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { error = "An unexpected error occurred." + ex.Message });
         }
+    }
+
+    [HttpGet ("get-all-permits")]
+    public async Task<IActionResult> GetAllPermits(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var permits = await _mediator.Send(new GetAllPermitsQuery(), cancellationToken);
+            return Ok(permits);
+        }catch(Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new {error = "An unexpected error occued" + ex.Message});
+        }
+        
+        
     }
 }

@@ -1,5 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography.X509Certificates;
+using CaseySmartHub.Application.Features.Permits.Commands.SavePermit;
 using CaseySmartHub.Application.Interfaces.ExternalServices;
 using CaseySmartHub.Application.Interfaces.Repositories;
 using CaseySmartHub.Domain.Entities;
@@ -44,7 +43,8 @@ public class SaveUserPermitCommandHandler : IRequestHandler<SaveUserPermitComman
         {
             UserId = request.UserId,
             PermitId = permit.Id,
-            SavedAt = DateTime.Now
+            CustomUserNote = "",
+            SavedAt = DateTime.UtcNow,
         };
 
         await _permitRepository.AddUserPermitAsync(userPermitLink, cancellationToken);
