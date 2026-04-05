@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CaseySmartHub.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21af8b846e10a6e82488d126ed13f08b2564c17b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bab4d74a824d0b1a55ef4b3a4c79efc8147dee3f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CaseySmartHub.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CaseySmartHub.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

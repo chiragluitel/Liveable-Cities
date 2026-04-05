@@ -1,0 +1,12 @@
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/bin/Debug/net9.0/CaseySmartHub.Domain.deps.json
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/bin/Debug/net9.0/CaseySmartHub.Domain.dll
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/bin/Debug/net9.0/CaseySmartHub.Domain.pdb
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.AssemblyInfoInputs.cache
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.AssemblyInfo.cs
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.csproj.CoreCompileInputs.cache
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.sourcelink.json
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.dll
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/refint/CaseySmartHub.Domain.dll
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/CaseySmartHub.Domain.pdb
+/Users/chiragluitel/Documents/Projects/Liveable-Cities/backend/CaseySmartHub.Domain/obj/Debug/net9.0/ref/CaseySmartHub.Domain.dll
