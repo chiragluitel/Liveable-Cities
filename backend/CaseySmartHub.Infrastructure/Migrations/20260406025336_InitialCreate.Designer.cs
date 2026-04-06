@@ -3,6 +3,7 @@ using System;
 using CaseySmartHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CaseySmartHub.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260406025336_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +31,7 @@ namespace CaseySmartHub.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ApplicationCategory")
+                    b.Property<string>("ApplicationCategoty")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -49,13 +52,14 @@ namespace CaseySmartHub.Infrastructure.Migrations
                     b.Property<DateTime>("DateEntered")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("FinalCertificateIssued")
+                    b.Property<DateTime?>("FinalCertificateIssed")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("IssuedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("IssuedYear")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("OccupancyPermitDate")

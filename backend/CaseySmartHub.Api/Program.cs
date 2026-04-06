@@ -1,9 +1,7 @@
-using CaseySmartHub.Application.Features.Permits.Commands;
-using CaseySmartHub.Application.Features.Permits.Commands.SavePermit;
-using CaseySmartHub.Application.Interfaces.ExternalServices;
+using CaseySmartHub.Application.ExternalServices.CaseyOpenData;
+using CaseySmartHub.Application.Features.Permits.Queries.GetAllBuildingPermits;
 using CaseySmartHub.Application.Interfaces.Repositories;
-using CaseySmartHub.Infrastructure.ExternalServices;
-using CaseySmartHub.Infrastructure.ExternalServices.Base;
+using CaseySmartHub.Infrastructure.ExternalData.CaseyOpenData;
 using CaseySmartHub.Infrastructure.Persistence;
 using CaseySmartHub.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,22 +14,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PsqlConnectionString")));
 
 // ========
-// 2. Internal Database Repositories
+// 2. Insert All Internal Repositories Here
 // ========
-builder.Services.AddScoped<IPermitRepository, PermitRepository>();
+builder.Services.AddScoped<IBuildingPermitRepository, BuildingPermitRepository>();
 
 // ========
-// 3. External API Services
+// 3. External API Services. Insert All External Services Here
 // ========
 //Base HTTP Client Setup - One time setup.
-builder.Services.AddHttpClient<CaseyOpenDataClient>();
+builder.Services.AddHttpClient<CaseyOpenDataClientBase>(client => 
+    client.BaseAddress= new Uri("https://data.casey.vic.gov.au/api/explore/v2.1/"));
 
 builder.Services.AddScoped<ICaseyPermitAPIService, CaseyPermitAPIService>();
 
 // ========
-// 4. Application Layer Services for MediatR
+// 4. Application Layer Services. For MediatR => One-Time Setup, no need to add. For Mapper => One-Time Setup, no need to add.
+
 // ========
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveUserPermitCommand).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllBuildingPermitsQuery).Assembly));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // ========
 // 5. Constrollers (our APIs)

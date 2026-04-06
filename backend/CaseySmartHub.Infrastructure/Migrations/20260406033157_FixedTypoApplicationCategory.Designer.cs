@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CaseySmartHub.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260405040657_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260406033157_FixedTypoApplicationCategory")]
+    partial class FixedTypoApplicationCategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,39 +25,59 @@ namespace CaseySmartHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CaseySmartHub.Domain.Entities.Permit", b =>
+            modelBuilder.Entity("CaseySmartHub.Domain.Entities.BuildingPermit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ApplicationCategory")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ApplicationNumber")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Category")
+                    b.Property<string>("BuildingRegulationNumbers")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CouncilWard")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreatedAtUTC")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("DateEntered")
+                    b.Property<DateTime>("DateEntered")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("IssueDate")
+                    b.Property<DateTime?>("FinalCertificateIssued")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("IssuedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("IssuedYear")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("OccupancyPermitDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PermitNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Postcode")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("StageDecision")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("SubCategory")
                         .IsRequired()
@@ -67,12 +87,12 @@ namespace CaseySmartHub.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAtUTC")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permits");
+                    b.ToTable("BuildingPermits");
                 });
 
             modelBuilder.Entity("CaseySmartHub.Domain.Entities.User", b =>
@@ -81,14 +101,18 @@ namespace CaseySmartHub.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AuthId")
+                    b.Property<DateTime>("CreatedAtUTC")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -96,62 +120,12 @@ namespace CaseySmartHub.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAtUTC")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("CaseySmartHub.Domain.Entities.UserPermit", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PermitId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CustomUserNote")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SavedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("UserId", "PermitId");
-
-                    b.HasIndex("PermitId");
-
-                    b.ToTable("UserPermits");
-                });
-
-            modelBuilder.Entity("CaseySmartHub.Domain.Entities.UserPermit", b =>
-                {
-                    b.HasOne("CaseySmartHub.Domain.Entities.Permit", "Permit")
-                        .WithMany("UserPermits")
-                        .HasForeignKey("PermitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CaseySmartHub.Domain.Entities.User", "User")
-                        .WithMany("UserPermits")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permit");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CaseySmartHub.Domain.Entities.Permit", b =>
-                {
-                    b.Navigation("UserPermits");
-                });
-
-            modelBuilder.Entity("CaseySmartHub.Domain.Entities.User", b =>
-                {
-                    b.Navigation("UserPermits");
                 });
 #pragma warning restore 612, 618
         }
