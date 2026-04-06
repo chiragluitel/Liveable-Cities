@@ -9,4 +9,11 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users {get;set;}
     public DbSet<BuildingPermit> BuildingPermits {get;set;}
+    public DbSet<Bench> Benches {get;set;}
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasPostgresExtension("postgis");
+        base.OnModelCreating(modelBuilder);
+    }
 }

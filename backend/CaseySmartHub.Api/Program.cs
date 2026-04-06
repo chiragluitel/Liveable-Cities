@@ -6,17 +6,23 @@ using CaseySmartHub.Infrastructure.Persistence;
 using CaseySmartHub.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ========
 // 1. Database Services - One time setup.  
-// ========
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PsqlConnectionString")));
 
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("PsqlConnectionString"),
+        o => o.UseNetTopologySuite()
+    )
+);
 // ========
 // 2. Insert All Internal Repositories Here
 // ========
 builder.Services.AddScoped<IBuildingPermitRepository, BuildingPermitRepository>();
+builder.Services.AddScoped<IBenchRepository, BenchRepository>();
 
 // ========
 // 3. External API Services. Insert All External Services Here
