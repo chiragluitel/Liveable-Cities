@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode, useRef, useState } from "react";
-import { StyleSheet, Text, View, TouchableHighlight, Modal, Button, Platform, TouchableOpacity, ScrollView, TouchableOpacityProps, TouchableHighlightProps } from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight, Modal, Platform, TouchableOpacity, ScrollView } from "react-native";
 import DropDownLeft from "./DropDownLeft";
-import DropDownItem, { ItemProps } from "./DropDownItem";
+import { ItemProps } from "./DropDownItem";
 
 type DropDownProps = {
   title: string
@@ -53,6 +53,7 @@ export default function DropDown({title = "{title}", hideSeperator = false, init
     );
   }
 
+  // Update dropdown items with onPressFunc and selection state
   const enhancedChildren = React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) {
       return child;

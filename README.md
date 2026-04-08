@@ -56,7 +56,7 @@ In summary:
 TODO
 
 ## Sources
-- Settings Dropdown Arrow: https://www.svgrepo.com/svg/509905/dropdown-arrow
+- Icons: https://fontawesome.com/
 
 ## TODO
 ### README file

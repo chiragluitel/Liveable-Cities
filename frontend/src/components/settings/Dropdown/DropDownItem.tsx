@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { View, TouchableHighlight, StyleSheet, Text } from "react-native";
+import React from "react";
+import { View, TouchableHighlight, StyleSheet, Text, Image } from "react-native";
+//@ts-ignore
+import checkArrow from "@/assets/settings/check-solid.png"
 
 export type ItemProps = {
   title: string
@@ -17,7 +19,7 @@ export default function DropDownItem({title = "{title}", value, isSelected = fal
     >
       <View style={hideSeperator ? styles.buttonLast : styles.button}>
         <Text style={{fontSize: 17}}>{title}</Text>
-        <Text style={{opacity: isSelected ? 1 : 0}}>0</Text>
+        <Image style={[styles.checkImg, {opacity: isSelected ? 1 : 0}]} source={checkArrow}/>
       </View>
     </TouchableHighlight>
   );
@@ -40,4 +42,8 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingLeft: 20,
   },
+  checkImg: {
+    height: 22, 
+    width: 22, 
+  }
 });

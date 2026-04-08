@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 // @ts-ignore
-import dropdownArrow from "@/assets/settings/dropdown-arrow.png" 
+import dropdownArrow from "@/assets/settings/chevron-down-solid.png" 
 
 type DropDownProps = {
   selectedValue: string,
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   arrowImg: {
     height: 19, 
     width: 19, 
-    marginTop: 5, 
-    marginLeft: 6
+    top: 3,
+    left: 6,
   }
 });

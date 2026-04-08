@@ -30,7 +30,7 @@ export default function SettingsIndex() {
             <DropDownItem title="Metric" value="Metric" />
             <DropDownItem title="Imperial" value="Imperial" hideSeperator={true} />
           </DropDown>
-          <DropDown title="Walking Speed" hideSeperator={true}>
+          <DropDown title="Walking Speed" initialValue="Average" hideSeperator={true}>
             <DropDownItem title="Slow (2km/h)" value="Slow" />
             <DropDownItem title="Average (4km/h)" value="Average" />
             <DropDownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
