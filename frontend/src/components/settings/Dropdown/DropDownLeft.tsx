@@ -1,11 +1,16 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import dropdownArrow from "@/assets/settings/dropdown-arrow.png"
+// @ts-ignore
+import dropdownArrow from "@/assets/settings/dropdown-arrow.png" 
 
-export default function DropDownLeft() {
+type DropDownProps = {
+  selectedValue: string,
+}
+
+export default function DropDownLeft({selectedValue = "{value}"}: DropDownProps) {
   return (
     <View style={styles.left}>
-      <Text style={{fontSize: 17, color: "#8e8e93"}}>value</Text>
+      <Text style={{fontSize: 17, color: "#8e8e93"}}>{selectedValue}</Text>
       <Image style={styles.arrowImg} source={dropdownArrow}/>
     </View>
   );

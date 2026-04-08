@@ -25,31 +25,30 @@ export default function SettingsIndex() {
           }}
           />
         <SettingsGroup title="Measurements">
-          <DropDown title="Units" />
-          <DropDown title="Walking Speed" />
+          <DropDown title="Units" initialValue="Metric" />
+          <DropDown title="Walking Speed" hideSeperator={true}/>
         </SettingsGroup>
 
         <SettingsGroup title="Language">
-          <DropDown title="Units" />
-          <DropDown title="Walking Speed" />
+          <DropDown title="Units" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Theme">
-          <DropDown title="Units" />
+          <DropDown title="Units" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Night Detection">
-          <DropDown title="Units" />
+          <DropDown title="Units" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Accessibility">
           <DropDown title="Units" />
-          <DropDown title="Units" />
+          <DropDown title="Units" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Other">
           <DropDown title="Units" />
-          <DropDown title="Units" />
+          <DropDown title="Units" hideSeperator={true} />
         </SettingsGroup>
       </ScrollView>
       <Text style={{alignSelf: "center", backgroundColor: "#dddddd", padding: 25, width: "100%"}}>

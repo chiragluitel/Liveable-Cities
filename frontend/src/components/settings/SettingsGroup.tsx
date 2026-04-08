@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: "100%",
-    backgroundColor: "#ffffff",
+    backgroundColor: "white",
     borderRadius: 10,
   },
 });
