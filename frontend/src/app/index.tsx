@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { View } from "react-native";
+import SettingsIndex from "./(settings)";
 
 export default function Index() {
   return (
@@ -9,7 +11,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <SettingsIndex />
+      <StatusBar style="auto" />
     </View>
   );
 }
