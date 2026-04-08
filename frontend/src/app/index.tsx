@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { View } from "react-native";
 import SettingsIndex from "./(settings)";
 
@@ -12,7 +11,6 @@ export default function Index() {
       }}
     >
       <SettingsIndex />
-      <StatusBar style="auto" />
     </View>
   );
 }
