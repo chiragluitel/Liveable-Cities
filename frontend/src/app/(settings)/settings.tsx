@@ -1,5 +1,5 @@
-import DropDown from "@/src/components/settings/Dropdown/DropDown";
-import DropDownItem from "@/src/components/settings/Dropdown/DropDownItem";
+import DropDown from "@/src/components/Dropdown/DropDown";
+import DropDownItem from "@/src/components/Dropdown/DropDownItem";
 import SettingsGroup from "@/src/components/settings/SettingsGroup";
 import { Stack } from "expo-router";
 import { ScrollView, View, Text } from "react-native";
@@ -16,7 +16,7 @@ export default function Settings() {
         contentContainerStyle={{
           alignItems: "center"
         }}
-        >
+      >
         <Stack.Screen 
           options={{
             headerTitle: "Settings",
@@ -24,13 +24,13 @@ export default function Settings() {
               fontSize: 34
             }
           }}
-          />
+        />
         <SettingsGroup title="Measurements">
-          <DropDown title="Units" initialValue="Metric">
+          <DropDown title="Units" initialSelected="Metric">
             <DropDownItem title="Metric" value="Metric" />
             <DropDownItem title="Imperial" value="Imperial" hideSeperator={true} />
           </DropDown>
-          <DropDown title="Walking Speed" initialValue="Average" hideSeperator={true}>
+          <DropDown title="Walking Speed" initialSelected="Average" hideSeperator={true}>
             <DropDownItem title="Slow (2km/h)" value="Slow" />
             <DropDownItem title="Average (4km/h)" value="Average" />
             <DropDownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />

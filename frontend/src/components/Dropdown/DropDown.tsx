@@ -1,11 +1,11 @@
 import React, { ReactElement, ReactNode, useRef, useState } from "react";
 import { StyleSheet, Text, View, TouchableHighlight, Modal, Platform, TouchableOpacity, ScrollView } from "react-native";
-import DropDownLeft from "./DropDownLeft";
+import DropDownRight from "./DropDownRight";
 import { ItemProps } from "./DropDownItem";
 
 type DropDownProps = {
   title: string
-  initialValue?: string
+  initialSelected?: string
   hideSeperator?: boolean
   children: ReactNode
 }
@@ -17,12 +17,17 @@ type Anchor = {
   height: number
 }
 
-export default function DropDown({title = "{title}", hideSeperator = false, initialValue, children}: DropDownProps) {
+export default function DropDown({
+  title = "{title}", 
+  hideSeperator = false, 
+  initialSelected, 
+  children
+}: DropDownProps) {
   //@ts-ignore
   const buttonRef = useRef<TouchableHighlight | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(initialValue ? initialValue : "");
+  const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
 
   function itemPressed(value: string) {
     setModalVisible(false);
@@ -36,7 +41,7 @@ export default function DropDown({title = "{title}", hideSeperator = false, init
 
     buttonRef.current.measure(
       (
-        x: number,
+        x: number, 
         y: number,
         width: number,
         height: number,
@@ -119,7 +124,7 @@ export default function DropDown({title = "{title}", hideSeperator = false, init
       >
         <View style={styles.button}>
           <Text style={{fontSize: 17}}>{title}</Text>
-          <DropDownLeft selectedValue={selectedValue} />
+          <DropDownRight selectedValue={selectedValue} />
         </View>
       </TouchableHighlight>
     </View>

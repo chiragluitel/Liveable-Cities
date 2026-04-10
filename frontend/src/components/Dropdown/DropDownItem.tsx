@@ -1,7 +1,6 @@
 import React from "react";
 import { View, TouchableHighlight, StyleSheet, Text, Image } from "react-native";
-//@ts-ignore
-import checkArrow from "@/assets/settings/check-solid.png"
+import Entypo from "@expo/vector-icons/Entypo"
 
 export type ItemProps = {
   title: string
@@ -24,11 +23,10 @@ export default function DropDownItem({
       onPress={() => onPressFunc(value)}
     >
       <View style={hideSeperator ? styles.buttonLast : styles.button}>
-        <Text style={{fontSize: 17}}>{title}</Text>
-        <Image 
-          style={[styles.checkImg, {opacity: isSelected ? 1 : 0}]} 
-          source={checkArrow}
-        />
+        <Text style={{fontSize: 17}}>
+          {title} 
+        </Text>
+        <Entypo name="check" size={20} color={"#007bfe"} style={{opacity: isSelected ? 1 : 0}} />
       </View>
     </TouchableHighlight>
   );

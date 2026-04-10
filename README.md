@@ -55,9 +55,6 @@ In summary:
 ## Features
 TODO
 
-## Sources
-- Icons: https://fontawesome.com/
-
 ## TODO
 ### README file
 - [ ] Expand description
