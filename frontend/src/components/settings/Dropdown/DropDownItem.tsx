@@ -11,7 +11,13 @@ export type ItemProps = {
   hideSeperator?: boolean
 }
 
-export default function DropDownItem({title = "{title}", value, isSelected = false, onPressFunc = () => {}, hideSeperator= false}: ItemProps) {
+export default function DropDownItem({
+  title = "{title}", 
+  value, 
+  isSelected = false, 
+  onPressFunc = () => {}, 
+  hideSeperator= false
+}: ItemProps) {
 
   return (
     <TouchableHighlight 
@@ -19,7 +25,10 @@ export default function DropDownItem({title = "{title}", value, isSelected = fal
     >
       <View style={hideSeperator ? styles.buttonLast : styles.button}>
         <Text style={{fontSize: 17}}>{title}</Text>
-        <Image style={[styles.checkImg, {opacity: isSelected ? 1 : 0}]} source={checkArrow}/>
+        <Image 
+          style={[styles.checkImg, {opacity: isSelected ? 1 : 0}]} 
+          source={checkArrow}
+        />
       </View>
     </TouchableHighlight>
   );
