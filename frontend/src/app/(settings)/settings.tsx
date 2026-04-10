@@ -4,7 +4,7 @@ import SettingsGroup from "@/src/components/settings/SettingsGroup";
 import { Stack } from "expo-router";
 import { ScrollView, View, Text } from "react-native";
 
-export default function SettingsIndex() {
+export default function Settings() {
   return (
     <View
       style={{

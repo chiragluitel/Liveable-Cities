@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import SettingsIndex from "./(settings)";
+import Settings from "./(settings)/settings";
 
 export default function Index() {
   return (
@@ -10,7 +10,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <SettingsIndex />
+      <Settings />
     </View>
   );
 }
