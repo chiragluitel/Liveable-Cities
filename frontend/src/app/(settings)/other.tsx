@@ -1,8 +1,7 @@
-import ClearDataButton from "@/src/components/settings/ClearDataButton/ClearDataButton";
-import SettingsGroup from "@/src/components/settings/SettingsGroup";
-import WebLinkButton from "@/src/components/WebLinkButton";
+import ClearDataButton from "@Components/settings/ClearDataButton/ClearDataButton";
+import SettingsGroup from "@Components/settings/SettingsGroup";
 import { Stack } from "expo-router";
-import { Text, View, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Information() {
   return (

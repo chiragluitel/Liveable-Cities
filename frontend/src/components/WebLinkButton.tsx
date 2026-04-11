@@ -3,10 +3,10 @@ import { Linking, StyleSheet, Text, TouchableHighlight, View } from "react-nativ
 type WebLinkProps = {
   text: string
   link: string
-}
+};
 
 export default function WebLinkButton({text = "{text}", link = "https://github.com/chiragluitel/Liveable-Cities"}: WebLinkProps) {
-  const openLink = () => {
+  function openLink() {
     Linking.canOpenURL(link).then(() => {
       Linking.openURL(link);
     });

@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import SlideToggle from "@Components/SlideToggle";
-
+import { useState } from "react";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 type ToggleProps = {
   title: string
   initialValue?: boolean
   hideSeperator?: boolean
-}
+};
 
 export default function ToggleSetting({
   title = "{title}", 

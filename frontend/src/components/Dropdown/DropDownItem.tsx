@@ -1,6 +1,5 @@
-import React from "react";
-import { View, TouchableHighlight, StyleSheet, Text, Image } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo"
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 export type ItemProps = {
   title: string
@@ -8,7 +7,7 @@ export type ItemProps = {
   isSelected?: boolean
   onPressFunc?: Function
   hideSeperator?: boolean
-}
+};
 
 export default function DropDownItem({
   title = "{title}", 
@@ -17,7 +16,6 @@ export default function DropDownItem({
   onPressFunc = () => {}, 
   hideSeperator= false
 }: ItemProps) {
-
   return (
     <TouchableHighlight 
       onPress={() => onPressFunc(value)}

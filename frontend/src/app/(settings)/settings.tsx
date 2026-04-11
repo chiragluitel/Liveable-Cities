@@ -1,10 +1,10 @@
 import DropDown from "@Components/Dropdown/DropDown";
 import DropDownItem from "@Components/Dropdown/DropDownItem";
 import SettingsGroup from "@Components/settings/SettingsGroup";
-import ToggleSetting from "@/src/components/settings/ToggleSetting";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
-import SettingsSubPage from "@/src/components/settings/SettingSubPage";
+import SettingsSubPage from "@Components/settings/SettingSubPage";
+import ToggleSetting from "@Components/settings/ToggleSetting";
 import { useRouter } from "expo-router";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 
 export default function Settings() {
   const router = useRouter();

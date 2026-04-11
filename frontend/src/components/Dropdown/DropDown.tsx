@@ -1,21 +1,21 @@
-import React, { ReactElement, ReactNode, useRef, useState } from "react";
-import { StyleSheet, Text, View, TouchableHighlight, Modal, Platform, TouchableOpacity, ScrollView } from "react-native";
-import { ItemProps } from "./DropDownItem";
 import Ionicons from "@expo/vector-icons/Ionicons"
+import React, { ReactElement, ReactNode, useRef, useState } from "react";
+import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { ItemProps } from "./DropDownItem";
 
 type DropDownProps = {
   title: string
   initialSelected?: string
   hideSeperator?: boolean
   children: ReactNode
-}
+};
 
 type Anchor = {
   x: number
   y: number
   width: number
   height: number
-}
+};
 
 export default function DropDown({
   title = "{title}", 
@@ -34,7 +34,7 @@ export default function DropDown({
     setSelectedValue(value);
   }
 
-  function getButtonPos(): void {
+  function getButtonPos() {
     if (!buttonRef.current) {
       return;
     }
@@ -53,7 +53,7 @@ export default function DropDown({
           y: pageY,
           width,
           height,
-        })
+        });
       }
     );
   }
@@ -77,9 +77,8 @@ export default function DropDown({
     }
   });
 
-
   return (
-    <View style={hideSeperator ? styles.settingRowLast : styles.settingRow}>
+    <View style={hideSeperator ? styles.settingRowNoSep : styles.settingRow}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -116,10 +115,9 @@ export default function DropDown({
       <TouchableHighlight 
         ref={buttonRef}
         onPress={() => {
-          getButtonPos();
-          setModalVisible(true)
-          }
-        } 
+            getButtonPos();
+            setModalVisible(true);
+        }} 
         style={{borderRadius: 10}}
         underlayColor="#747480"
       >
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#c7c7cc",
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-  settingRowLast: {
+  settingRowNoSep: {
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,

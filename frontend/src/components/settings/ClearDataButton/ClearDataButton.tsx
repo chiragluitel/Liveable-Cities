@@ -1,12 +1,11 @@
+import AlertBox from "@Components/AlertBox";
+import ConfirmBox from "@Components/ConfirmBox";
 import { useState } from "react";
-import { View, TouchableHighlight, Text, StyleSheet, TouchableOpacity, Modal, Platform } from "react-native";
-import AlertBox from "../../AlertBox";
-import ConfirmBox from "../../ConfirmBox";
-
+import { Modal, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function ClearDataButton() {
-  const [alertVisible, setAlertVisible] = useState(false)
-  const [confirmVisible, setConfrimVisible] = useState(false)
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [confirmVisible, setConfrimVisible] = useState(false);
   
   return (
     <View>
@@ -25,7 +24,10 @@ export default function ClearDataButton() {
             title="Delete All Data?" 
             message="This action cannot be undone." 
             cancelFunc={() => setAlertVisible(false)} 
-            confirmFunc={() => {setAlertVisible(false); setConfrimVisible(true)}}
+            confirmFunc={() => {
+              setAlertVisible(false); 
+              setConfrimVisible(true);
+            }}
           />
         </TouchableOpacity>
       </Modal>

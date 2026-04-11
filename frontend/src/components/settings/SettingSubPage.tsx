@@ -1,14 +1,12 @@
-import React, { useState, ReactNode, ReactElement } from "react";
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useRouter } from "expo-router";
-
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 type SubPageProps = {
   title: string
   navigateFunc: Function
   hideSeperator?: boolean
-}
+};
 
 export default function SettingsSubPage({
   title = "{title}", 

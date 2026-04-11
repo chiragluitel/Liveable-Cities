@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { ReactNode } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type SettingsGroupProps = {
   title: string
   children: ReactNode
-}
+};
 
 export default function SettingsGroup({title="title", children}: SettingsGroupProps) {
   return (

@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Animated, Pressable, StyleSheet } from "react-native";
 
 type ToggleProps = {
   value: boolean,
   onValueChange: Function
-}
+};
 
 export default function SlideToggle({value, onValueChange}: ToggleProps) {
   const anim = useRef(new Animated.Value(value ? 1 : 0)).current;
