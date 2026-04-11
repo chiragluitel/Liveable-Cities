@@ -22,7 +22,7 @@ export default function Information() {
         }} />
 
         <SettingsGroup title="Project Information">
-          <View style={styles.textSectionLast}>
+          <View style={styles.textSectionNoSep}>
             <Text style={{fontSize: 17}}>
               This project serves to help the community have better access to local facilities while walking.
             </Text>
@@ -30,7 +30,7 @@ export default function Information() {
         </SettingsGroup>
 
         <SettingsGroup title="Team Information">
-          <View style={styles.textSectionLast}>
+          <View style={styles.textSectionNoSep}>
             <Text style={{fontSize: 17}}>
               We are a group of Swinburne students completing this project as part of our capstone subject.
             </Text>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#c7c7cc",
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-  textSectionLast: {
+  textSectionNoSep: {
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,

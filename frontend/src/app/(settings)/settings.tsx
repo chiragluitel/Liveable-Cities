@@ -46,13 +46,13 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Accessibility">
-          <ToggleSetting title="Reduce Motion" hideSeperator={true} />
+          <ToggleSetting title="Reduce Motion" />
           <ToggleSetting title="Increase Contrast" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="About">
           <SettingsSubPage title="Information" navigateFunc={() => router.navigate("/information")} />
-          <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/other")} />
+          <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/other")} hideSeperator={true} />
         </SettingsGroup>
       </ScrollView>
     </View>

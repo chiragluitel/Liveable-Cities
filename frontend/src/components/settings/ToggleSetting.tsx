@@ -16,7 +16,7 @@ export default function ToggleSetting({
   const [value, setValue] = useState(initialValue);
 
   return (
-    <View style={hideSeperator ? styles.settingRowLast : styles.settingRow}>
+    <View style={hideSeperator ? styles.settingRowNoSep : styles.settingRow}>
       <TouchableHighlight
         onPress={() => setValue(!value)}
         style={{borderRadius: 10}}
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#c7c7cc",
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-  settingRowLast: {
+  settingRowNoSep: {
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
