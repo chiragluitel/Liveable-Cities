@@ -1,8 +1,8 @@
 import { Amenity } from '@/src/types/TypesForWalkPlanner';
 import React from 'react';
 import { View, useWindowDimensions } from 'react-native';
-import { ClickableHeader } from '../ClickableHeader';
-import { HorizontalCarousel } from '../HorizontalCarousel';
+import { ClickableHeader } from '../../shared/ClickableHeader';
+import { HorizontalCarousel } from '../../shared/HorizontalCarousel';
 import { NearbyCard } from './NearbyCard';
 
 interface NearbySectionProps {
@@ -14,7 +14,7 @@ interface NearbySectionProps {
 export function NearbySection({ amenities, onHeaderPress, onAmenityPress }: NearbySectionProps) {
   const { width: windowWidth } = useWindowDimensions();
   
-  const CARD_WIDTH = windowWidth * 0.42; 
+  const CARD_WIDTH = windowWidth * 0.55; 
   const GAP = 16;
   const SNAP_INTERVAL = CARD_WIDTH + GAP;
 

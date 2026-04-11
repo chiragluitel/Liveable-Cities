@@ -1,8 +1,8 @@
 import { Walk } from "@/src/types/TypesForWalkPlanner";
 import { useWindowDimensions, View } from "react-native";
-import { HorizontalCarousel } from "../HorizontalCarousel";
+import { HorizontalCarousel } from "../../shared/HorizontalCarousel";
 import { MyWalkCard } from "./MyWalkCard";
-import { ClickableHeader } from "../ClickableHeader";
+import { ClickableHeader } from "../../shared/ClickableHeader";
 
 interface MyWalksSectionProps {
     walks: Walk[];

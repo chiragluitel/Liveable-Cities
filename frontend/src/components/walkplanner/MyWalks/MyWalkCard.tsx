@@ -3,6 +3,7 @@ import { Footprints } from "lucide-react-native";
 import { Dimensions, Pressable, View } from "react-native";
 import { WalkDetails } from "./WalkDetails";
 
+
 interface MyWalkCardProps {
     walk: Walk;
     onPress? : (walkId: string) => void
