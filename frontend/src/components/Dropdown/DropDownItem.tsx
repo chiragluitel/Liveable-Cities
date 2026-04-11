@@ -21,6 +21,7 @@ export default function DropDownItem({
   return (
     <TouchableHighlight 
       onPress={() => onPressFunc(value)}
+      underlayColor="#747480"
     >
       <View style={hideSeperator ? styles.buttonLast : styles.button}>
         <Text style={{fontSize: 17}}>

@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode, useRef, useState } from "react";
 import { StyleSheet, Text, View, TouchableHighlight, Modal, Platform, TouchableOpacity, ScrollView } from "react-native";
-import DropDownRight from "./DropDownRight";
 import { ItemProps } from "./DropDownItem";
+import Ionicons from "@expo/vector-icons/Ionicons"
 
 type DropDownProps = {
   title: string
@@ -79,7 +79,7 @@ export default function DropDown({
 
 
   return (
-    <View style={hideSeperator ? styles.dropdownLast : styles.dropdown}>
+    <View style={hideSeperator ? styles.settingRowLast : styles.settingRow}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -121,10 +121,13 @@ export default function DropDown({
           }
         } 
         style={{borderRadius: 10}}
+        underlayColor="#747480"
       >
         <View style={styles.button}>
           <Text style={{fontSize: 17}}>{title}</Text>
-          <DropDownRight selectedValue={selectedValue} />
+          <Text style={{fontSize: 17, color: "#8e8e93"}}>
+            {selectedValue} <Ionicons name="chevron-expand" size={17} />
+          </Text>
         </View>
       </TouchableHighlight>
     </View>
@@ -132,14 +135,14 @@ export default function DropDown({
 }
 
 const styles = StyleSheet.create({
-  dropdown: {
+  settingRow: {
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
     borderBottomColor: "#c7c7cc",
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-  dropdownLast: {
+  settingRowLast: {
     width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
