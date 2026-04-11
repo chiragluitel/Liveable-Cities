@@ -3,9 +3,10 @@ import {User} from 'lucide-react-native'
 import useSearchLogic from "@/src/hooks/useSearchLogic"
 import CustomSearchBar from "@/src/components/shared/SearchBar";
 import MyWalksSection from "@/src/components/walkplanner/MyWalks/MyWalksSection";
-import { MY_WALKS, NEARBY_AMENITIES } from "@/src/database/MockDB";
+import { FITNESS_GOALS, MY_WALKS, NEARBY_AMENITIES } from "@/src/database/MockDB";
 import { NearbySection } from "@/src/components/walkplanner/Nearby/NearbySection";
 import CommunityWalkSection from "@/src/components/walkplanner/CommunityWalks/CommunityWalkSection";
+import { FitnessSection } from "@/src/components/walkplanner/FitnessGoals/FitnessSection";
 
 const WalkPlannerHomePage = () => {
     const searchState = useSearchLogic();
@@ -16,6 +17,7 @@ const WalkPlannerHomePage = () => {
                  <User/> 
             </View>
             <CustomSearchBar searchState={searchState} placeholder="Search..." />
+            <FitnessSection goals={FITNESS_GOALS} onHeaderPress={()=>console.log('FitnessGoalsHeadersPressed')} onGoalPress={()=>console.log('Goal Pressed')} />
             <MyWalksSection walks={MY_WALKS} onHeaderPress={()=>console.log('HeaderPressed')} onWalkPress={()=>console.log('Walk Pressed')} />
             <NearbySection amenities={NEARBY_AMENITIES} />
             <CommunityWalkSection walks={MY_WALKS} onHeaderPress={()=>console.log('HeaderPressed')} onWalkPress={()=>console.log('Walk Pressed')} />

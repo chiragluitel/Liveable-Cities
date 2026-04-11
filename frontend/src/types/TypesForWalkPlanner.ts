@@ -38,7 +38,6 @@ export interface FitnessGoal {
   unit: string;
   current: number;
   target: number;
-  accentColor: string;
 }
 
 

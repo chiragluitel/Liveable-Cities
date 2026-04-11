@@ -220,17 +220,15 @@ export const FITNESS_GOALS: FitnessGoal[] = [
     id: 'g1',
     label: 'Weekly Distance',
     unit: 'km',
-    current: 14.2,
-    target: 20,
-    accentColor: '#4CAF50',
+    current: 14,
+    target: 20
   },
   {
     id: 'g2',
     label: 'Daily Steps',
     unit: 'steps',
     current: 7800,
-    target: 10000,
-    accentColor: '#2196F3',
+    target: 10000
   },
 ];
 
