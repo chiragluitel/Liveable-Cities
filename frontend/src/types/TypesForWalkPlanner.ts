@@ -29,7 +29,6 @@ export interface Amenity {
   name: string;
   type: AmenityType;
   distanceM: number;
-  iconEmoji: string;
 }
 
 

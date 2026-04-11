@@ -3,7 +3,8 @@ import {User} from 'lucide-react-native'
 import useSearchLogic from "@/src/hooks/useSearchLogic"
 import CustomSearchBar from "@/src/components/SearchBar";
 import MyWalksSection from "@/src/components/walkplanner/MyWalksSection";
-import { MY_WALKS } from "@/src/database/MockDB";
+import { MY_WALKS, NEARBY_AMENITIES } from "@/src/database/MockDB";
+import { NearbySection } from "@/src/components/walkplanner/NearbySection";
 
 const WalkPlannerHomePage = () => {
     const searchState = useSearchLogic();
@@ -15,6 +16,7 @@ const WalkPlannerHomePage = () => {
             </View>
             <CustomSearchBar searchState={searchState} placeholder="Search..." />
             <MyWalksSection walks={MY_WALKS} onHeaderPress={()=>console.log('HeaderPressed')} onWalkPress={()=>console.log('Walk Pressed')} />
+            <NearbySection amenities={NEARBY_AMENITIES} />
         </View>
 
     )

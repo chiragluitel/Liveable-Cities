@@ -146,42 +146,72 @@ export const NEARBY_AMENITIES: Amenity[] = [
     name: 'Scenic Amenities',
     type: 'Scenic Amenities',
     distanceM: 320,
-    iconEmoji: '🌿',
+    
   },
   {
     id: 'a2',
     name: 'Grebe Park',
     type: 'Grass Park',
     distanceM: 480,
-    iconEmoji: '🌳',
+    
   },
   {
     id: 'a3',
     name: 'Scenic Amenities',
     type: 'Scenic Amenities',
     distanceM: 650,
-    iconEmoji: '🌿',
+    
   },
   {
     id: 'a4',
     name: 'Sports Park',
     type: 'Sports Facilities',
     distanceM: 820,
-    iconEmoji: '⚽',
   },
   {
     id: 'a5',
     name: 'Scenic Amenities',
     type: 'Scenic Amenities',
     distanceM: 1100,
-    iconEmoji: '🌿',
+    
   },
   {
     id: 'a6',
     name: 'Grebe Park',
     type: 'Grass Park',
     distanceM: 1300,
-    iconEmoji: '🌳',
+    
+  },
+    {
+    id: 'a7',
+    name: 'Grebe Park',
+    type: 'Grass Park',
+    distanceM: 1300,
+    
+  },
+    {
+    id: 'a8',
+    name: 'Grebe Park',
+    type: 'Grass Park',
+    distanceM: 1300
+  },
+    {
+    id: 'a9',
+    name: 'Grebe Park',
+    type: 'Grass Park',
+    distanceM: 1300
+  },
+    {
+    id: 'a10',
+    name: 'Grebe Park',
+    type: 'Grass Park',
+    distanceM: 1300
+  },
+    {
+    id: 'a11',
+    name: 'Grebe Park',
+    type: 'Grass Park',
+    distanceM: 1300
   },
 ];
 
