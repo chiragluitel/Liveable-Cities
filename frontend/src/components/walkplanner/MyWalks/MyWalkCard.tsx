@@ -20,8 +20,8 @@ export const MyWalkCard = ({walk, onPress, width}: MyWalkCardProps) => {
             accessibilityLabel={`View details for ${walk.title}`}
         >
             <View
-                className="w-14 h-14 rounded-xl items-center justify-center"
-                style={{ backgroundColor: walk.thumbnailColor }}
+                className="w-14 h-14 rounded-xl items-center justify-center border-2"
+                // style={{ backgroundColor: walk.thumbnailColor }}
             >
                 <Footprints size={24} color="#000000" strokeWidth={2.5} />
             </View>
