@@ -1,10 +1,14 @@
-import DropDown from "@/src/components/Dropdown/DropDown";
-import DropDownItem from "@/src/components/Dropdown/DropDownItem";
-import SettingsGroup from "@/src/components/settings/SettingsGroup";
-import { Stack } from "expo-router";
-import { ScrollView, View, Text } from "react-native";
+import DropDown from "@Components/Dropdown/DropDown";
+import DropDownItem from "@Components/Dropdown/DropDownItem";
+import SettingsGroup from "@Components/settings/SettingsGroup";
+import ToggleSetting from "@/src/components/settings/ToggleSetting";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
+import SettingsSubPage from "@/src/components/settings/SettingSubPage";
+import { useRouter } from "expo-router";
 
 export default function Settings() {
+  const router = useRouter();
+
   return (
     <View
       style={{
@@ -17,14 +21,10 @@ export default function Settings() {
           alignItems: "center"
         }}
       >
-        <Stack.Screen 
-          options={{
-            headerTitle: "Settings",
-            headerTitleStyle: {
-              fontSize: 34
-            }
-          }}
-        />
+        <Text style={styles.title} >
+          Settings
+        </Text>
+
         <SettingsGroup title="Measurements">
           <DropDown title="Units" initialSelected="Metric">
             <DropDownItem title="Metric" value="Metric" />
@@ -36,63 +36,35 @@ export default function Settings() {
             <DropDownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
           </DropDown>
         </SettingsGroup>
-
-        <SettingsGroup title="Language">
-          <DropDown title="Units" hideSeperator={true}>
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
-        </SettingsGroup>
         
         <SettingsGroup title="Theme">
-          <DropDown title="Units" hideSeperator={true}>
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
+          <ToggleSetting title="Dark Theme" hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Night Detection">
-          <DropDown title="Units" hideSeperator={true}>
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
+          <ToggleSetting title="Auto Enable Street Lights" initialValue={true} hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Accessibility">
-          <DropDown title="Units">
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
-          <DropDown title="Units" hideSeperator={true}>
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
+          <ToggleSetting title="Reduce Motion" hideSeperator={true} />
+          <ToggleSetting title="Increase Contrast" hideSeperator={true} />
         </SettingsGroup>
         
-        <SettingsGroup title="Other">
-          <DropDown title="Units">
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
-          <DropDown title="Units" hideSeperator={true}>
-            <DropDownItem title="Metric" value="metric" />
-            <DropDownItem title="Imperial" value="imperial" hideSeperator={true} />
-          </DropDown>
+        <SettingsGroup title="About">
+          <SettingsSubPage title="Information" navigateFunc={() => router.navigate("/information")} />
+          <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/other")} />
         </SettingsGroup>
       </ScrollView>
-      <Text style={{alignSelf: "center", backgroundColor: "#dddddd", padding: 25, width: "100%"}}>
-        Navigation goes here
-      </Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 34,
+    fontWeight: "bold",
+    width: "100%",
+    marginTop: "20%",
+    marginLeft: "10%"
+  }
+});
