@@ -2,6 +2,8 @@ import { Text, View } from "react-native"
 import {User} from 'lucide-react-native'
 import useSearchLogic from "@/src/hooks/useSearchLogic"
 import CustomSearchBar from "@/src/components/SearchBar";
+import MyWalksSection from "@/src/components/walkplanner/MyWalksSection";
+import { MY_WALKS } from "@/src/database/MockDB";
 
 const WalkPlannerHomePage = () => {
     const searchState = useSearchLogic();
@@ -12,7 +14,7 @@ const WalkPlannerHomePage = () => {
                  <User/> 
             </View>
             <CustomSearchBar searchState={searchState} placeholder="Search..." />
-
+            <MyWalksSection walks={MY_WALKS} onHeaderPress={()=>console.log('HeaderPressed')} onWalkPress={()=>console.log('Walk Pressed')} />
         </View>
 
     )
