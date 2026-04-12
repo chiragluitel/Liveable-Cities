@@ -49,7 +49,7 @@ const CaseyMap = forwardRef<CaseyMapHandle>((_, ref) => {
       />
 
       <RecentreButton onPress={() => send({ type: 'RECENTRE' })} />
-      
+
       <ZoomControls
         onZoomIn={() => send({ type: 'ZOOM_IN' })}
         onZoomOut={() => send({ type: 'ZOOM_OUT' })}
