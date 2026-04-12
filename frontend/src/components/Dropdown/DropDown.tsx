@@ -1,30 +1,29 @@
+import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactElement, ReactNode, useRef, useState } from "react";
-import { StyleSheet, Text, View, TouchableHighlight, Modal, Platform, TouchableOpacity, ScrollView } from "react-native";
-import DropDownRight from "./DropDownRight";
+import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { ItemProps } from "./DropDownItem";
 
 type DropDownProps = {
   title: string
-  initialSelected?: string
+  initialSelected: string
   hideSeperator?: boolean
   children: ReactNode
-}
+};
 
 type Anchor = {
   x: number
   y: number
   width: number
   height: number
-}
+};
 
 export default function DropDown({
-  title = "{title}", 
-  hideSeperator = false, 
+  title, 
   initialSelected, 
+  hideSeperator = false, 
   children
 }: DropDownProps) {
-  //@ts-ignore
-  const buttonRef = useRef<TouchableHighlight | null>(null); 
+  const buttonRef = useRef<View | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
@@ -34,7 +33,7 @@ export default function DropDown({
     setSelectedValue(value);
   }
 
-  function getButtonPos(): void {
+  function getButtonPos() {
     if (!buttonRef.current) {
       return;
     }
@@ -53,7 +52,7 @@ export default function DropDown({
           y: pageY,
           width,
           height,
-        })
+        });
       }
     );
   }
@@ -77,9 +76,8 @@ export default function DropDown({
     }
   });
 
-
   return (
-    <View style={hideSeperator ? styles.dropdownLast : styles.dropdown}>
+    <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -87,7 +85,7 @@ export default function DropDown({
         onRequestClose={() => setModalVisible(false)}
       >
         <TouchableOpacity 
-          style={styles.modalContainer}
+          className="flex-1 items-center justify-center"
           activeOpacity={1}
           onPressOut={() => setModalVisible(false)}
         >
@@ -102,7 +100,8 @@ export default function DropDown({
               }}
             >
               <ScrollView 
-                style={styles.content}
+                className="bg-white m-[5] rounded-[20]"
+                style={styles.contentShadow}
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
               >
@@ -114,17 +113,21 @@ export default function DropDown({
       </Modal>
 
       <TouchableHighlight 
-        ref={buttonRef}
         onPress={() => {
-          getButtonPos();
-          setModalVisible(true)
-          }
-        } 
-        style={{borderRadius: 10}}
+            getButtonPos();
+            setModalVisible(true);
+        }} 
+        className="rounded-[10]"
+        underlayColor="#747480"
       >
-        <View style={styles.button}>
+        <View 
+          className="flex-row justify-between bg-white rounded-[10] p-[15]" 
+          ref={buttonRef}
+        >
           <Text style={{fontSize: 17}}>{title}</Text>
-          <DropDownRight selectedValue={selectedValue} />
+          <Text style={{fontSize: 17, color: "#8e8e93"}}>
+            {selectedValue} <Ionicons name="chevron-expand" size={17} />
+          </Text>
         </View>
       </TouchableHighlight>
     </View>
@@ -132,31 +135,7 @@ export default function DropDown({
 }
 
 const styles = StyleSheet.create({
-  dropdown: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    borderBottomColor: "#c7c7cc",
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  dropdownLast: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-  },
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15
-  },
-  modalContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  content: {
+  contentShadow: {
     backgroundColor: "white",
     margin: 5,
     borderRadius: 20,
