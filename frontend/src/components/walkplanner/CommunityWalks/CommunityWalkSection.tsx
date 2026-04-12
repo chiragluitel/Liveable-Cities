@@ -1,8 +1,8 @@
 import { Walk } from "@/src/types/TypesForWalkPlanner";
 import { useWindowDimensions, View } from "react-native";
-import { HorizontalCarousel } from "../../shared/HorizontalCarousel";
+import { HorizontalCarousel } from "@Components/shared/HorizontalCarousel";
 import { MyWalkCard } from "../MyWalks/MyWalkCard";
-import { ClickableHeader } from "../../shared/ClickableHeader";
+import { ClickableHeader } from "@Components/shared/ClickableHeader";
 import { CommunityWalkCard } from "./CommunityWalkCard";
 
 interface CommunityWalkSectionProps {

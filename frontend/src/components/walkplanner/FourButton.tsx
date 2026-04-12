@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import CustomButton from "../shared/CustomButton";
+import CustomButton from "@Components/shared/CustomButton";
 import { customButton } from "@/src/types/TypesForApp";
 
 interface FourButtonProps {

@@ -1,6 +1,6 @@
 import { Text, View, useWindowDimensions } from "react-native";
 import { FitnessGoal } from "@/src/types/TypesForWalkPlanner";
-import { ClickableHeader } from "../../shared/ClickableHeader";
+import { ClickableHeader } from "@Components/shared/ClickableHeader";
 import { GoalCard } from "./GoalCard";
 import { FITNESS_GOALS } from "@/src/database/MockDB";
 import { ProgressBar } from "./ProgressBar";

@@ -1,6 +1,6 @@
 import { Mic, Search, XCircle } from "lucide-react-native"
 import { Pressable, TextInput, View } from "react-native"
-import { SearchLogicReturnObject } from "../../hooks/useSearchLogic"
+import { SearchLogicReturnObject } from "@Hooks/useSearchLogic"
 
 interface CustomSearchBarProps {
     searchState : SearchLogicReturnObject,
