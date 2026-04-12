@@ -10,7 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.caseysmarthubcl.app"
+      "bundleIdentifier": "com.caseysmarthubcl.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow Casey Smart Hub to use your location to show you on the map.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Casey Smart Hub to use your location to show you on the map."
+      }
     },
     "android": {
       "adaptiveIcon": {

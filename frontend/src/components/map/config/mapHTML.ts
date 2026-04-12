@@ -92,9 +92,9 @@ function buildMapHTML(): string {
           }).addTo(map);
           break;
 
-        case 'RECENTRE': 
+        case 'RECENTRE':
           if (userLocation) {
-            map.flyTo([userLocation.lat, userLocation.lng], 15); 
+            map.flyTo([userLocation.lat, userLocation.lng], 15);
           }
           break;
 
