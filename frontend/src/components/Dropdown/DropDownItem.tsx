@@ -1,28 +1,27 @@
-import React from "react";
-import { View, TouchableHighlight, StyleSheet, Text, Image } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo"
+import { Text, TouchableHighlight, View } from "react-native";
 
 export type ItemProps = {
   title: string
   value: string
-  isSelected?: boolean
-  onPressFunc?: Function
+  onPressFunc?: (value: string) => void   // Optional as it will often be set by the parent DropDown, not when created
+  isSelected?: boolean    // Optional as it will often be set by the parent Dropdown, not when created
   hideSeperator?: boolean
-}
+};
 
 export default function DropDownItem({
-  title = "{title}", 
+  title, 
   value, 
-  isSelected = false, 
   onPressFunc = () => {}, 
+  isSelected = false, 
   hideSeperator= false
 }: ItemProps) {
-
   return (
     <TouchableHighlight 
       onPress={() => onPressFunc(value)}
+      underlayColor="#747480"
     >
-      <View style={hideSeperator ? styles.buttonLast : styles.button}>
+      <View className={`flex-row justify-between bg-white p-[15] pl-[20] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
         <Text style={{fontSize: 17}}>
           {title} 
         </Text>
@@ -31,26 +30,3 @@ export default function DropDownItem({
     </TouchableHighlight>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    padding: 15,
-    paddingLeft: 20,
-    borderBottomColor: "black",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  buttonLast: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    padding: 15,
-    paddingLeft: 20,
-  },
-  checkImg: {
-    height: 22, 
-    width: 22, 
-  }
-});
