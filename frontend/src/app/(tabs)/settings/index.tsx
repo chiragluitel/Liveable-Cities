@@ -3,7 +3,7 @@ import DropDownItem from "@Components/Dropdown/DropDownItem";
 import SettingsGroup from "@Components/settings/SettingsGroup";
 import SettingsSubPage from "@Components/settings/SettingSubPage";
 import ToggleSetting from "@Components/settings/ToggleSetting";
-import { useRouter } from "expo-router";
+import { useRouter, Stack } from "expo-router";
 import { ScrollView, View, Text } from "react-native";
 
 export default function Settings() {
@@ -16,6 +16,8 @@ export default function Settings() {
           alignItems: "center"
         }}
       >
+        <Stack.Screen options={{headerShown: false}} />
+
         <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%]">
           Settings
         </Text>
