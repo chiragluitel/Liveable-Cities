@@ -21,7 +21,7 @@ export default function ProfilePage() {
         email={user.email}
       />
 
-      <ProfileActions onBack={() => router.back()} />
+      {/*<ProfileActions onBack={() => router.back()} />*/}
     </View>
   );
 };

@@ -33,16 +33,6 @@ export default function HomePage() {
             Stay tuned
           </Text>
         </View>
-
-        {/* go to profile page */}
-        <Pressable
-          className="bg-black mt-10 px-3 py-6 rounded-xl"
-          onPress={() => router.navigate("./profilePage")}
-        >
-          <Text className="text-white text-center font-semibold">
-            View Your Profile
-          </Text>
-        </Pressable>
       </View>
 
       <StatusBar style="dark" />
