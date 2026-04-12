@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Pressable } from "react-native";
 import {useRouter} from "expo-router";
+import { StatusBar } from "expo-status-bar"
 import HomeHeader from "../components/HomePage/HomeHeader";
 import FeatureCard from "../components/HomePage/FeatureCard";
 
@@ -43,7 +44,7 @@ export default function HomePage() {
                     </Text>
                 </Pressable>
             </View>
-
+            <StatusBar style="dark" />
        </View>
   );
 }
