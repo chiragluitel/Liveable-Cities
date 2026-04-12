@@ -16,7 +16,7 @@ export default function ToggleSetting({
   const [value, setValue] = useState(initialValue);
 
   return (
-    <View style={hideSeperator ? styles.settingRowNoSep : styles.settingRow}>
+    <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
       <TouchableHighlight
         onPress={() => setValue(!value)}
         style={{borderRadius: 10}}

@@ -14,27 +14,27 @@ export default function AlertBox({
   confirmFunc
 }: AlertBoxProps) {
   return (
-    <View style={styles.content}>
-      <View style={styles.textContent}>
+    <View className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" style={styles.contentShadow}>
+      <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-[#C7C7CC]">
         <Text style={{fontWeight: "bold", fontSize: 17}}>{title}</Text>
         <Text style={{fontSize: 13}}>{message}</Text>
       </View>
-      <View style={styles.buttonGroup}>
+      <View className="items-center w-full h-[40%] flex-row justify-evenly">
         <TouchableHighlight 
-          style={{width: "50%", borderBottomLeftRadius: 20}}
+          className="w-[50%] rounded-bl-[20]"
           onPress={() => cancelFunc()}
           underlayColor="#747480"
         >
-          <View style={[styles.button, styles.button1]}>
+          <View className="h-full justify-center bg-white rounded-bl-[20] border-r-hairline border-r-[#C7C7CC]">
             <Text style={{textAlign: "center", color: "#007BFE"}}>Cancel</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight 
-          style={{width: "50%", borderBottomRightRadius: 20}}
+          className="w-[50%] rounded-br-[20]"
           onPress={() => confirmFunc()}
           underlayColor="#747480"
         >
-          <View style={[styles.button, styles.button2]}>
+          <View className="h-full justify-center bg-white rounded-br-[20]">
             <Text style={{textAlign: "center", color: "#FF382B"}}>Confirm</Text>
           </View>
         </TouchableHighlight>
@@ -44,13 +44,7 @@ export default function AlertBox({
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    width: "60%",
-    height: "15%",
-    backgroundColor: "white",
-    borderRadius: 20,
+  contentShadow: {
     shadowColor: Platform.OS === "ios" ? "black" : "#0000007f", // Make shadow lighter on Android
     shadowOffset: {
       width: 5,
@@ -60,33 +54,4 @@ const styles = StyleSheet.create({
     shadowRadius: 9.8,
     elevation: 8,
   },
-  textContent: {
-    justifyContent: "center",
-    width: "100%",
-    height: "60%",
-    alignItems: "center",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#C7C7CC"
-  },
-  buttonGroup: {
-    alignItems: "center",
-    width: "100%",
-    height: "40%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    padding: 0
-  },
-  button: {
-    height: "100%",
-    justifyContent: "center",
-    backgroundColor: "white"
-  },
-  button1: {
-    borderRightWidth: StyleSheet.hairlineWidth, 
-    borderRightColor: "#C7C7CC",
-    borderBottomLeftRadius: 20
-  },
-  button2: {
-    borderBottomRightRadius: 20
-  }
 });

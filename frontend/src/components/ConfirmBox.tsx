@@ -12,18 +12,18 @@ export default function ConfirmBox({
   confirmFunc
 }: ConfirmBoxProps) {
   return (
-    <View style={styles.content}>
-      <View style={styles.textContent}>
+    <View className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" style={styles.contentShadow}>
+      <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-[#C7C7CC]">
         <Text style={{fontWeight: "bold", fontSize: 17}}>{title}</Text>
         <Text style={{fontSize: 13}}>{message}</Text>
       </View>
-      <View style={styles.buttonGroup}>
+      <View className="items-center w-full h-[40%]">
         <TouchableHighlight 
-          style={{width: "100%", borderBottomRightRadius: 20, borderBottomLeftRadius: 20}}
+          className="w-full rounded-b-[20]"
           onPress={() => confirmFunc()}
           underlayColor="#747480"
         >
-          <View style={styles.button}>
+          <View className="h-full justify-center bg-white rounded-b-[20]">
             <Text style={{textAlign: "center", color: "#007BFE"}}>Confirm</Text>
           </View>
         </TouchableHighlight>
@@ -33,13 +33,7 @@ export default function ConfirmBox({
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    width: "60%",
-    height: "15%",
-    backgroundColor: "white",
-    borderRadius: 20,
+  contentShadow: {
     shadowColor: Platform.OS === "ios" ? "black" : "#0000007f", // Make shadow lighter on Android
     shadowOffset: {
       width: 5,
@@ -49,27 +43,4 @@ const styles = StyleSheet.create({
     shadowRadius: 9.8,
     elevation: 8,
   },
-  textContent: {
-    justifyContent: "center",
-    width: "100%",
-    height: "60%",
-    alignItems: "center",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#C7C7CC"
-  },
-  buttonGroup: {
-    alignItems: "center",
-    width: "100%",
-    height: "40%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    padding: 0
-  },
-  button: {
-    height: "100%",
-    justifyContent: "center",
-    backgroundColor: "white",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20
-  }
 });
