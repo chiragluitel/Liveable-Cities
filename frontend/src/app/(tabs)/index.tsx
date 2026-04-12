@@ -20,23 +20,9 @@ export default function HomePage() {
             title="Smart Walk Planner"
             description="Plan your walks tailored to your needs"
             buttonText="Plan a Walk"
-            onPress={() => router.push('/(apps)/walkplanner')}
+            onPress={() => router.navigate('/walkplanner')}
           />
-
-          <FeatureCard
-            title="TESTING - custom-walk-selected"
-            description="Plan your walks tailored to your needs"
-            buttonText="Plan a Walk"
-            onPress={() => router.push('/custom-walk-selected')}
-          />
-
-          <FeatureCard
-            title="TESTING - walk-selected"
-            description="Plan your walks tailored to your needs"
-            buttonText="Plan a Walk"
-            onPress={() => router.push('/walk-selected')}
-          />
-
+          
           {/* Coming Soon Box */}
           <View className="mt-6 border border-dashed border-gray-400 rounded-2xl p-8 items-center">
             <Text className="text-gray-500 font-semibold">
