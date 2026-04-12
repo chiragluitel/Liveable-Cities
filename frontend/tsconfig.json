@@ -6,7 +6,7 @@
       "@/*": [
         "./*"
       ],
-      "@Assets/*": ["./assets/*"],
+      "@Assets/*": ["./src/assets/*"],
       "@Components/*": ["./src/components/*"]
     }
   },
