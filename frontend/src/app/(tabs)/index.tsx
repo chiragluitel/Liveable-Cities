@@ -1,9 +1,8 @@
-import React from "react";
-import { Text, View, Pressable } from "react-native";
 import {useRouter} from "expo-router";
 import { StatusBar } from "expo-status-bar"
-import HomeHeader from "@Components/HomePage/HomeHeader";
+import { Text, View } from "react-native";
 import FeatureCard from "@Components/HomePage/FeatureCard";
+import HomeHeader from "@Components/HomePage/HomeHeader";
 
 export default function HomePage() {
   const router = useRouter();

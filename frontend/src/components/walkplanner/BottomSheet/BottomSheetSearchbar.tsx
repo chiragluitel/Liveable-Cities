@@ -14,12 +14,13 @@ export const BottomSheetSearchBar = ({ searchState, onFocusAction, placeholder =
     const { query, handleTextChange, handleBlur, clearSearch } = searchState;
 
     return (
-        <View className="flex-row items-center bg-gray-200 dark:bg-gray-800 rounded-xl px-3 py-2 mx-4 h-11 mb-2">
+        <View className="flex-row items-center bg-gray-200 dark:bg-gray-800 rounded-xl px-3 mx-4 mb-2" style={{ height: 44 }}>
             <Search size={20} color={'#8E8E93'} className="mr-2" />
-            <BottomSheetTextInput 
+            <BottomSheetTextInput
                 // @ts-expect-error
-                ref={inputRef} 
-                className="flex-1 text-[17px] text-black dark:text-white ml-2 h-full"
+                ref={inputRef}
+                className="flex-1 ml-2"
+                style={{ color: '#000000', fontSize: 17, paddingVertical: 0 }}
                 placeholder={placeholder}
                 placeholderTextColor={"#8E8E93"}
                 value={query}

@@ -13,7 +13,7 @@ export default function RecentreButton({ onPress }: Props) {
 const styles = StyleSheet.create({
   btn: {
     position: 'absolute',
-    bottom: 32,
+    bottom: 120,
     left: 16,
     paddingVertical: 10,
     paddingHorizontal: 16,
