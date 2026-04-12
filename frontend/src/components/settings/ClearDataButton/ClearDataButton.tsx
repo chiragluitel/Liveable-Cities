@@ -1,7 +1,7 @@
 import AlertBox from "@Components/AlertBox";
 import ConfirmBox from "@Components/ConfirmBox";
 import { useState } from "react";
-import { Modal, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 export default function ClearDataButton() {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -16,7 +16,7 @@ export default function ClearDataButton() {
         onRequestClose={() => setAlertVisible(false)}
       >
         <TouchableOpacity 
-          style={styles.modalContainer}
+          className="flex-1 items-center justify-center"
           activeOpacity={1}
           onPressOut={() => setAlertVisible(false)}
         >
@@ -39,7 +39,7 @@ export default function ClearDataButton() {
         onRequestClose={() => setConfrimVisible(false)}
       >
         <TouchableOpacity 
-          style={styles.modalContainer}
+          className="flex-1 items-center justify-center"
           activeOpacity={1}
           onPressOut={() => setConfrimVisible(false)}
         >
@@ -53,44 +53,13 @@ export default function ClearDataButton() {
 
       <TouchableHighlight
         onPress={() => setAlertVisible(true)}
-        style={{borderRadius: 10}}
+        className="rounded-[10]"
         underlayColor="#747480"
         >
-        <View style={styles.button}>
+        <View className="bg-white rounded-[10] p-[15]">
           <Text style={{fontSize: 17, color: "#FF382B"}}>Clear All Data</Text>
         </View>
       </TouchableHighlight>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15
-  },
-  modalContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  content: {
-    justifyContent: "center",
-    width: "50%",
-    height: "20%",
-    backgroundColor: "white",
-    margin: 5,
-    borderRadius: 20,
-    shadowColor: Platform.OS === "ios" ? "black" : "#0000007f", // Make shadow lighter on Android
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.13,
-    shadowRadius: 9.8,
-    elevation: 8,
-  }
-});

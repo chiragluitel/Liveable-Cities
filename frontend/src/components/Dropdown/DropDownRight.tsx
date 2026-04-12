@@ -8,22 +8,10 @@ type DropDownProps = {
 
 export default function DropDownRight({selectedValue = "{value}"}: DropDownProps) {
   return (
-    <View style={styles.left}>
+    <View className="flex-row">
       <Text style={{fontSize: 17, color: "#8e8e93"}}>
         {selectedValue} <Ionicons name="chevron-expand" size={17} />
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  left: {
-    flexDirection: "row"
-  },
-  arrowImg: {
-    height: 19, 
-    width: 19, 
-    top: 3,
-    left: 6,
-  }
-});

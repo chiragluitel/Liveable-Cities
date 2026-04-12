@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { Text, TouchableHighlight, View } from "react-native";
 
 type SubPageProps = {
   title: string
@@ -16,13 +16,13 @@ export default function SettingsSubPage({
   const router = useRouter();
 
   return (
-    <View style={hideSeperator ? styles.settingRowNoSep : styles.settingRow}>
+    <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
       <TouchableHighlight
         onPress={() => navigateFunc()}
-        style={{borderRadius: 10}}
+        className="rounded-[10]"
         underlayColor="#747480"
       >
-        <View style={styles.button}>
+        <View className="flex-row justify-between bg-white rounded-[10] p-[15]">
           <Text style={{fontSize: 17}}>{title}</Text>
           <Ionicons name="chevron-forward" size={17} color="#8e8e93" />
         </View>
@@ -30,25 +30,3 @@ export default function SettingsSubPage({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  settingRow: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    borderBottomColor: "#c7c7cc",
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  settingRowNoSep: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-  },
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15
-  },
-});

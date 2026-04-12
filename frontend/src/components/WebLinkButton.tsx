@@ -1,4 +1,4 @@
-import { Linking, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { Linking, Text, TouchableHighlight, View } from "react-native";
 
 type WebLinkProps = {
   text: string

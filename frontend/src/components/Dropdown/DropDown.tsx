@@ -78,7 +78,7 @@ export default function DropDown({
   });
 
   return (
-    <View style={hideSeperator ? styles.settingRowNoSep : styles.settingRow}>
+    <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -86,7 +86,7 @@ export default function DropDown({
         onRequestClose={() => setModalVisible(false)}
       >
         <TouchableOpacity 
-          style={styles.modalContainer}
+          className="flex-1 items-center justify-center"
           activeOpacity={1}
           onPressOut={() => setModalVisible(false)}
         >
@@ -101,7 +101,8 @@ export default function DropDown({
               }}
             >
               <ScrollView 
-                style={styles.content}
+                className="bg-white m-[5] rounded-[20]"
+                style={styles.contentShadow}
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
               >
@@ -118,10 +119,10 @@ export default function DropDown({
             getButtonPos();
             setModalVisible(true);
         }} 
-        style={{borderRadius: 10}}
+        className="rounded-[20]"
         underlayColor="#747480"
       >
-        <View style={styles.button}>
+        <View className="flex-row justify-between bg-white rounded-[10] p-[15]">
           <Text style={{fontSize: 17}}>{title}</Text>
           <Text style={{fontSize: 17, color: "#8e8e93"}}>
             {selectedValue} <Ionicons name="chevron-expand" size={17} />
@@ -133,31 +134,7 @@ export default function DropDown({
 }
 
 const styles = StyleSheet.create({
-  settingRow: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    borderBottomColor: "#c7c7cc",
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  settingRowNoSep: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-  },
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15
-  },
-  modalContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  content: {
+  contentShadow: {
     backgroundColor: "white",
     margin: 5,
     borderRadius: 20,

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 type SettingsGroupProps = {
   title: string
@@ -8,28 +8,11 @@ type SettingsGroupProps = {
 
 export default function SettingsGroup({title="title", children}: SettingsGroupProps) {
   return (
-    <View style={styles.group}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.content}>
+    <View className="w-[90%] pb-[10]">
+      <Text className="text-sm text-[#8E8E93] p-[8]">{title}</Text>
+      <View className="w-full bg-white rounded-[10]">
         {children}
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  group: {
-    width: "90%",
-    paddingBottom: 10,
-  },
-  title: {
-    fontSize: 13,
-    color: "#8e8e93",
-    padding: 8,
-  },
-  content: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-  },
-});
