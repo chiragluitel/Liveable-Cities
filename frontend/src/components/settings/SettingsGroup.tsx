@@ -6,7 +6,7 @@ type SettingsGroupProps = {
   children: ReactNode
 };
 
-export default function SettingsGroup({title="title", children}: SettingsGroupProps) {
+export default function SettingsGroup({title, children}: SettingsGroupProps) {
   return (
     <View className="w-[90%] pb-[10]">
       <Text className="text-sm text-[#8E8E93] p-[8]">{title}</Text>

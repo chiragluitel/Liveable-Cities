@@ -3,16 +3,11 @@ import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-nati
 type AlertBoxProps = {
   title: string
   message: string
-  cancelFunc: Function
-  confirmFunc: Function
+  cancelFunc: () => void
+  confirmFunc: () => void
 };
 
-export default function AlertBox({
-  title = "{title}", 
-  message = "{message}", 
-  cancelFunc, 
-  confirmFunc
-}: AlertBoxProps) {
+export default function AlertBox({title, message, cancelFunc, confirmFunc}: AlertBoxProps) {
   return (
     <View 
       className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" 

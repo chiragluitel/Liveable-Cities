@@ -1,20 +1,13 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
-import { useRouter } from "expo-router";
 import { Text, TouchableHighlight, View } from "react-native";
 
 type SubPageProps = {
   title: string
-  navigateFunc: Function
+  navigateFunc: () => void
   hideSeperator?: boolean
 };
 
-export default function SettingsSubPage({
-  title = "{title}", 
-  navigateFunc,
-  hideSeperator = false, 
-}: SubPageProps) {
-  const router = useRouter();
-
+export default function SettingsSubPage({title, navigateFunc, hideSeperator = false}: SubPageProps) {
   return (
     <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
       <TouchableHighlight

@@ -3,7 +3,7 @@ import { Animated, Pressable, StyleSheet } from "react-native";
 
 type ToggleProps = {
   value: boolean,
-  onValueChange: Function
+  onValueChange: (value: boolean) => void
 };
 
 export default function SlideToggle({value, onValueChange}: ToggleProps) {

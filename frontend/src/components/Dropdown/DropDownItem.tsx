@@ -4,16 +4,16 @@ import { Text, TouchableHighlight, View } from "react-native";
 export type ItemProps = {
   title: string
   value: string
-  isSelected?: boolean
-  onPressFunc?: Function
+  onPressFunc?: (value: string) => void   // Optional as it will often be set by the parent DropDown, not when created
+  isSelected?: boolean    // Optional as it will often be set by the parent Dropdown, not when created
   hideSeperator?: boolean
 };
 
 export default function DropDownItem({
-  title = "{title}", 
+  title, 
   value, 
-  isSelected = false, 
   onPressFunc = () => {}, 
+  isSelected = false, 
   hideSeperator= false
 }: ItemProps) {
   return (

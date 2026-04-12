@@ -33,7 +33,7 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Theme">
-          <ToggleSetting title="Dark Theme" hideSeperator={true} />
+          <ToggleSetting title="Dark Theme" initialValue={false} hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Night Detection">
@@ -41,8 +41,8 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Accessibility">
-          <ToggleSetting title="Reduce Motion" />
-          <ToggleSetting title="Increase Contrast" hideSeperator={true} />
+          <ToggleSetting title="Reduce Motion" initialValue={false} />
+          <ToggleSetting title="Increase Contrast" initialValue={false} hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="About">

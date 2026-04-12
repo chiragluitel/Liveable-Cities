@@ -4,15 +4,11 @@ import { Text, TouchableHighlight, View } from "react-native";
 
 type ToggleProps = {
   title: string
-  initialValue?: boolean
+  initialValue: boolean
   hideSeperator?: boolean
 };
 
-export default function ToggleSetting({
-  title = "{title}", 
-  hideSeperator = false, 
-  initialValue = false, 
-}: ToggleProps) {
+export default function ToggleSetting({title, initialValue, hideSeperator = false}: ToggleProps) {
   const [value, setValue] = useState(initialValue);
 
   return (

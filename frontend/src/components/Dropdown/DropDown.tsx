@@ -5,7 +5,7 @@ import { ItemProps } from "./DropDownItem";
 
 type DropDownProps = {
   title: string
-  initialSelected?: string
+  initialSelected: string
   hideSeperator?: boolean
   children: ReactNode
 };
@@ -18,9 +18,9 @@ type Anchor = {
 };
 
 export default function DropDown({
-  title = "{title}", 
-  hideSeperator = false, 
+  title, 
   initialSelected, 
+  hideSeperator = false, 
   children
 }: DropDownProps) {
   const buttonRef = useRef<View | null>(null); 

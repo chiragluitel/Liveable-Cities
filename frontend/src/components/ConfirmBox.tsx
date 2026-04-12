@@ -3,14 +3,10 @@ import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-nati
 type ConfirmBoxProps = {
   title: string
   message: string
-  confirmFunc: Function
+  confirmFunc: () => void
 };
 
-export default function ConfirmBox({
-  title = "{title}", 
-  message = "{message}", 
-  confirmFunc
-}: ConfirmBoxProps) {
+export default function ConfirmBox({title, message, confirmFunc}: ConfirmBoxProps) {
   return (
     <View 
       className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" 
