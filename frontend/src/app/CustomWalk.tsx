@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Switch, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TextInput, Switch, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useWalks } from '../context/SavedCustomWalks';
 
 export default function WalkPlannerScreen() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  const { saveWalk, walks } = useWalks(); //Connects to global walks state
+
   // State initialization 
   const [distance, setDistance] = useState('');
   const [cuswalkname, setcuswalk] = useState('');
@@ -10,6 +17,44 @@ export default function WalkPlannerScreen() {
   const [hasPark, setHasPark] = useState(false);
   const [hasPlayground, setHasPlayground] = useState(false);
   const [hasWellLitStreets, setHasWellLitStreets] = useState(false);
+  const [hasRubbishBin, setHasRubbishBin] = useState(false)
+  const [hasOffLeash, setHasOffLeash] = useState(false)
+
+  //__WARNING BELOW until warning again is AI generated as i got stuck here______________
+  // If routing parameters contain an 'id', we are editing. Hydrate the local state.
+  useEffect(() => {
+    if (params.id) {
+      const existingWalk = walks.find((w: any) => w.id === params.id);
+      if (existingWalk) {
+        setcuswalk(existingWalk.cuswalkname);
+        setDistance(existingWalk.distance);
+        setHasWaterFountain(existingWalk.hasWaterFountain);
+        setHasDisabledToilets(existingWalk.hasDisabledToilets);
+        setHasPark(existingWalk.hasPark);
+        setHasPlayground(existingWalk.hasPlayground);
+        setHasWellLitStreets(existingWalk.hasWellLitStreets);
+      }
+    }
+  }, [params.id, walks]);
+
+  const handleSave = () => {
+    // Package all state variables into a single data object
+    const walkData = {
+      id: params.id, // Will be undefined if creating a new walk
+      cuswalkname,
+      distance,
+      hasWaterFountain,
+      hasDisabledToilets,
+      hasPark,
+      hasPlayground,
+      hasWellLitStreets,
+    };
+    
+    saveWalk(walkData); // Push object to global memory
+    router.back(); // Navigate back to the dashboard
+  };
+
+  //WARNING AI generated unit here _________________________________________________
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -22,8 +67,7 @@ export default function WalkPlannerScreen() {
           <TextInput
             style={styles.textInput}
             value={cuswalkname}
-            onChangeText={setDistance}
-            keyboardType="numeric"
+            onChangeText={setcuswalk}
             placeholder="Park Walk"
           />
         </View>
@@ -48,6 +92,8 @@ export default function WalkPlannerScreen() {
           <Switch value={hasWaterFountain} onValueChange={setHasWaterFountain} />
         </View>
 
+        
+
         {/* Disabled Toilets Filter */}
         <View style={styles.switchContainer}>
           <Text style={styles.switchLabel}>Disabled Toilets</Text>
@@ -66,16 +112,31 @@ export default function WalkPlannerScreen() {
           <Switch value={hasPlayground} onValueChange={setHasPlayground} />
         </View>
 
-        {/* Well Lit Streets Filter */}
+        {/* Rubish Bins */}
         <View style={styles.switchContainer}>
-          <Text style={styles.switchLabel}>Well Lit Streets</Text>
-          <Switch value={hasWellLitStreets} onValueChange={setHasWellLitStreets} />
+          <Text style={styles.switchLabel}>Rubbish Bins</Text>
+          <Switch value={hasRubbishBin} onValueChange={setHasRubbishBin} />
         </View>
 
-        {/* Saving the walk button*/}
-        <View
+        {/* Off leash Dog Zones */}
+        <View style={styles.switchContainer}>
+          <Text style={styles.switchLabel}>Off Leash Zones</Text>
+          <Switch value={hasOffLeash} onValueChange={setHasOffLeash} />
+        </View>
 
+
+
+        
+
+        {/* Saving the walk button*/}
+                
+        
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+            <Ionicons name="save" size={24} color="#FFF" />
+            <Text style={styles.saveButtonText}>Save Custom Walk</Text>
+        </TouchableOpacity>
       </ScrollView>
+
     </SafeAreaView>
   );
 }
@@ -132,10 +193,39 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
-    elevation: 2, // Shadow equivalent for Android
+    elevation: 2, 
   },
   switchLabel: {
     fontSize: 17,
     color: '#000',
   },
+  addButton: {
+    flexDirection: 'row',
+    backgroundColor: '#208b00', 
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
+
+  saveButton: { flexDirection: 'row', 
+    backgroundColor: '#208b00',
+    padding: 16, 
+    borderRadius: 12, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    marginTop: 20, 
+    marginBottom: 40 },
+
+  saveButtonText: { color: '#FFF', 
+    fontSize: 18, 
+    fontWeight: '600', 
+    marginLeft: 8 },
 });
