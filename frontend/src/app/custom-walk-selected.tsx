@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Ionicons, MaterialIcons, Feather } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 export default function CustomWalkSelected() {
   const [expanded, setExpanded] = useState(false);
@@ -17,6 +17,8 @@ export default function CustomWalkSelected() {
     console.log(`${place} pressed`);
   };
 
+  // AI-assisted: basic bottom sheet expand/collapse interaction,
+  // then adjusted manually for this custom walk screen.
   const toggleSheet = () => {
     setExpanded((prev) => !prev);
   };
@@ -33,7 +35,9 @@ export default function CustomWalkSelected() {
               <Text style={styles.backText}>Create a Custom Walk</Text>
             </Pressable>
 
-            {!expanded && <Text style={styles.screenTitle}>Your Custom Walk</Text>}
+            {!expanded && (
+              <Text style={styles.screenTitle}>Your Custom Walk</Text>
+            )}
           </View>
 
           <View style={[styles.mapPlaceholder, expanded && styles.mapExpanded]}>
@@ -43,8 +47,13 @@ export default function CustomWalkSelected() {
               <Pressable style={styles.mapIconButton}>
                 <MaterialIcons name="map" size={22} color="#6b6b6b" />
               </Pressable>
+
               <Pressable style={styles.mapIconButton}>
-                <Ionicons name="paper-plane-outline" size={20} color="#6b6b6b" />
+                <Ionicons
+                  name="paper-plane-outline"
+                  size={20}
+                  color="#6b6b6b"
+                />
               </Pressable>
             </View>
 
@@ -53,6 +62,7 @@ export default function CustomWalkSelected() {
               <Ionicons name="close" size={14} color="#777" />
             </View>
 
+            {/* AI-assisted placeholder map markers and route shape for UI demo */}
             <View style={styles.routeOutline} />
             <View style={[styles.mapPin, styles.redPin]} />
             <View style={[styles.mapPin, styles.bluePin]} />
@@ -80,6 +90,7 @@ export default function CustomWalkSelected() {
                   <Pressable style={styles.circleIconButton}>
                     <Feather name="share" size={20} color="#8a8a8a" />
                   </Pressable>
+
                   <Pressable style={styles.circleIconButton}>
                     <Ionicons name="close" size={22} color="#8a8a8a" />
                   </Pressable>
@@ -87,7 +98,8 @@ export default function CustomWalkSelected() {
               </View>
 
               <Text style={styles.walkMeta}>
-                <Text style={styles.blueText}>3.8 km, 40 mins</Text> .Easy
+                <Text style={styles.blueText}>3.8 km, 40 mins</Text>
+                .Easy
               </Text>
 
               <View style={styles.actionRow}>
@@ -106,7 +118,11 @@ export default function CustomWalkSelected() {
                 </Pressable>
 
                 <Pressable style={styles.secondaryAction}>
-                  <Ionicons name="ellipsis-horizontal" size={20} color="#111" />
+                  <Ionicons
+                    name="ellipsis-horizontal"
+                    size={20}
+                    color="#111"
+                  />
                   <Text style={styles.secondaryActionText}>More</Text>
                 </Pressable>
               </View>
@@ -123,9 +139,11 @@ export default function CustomWalkSelected() {
                 <View style={styles.darkTag}>
                   <Text style={styles.darkTagText}>Well-Lit 💡</Text>
                 </View>
+
                 <View style={styles.lightTag}>
                   <Text style={styles.lightTagText}>Quieter Route 🌙</Text>
                 </View>
+
                 <View style={styles.darkTag}>
                   <Text style={styles.darkTagText}>Accessible</Text>
                 </View>
@@ -139,7 +157,9 @@ export default function CustomWalkSelected() {
                     style={styles.nearbyButton}
                     onPress={() => handleNearbyPress("Public Toilets")}
                   >
-                    <View style={[styles.nearbyIconCircle, styles.purpleCircle]}>
+                    <View
+                      style={[styles.nearbyIconCircle, styles.purpleCircle]}
+                    >
                       <MaterialIcons name="wc" size={28} color="#111" />
                     </View>
                     <Text style={styles.nearbyLabel}>Public Toilets</Text>
@@ -160,7 +180,11 @@ export default function CustomWalkSelected() {
                     onPress={() => handleNearbyPress("Rest Areas")}
                   >
                     <View style={[styles.nearbyIconCircle, styles.grayCircle]}>
-                      <MaterialIcons name="event-seat" size={24} color="#111" />
+                      <MaterialIcons
+                        name="event-seat"
+                        size={24}
+                        color="#111"
+                      />
                     </View>
                     <Text style={styles.nearbyLabel}>Rest Areas</Text>
                   </Pressable>
@@ -189,7 +213,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     backgroundColor: "#ffffff",
-    paddingTop: 18,
+    paddingTop: 30,
     paddingHorizontal: 20,
     paddingBottom: 8,
   },

@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Ionicons, MaterialIcons, Feather } from "@expo/vector-icons";
+import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 export default function WalkSelected() {
   const [expanded, setExpanded] = useState(false);
@@ -17,6 +17,8 @@ export default function WalkSelected() {
     console.log(`${place} pressed`);
   };
 
+  // AI-assisted: basic bottom sheet expand/collapse interaction,
+  // then adjusted manually for this screen layout.
   const toggleSheet = () => {
     setExpanded((prev) => !prev);
   };
@@ -43,8 +45,13 @@ export default function WalkSelected() {
               <Pressable style={styles.mapIconButton}>
                 <MaterialIcons name="map" size={22} color="#6b6b6b" />
               </Pressable>
+
               <Pressable style={styles.mapIconButton}>
-                <Ionicons name="paper-plane-outline" size={20} color="#6b6b6b" />
+                <Ionicons
+                  name="paper-plane-outline"
+                  size={20}
+                  color="#6b6b6b"
+                />
               </Pressable>
             </View>
 
@@ -53,6 +60,7 @@ export default function WalkSelected() {
               <Ionicons name="close" size={14} color="#777" />
             </View>
 
+            {/* AI-assisted placeholder map markers and route shape for UI demo */}
             <View style={styles.routeOutline} />
             <View style={[styles.mapPin, styles.redPin]} />
             <View style={[styles.mapPin, styles.bluePin]} />
@@ -80,6 +88,7 @@ export default function WalkSelected() {
                   <Pressable style={styles.circleIconButton}>
                     <Feather name="share" size={20} color="#8a8a8a" />
                   </Pressable>
+
                   <Pressable style={styles.circleIconButton}>
                     <Ionicons name="close" size={22} color="#8a8a8a" />
                   </Pressable>
@@ -87,7 +96,9 @@ export default function WalkSelected() {
               </View>
 
               <Text style={styles.walkMeta}>
-                4.8 ⭐ <Text style={styles.blueText}>· 3.8 km, 40 mins</Text> .Easy
+                4.8 ⭐
+                <Text style={styles.blueText}> · 3.8 km, 40 mins</Text>
+                .Easy
               </Text>
 
               <View style={styles.actionRow}>
@@ -106,7 +117,11 @@ export default function WalkSelected() {
                 </Pressable>
 
                 <Pressable style={styles.secondaryAction}>
-                  <Ionicons name="ellipsis-horizontal" size={20} color="#111" />
+                  <Ionicons
+                    name="ellipsis-horizontal"
+                    size={20}
+                    color="#111"
+                  />
                   <Text style={styles.secondaryActionText}>More</Text>
                 </Pressable>
               </View>
@@ -115,9 +130,11 @@ export default function WalkSelected() {
                 <View style={styles.galleryImage}>
                   <Text style={styles.galleryText}>Image 1</Text>
                 </View>
+
                 <View style={styles.galleryImage}>
                   <Text style={styles.galleryText}>Image 2</Text>
                 </View>
+
                 <View style={styles.galleryImageNarrow}>
                   <Text style={styles.galleryText}>Image 3</Text>
                 </View>
@@ -127,17 +144,19 @@ export default function WalkSelected() {
                 <>
                   <Text style={styles.sectionHeading}>About</Text>
                   <Text style={styles.aboutText}>
-                    A calm scenic walk with paved paths, shaded areas, and nearby
-                    community facilities
+                    A calm scenic walk with paved paths, shaded areas, and
+                    nearby community facilities
                   </Text>
 
                   <View style={styles.tagRow}>
                     <View style={styles.darkTag}>
                       <Text style={styles.darkTagText}>Well-Lit 💡</Text>
                     </View>
+
                     <View style={styles.lightTag}>
                       <Text style={styles.lightTagText}>Quieter Route 🌙</Text>
                     </View>
+
                     <View style={styles.darkTag}>
                       <Text style={styles.darkTagText}>Accessible</Text>
                     </View>
@@ -149,7 +168,9 @@ export default function WalkSelected() {
                     style={styles.nearbyButton}
                     onPress={() => handleNearbyPress("Public Toilets")}
                   >
-                    <View style={[styles.nearbyIconCircle, styles.purpleCircle]}>
+                    <View
+                      style={[styles.nearbyIconCircle, styles.purpleCircle]}
+                    >
                       <MaterialIcons name="wc" size={28} color="#111" />
                     </View>
                     <Text style={styles.nearbyLabel}>Public Toilets</Text>
@@ -170,7 +191,11 @@ export default function WalkSelected() {
                     onPress={() => handleNearbyPress("Rest Areas")}
                   >
                     <View style={[styles.nearbyIconCircle, styles.grayCircle]}>
-                      <MaterialIcons name="event-seat" size={24} color="#111" />
+                      <MaterialIcons
+                        name="event-seat"
+                        size={24}
+                        color="#111"
+                      />
                     </View>
                     <Text style={styles.nearbyLabel}>Rest Areas</Text>
                   </Pressable>
@@ -199,7 +224,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     backgroundColor: "#ffffff",
-    paddingTop: 18,
+    paddingTop: 30,
     paddingHorizontal: 20,
     paddingBottom: 8,
   },
