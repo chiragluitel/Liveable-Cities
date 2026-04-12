@@ -185,7 +185,7 @@ export const NEARBY_AMENITIES: Amenity[] = [
     {
     id: 'a7',
     name: 'Grebe Park',
-    type: 'Grass Park',
+    type: 'Scenic Amenities',
     distanceM: 1300,
     
   },
@@ -198,19 +198,19 @@ export const NEARBY_AMENITIES: Amenity[] = [
     {
     id: 'a9',
     name: 'Grebe Park',
-    type: 'Grass Park',
+    type: 'Sports Facilities',
     distanceM: 1300
   },
     {
     id: 'a10',
     name: 'Grebe Park',
-    type: 'Grass Park',
+    type: 'Scenic Amenities',
     distanceM: 1300
   },
     {
     id: 'a11',
     name: 'Grebe Park',
-    type: 'Grass Park',
+    type: 'Sports Facilities',
     distanceM: 1300
   },
 ];
