@@ -44,6 +44,7 @@ export default function HomePage() {
           </Text>
         </Pressable>
       </View>
+
       <StatusBar style="dark" />
     </View>
   );
