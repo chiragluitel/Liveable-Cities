@@ -1,6 +1,6 @@
 import {useRouter} from "expo-router";
 import { StatusBar } from "expo-status-bar"
-import { Text, View } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import FeatureCard from "@Components/HomePage/FeatureCard";
 import HomeHeader from "@Components/HomePage/HomeHeader";
 
@@ -12,27 +12,43 @@ export default function HomePage() {
       {/* header */}
       <HomeHeader />
 
-      {/* content */}
-      <View className="gap-y-4">
-        {/* walk planner app */}
-        <FeatureCard
-          title="Smart Walk Planner"
-          description="Plan your walks tailored to your needs"
-          buttonText="Plan a Walk"
-          onPress={() => console.log("Navigate to walk planner")}
-        />
+      <ScrollView>
+        {/* content */}
+        <View className="gap-y-4 pb-[20]">
+          {/* walk planner app */}
+          <FeatureCard
+            title="Smart Walk Planner"
+            description="Plan your walks tailored to your needs"
+            buttonText="Plan a Walk"
+            onPress={() => router.push('/(apps)/walkplanner')}
+          />
 
-        {/* Coming Soon Box */}
-        <View className="mt-6 border border-dashed border-gray-400 rounded-2xl p-8 items-center">
-          <Text className="text-gray-500 font-semibold">
-            More features coming soon
-          </Text>
+          <FeatureCard
+            title="TESTING - custom-walk-selected"
+            description="Plan your walks tailored to your needs"
+            buttonText="Plan a Walk"
+            onPress={() => router.push('/custom-walk-selected')}
+          />
 
-          <Text className="text-gray-400 text-sm mt-1">
-            Stay tuned
-          </Text>
+          <FeatureCard
+            title="TESTING - walk-selected"
+            description="Plan your walks tailored to your needs"
+            buttonText="Plan a Walk"
+            onPress={() => router.push('/walk-selected')}
+          />
+
+          {/* Coming Soon Box */}
+          <View className="mt-6 border border-dashed border-gray-400 rounded-2xl p-8 items-center">
+            <Text className="text-gray-500 font-semibold">
+              More features coming soon
+            </Text>
+
+            <Text className="text-gray-400 text-sm mt-1">
+              Stay tuned
+            </Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
       <StatusBar style="dark" />
     </View>
