@@ -119,7 +119,7 @@ export default function DropDown({
             getButtonPos();
             setModalVisible(true);
         }} 
-        className="rounded-[20]"
+        className="rounded-[10]"
         underlayColor="#747480"
       >
         <View className="flex-row justify-between bg-white rounded-[10] p-[15]">
