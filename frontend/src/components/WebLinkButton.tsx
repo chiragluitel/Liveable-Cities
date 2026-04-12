@@ -18,19 +18,9 @@ export default function WebLinkButton({text = "{text}", link = "https://github.c
       style={{borderRadius: 10}}
       underlayColor="#747480"
     >
-      <View style={styles.button}>
+      <View className="bg-white rounded-[10] p-[15]">
         <Text style={{fontSize: 17, color: "#007BFE"}}>{text}</Text>
       </View>
     </TouchableHighlight>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15
-  },
-});

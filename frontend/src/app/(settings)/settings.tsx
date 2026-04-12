@@ -4,24 +4,19 @@ import SettingsGroup from "@Components/settings/SettingsGroup";
 import SettingsSubPage from "@Components/settings/SettingSubPage";
 import ToggleSetting from "@Components/settings/ToggleSetting";
 import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 
 export default function Settings() {
   const router = useRouter();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        width: "100%",
-      }}
-    >
+    <View className="flex-1 w-full">
       <ScrollView
         contentContainerStyle={{
           alignItems: "center"
         }}
       >
-        <Text style={styles.title} >
+        <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%]">
           Settings
         </Text>
 
@@ -58,13 +53,3 @@ export default function Settings() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 34,
-    fontWeight: "bold",
-    width: "100%",
-    marginTop: "20%",
-    marginLeft: "10%"
-  }
-});

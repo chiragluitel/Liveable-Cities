@@ -29,26 +29,15 @@ export default function SlideToggle({value, onValueChange}: ToggleProps) {
 
   return (
     <Pressable onPress={() => onValueChange(!value)}>
-      <Animated.View style={[styles.track, {backgroundColor}]}>
-        <Animated.View style={[styles.knob, { transform: [{translateX}]}]} />
+      <Animated.View className="w-[36] h-[22] rounded-[15] justify-center" style={{backgroundColor}}>
+        <Animated.View className="w-[18] h-[18] rounded-[13] bg-white absolute" style={[styles.shadow, { transform: [{translateX}]}]} />
       </Animated.View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  track: {
-    width: 36,
-    height: 22,
-    borderRadius: 15,
-    justifyContent: "center",
-  },
-  knob: {
-    width: 18,
-    height: 18,
-    borderRadius: 13,
-    backgroundColor: "white",
-    position: "absolute",
+    shadow: {
     shadowColor: "black",
     shadowOffset: {
       width: 0,

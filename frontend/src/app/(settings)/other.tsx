@@ -5,12 +5,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Information() {
   return (
-    <View
-      style={{
-        flex: 1,
-        width: "100%"
-      }}
-    >
+    <View className="flex-1 w-full">
       <ScrollView
         contentContainerStyle={{
           alignItems: "center"
@@ -22,7 +17,7 @@ export default function Information() {
         }} />
 
         <SettingsGroup title="Privacy Notice">
-          <View style={styles.textSectionLast}>
+          <View className="w-full bg-white rounded-[10] p-[15]">
             <Text style={{fontSize: 17}}>
               We follow the 13 APPs.
             </Text>
@@ -30,7 +25,7 @@ export default function Information() {
         </SettingsGroup>
 
         <SettingsGroup title="Version Information">
-          <View style={styles.textSectionLast}>
+          <View className="w-full bg-white rounded-[10] p-[15]">
             <Text style={{fontSize: 17}}>
               Version 0.0.1
             </Text>
@@ -44,22 +39,3 @@ export default function Information() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  textSection: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 15,
-    borderBottomColor: "#c7c7cc",
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  textSectionLast: {
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15
-  }
-});
