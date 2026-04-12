@@ -14,7 +14,10 @@ export default function AlertBox({
   confirmFunc
 }: AlertBoxProps) {
   return (
-    <View className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" style={styles.contentShadow}>
+    <View 
+      className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" 
+      style={styles.contentShadow}
+    >
       <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-[#C7C7CC]">
         <Text style={{fontWeight: "bold", fontSize: 17}}>{title}</Text>
         <Text style={{fontSize: 13}}>{message}</Text>

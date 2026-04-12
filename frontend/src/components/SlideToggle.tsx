@@ -29,8 +29,14 @@ export default function SlideToggle({value, onValueChange}: ToggleProps) {
 
   return (
     <Pressable onPress={() => onValueChange(!value)}>
-      <Animated.View className="w-[36] h-[22] rounded-[15] justify-center" style={{backgroundColor}}>
-        <Animated.View className="w-[18] h-[18] rounded-[13] bg-white absolute" style={[styles.shadow, { transform: [{translateX}]}]} />
+      <Animated.View 
+        className="w-[36] h-[22] rounded-[15] justify-center" 
+        style={{backgroundColor}}
+      >
+        <Animated.View 
+          className="w-[18] h-[18] rounded-[13] bg-white absolute" 
+          style={[styles.shadow, { transform: [{translateX}]}]} 
+        />
       </Animated.View>
     </Pressable>
   );

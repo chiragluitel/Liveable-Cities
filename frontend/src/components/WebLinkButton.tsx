@@ -5,7 +5,10 @@ type WebLinkProps = {
   link: string
 };
 
-export default function WebLinkButton({text = "{text}", link = "https://github.com/chiragluitel/Liveable-Cities"}: WebLinkProps) {
+export default function WebLinkButton({
+  text = "{text}", 
+  link = "https://github.com/chiragluitel/Liveable-Cities"
+}: WebLinkProps) {
   function openLink() {
     Linking.canOpenURL(link).then(() => {
       Linking.openURL(link);
