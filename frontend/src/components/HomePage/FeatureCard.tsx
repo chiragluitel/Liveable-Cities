@@ -28,7 +28,7 @@ const FeatureCard = ({
                     className="mt-4 self-start bg-white px-4 py-2 rounded-full"
                 >
                     <Text className="text-black font-semibold">
-                        {buttonText} ->
+                        {buttonText} -&gt;
                     </Text>
                 </Pressable>
 

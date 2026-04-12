@@ -36,7 +36,7 @@ export default function HomePage() {
                 {/* go to profile page */}
                 <Pressable
                     className="bg-black mt-10 px-3 py-6 rounded-xl"
-                    onPress={() => router.push("/profilePage")}
+                    onPress={() => router.navigate("./profilePage")}
                 >
                     <Text className="text-white text-center font-semibold">
                         View Your Profile
