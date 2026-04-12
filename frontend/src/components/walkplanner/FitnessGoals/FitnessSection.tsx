@@ -1,10 +1,9 @@
 import { Text, View, useWindowDimensions } from "react-native";
 import { FitnessGoal } from "@/src/types/TypesForWalkPlanner";
 import { ClickableHeader } from "../../shared/ClickableHeader";
-import { HorizontalCarousel } from "../../shared/HorizontalCarousel";
-import { ProgressBar } from "./ProgressBar";
 import { GoalCard } from "./GoalCard";
 import { FITNESS_GOALS } from "@/src/database/MockDB";
+import { ProgressBar } from "./ProgressBar";
 
 interface FitnessSectionProps {
   goals: FitnessGoal[];
