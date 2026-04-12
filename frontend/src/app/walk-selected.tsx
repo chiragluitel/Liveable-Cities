@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import CaseyMap from "@/src/components/map/CaseyMap";
 
 export default function WalkSelected() {
   const [expanded, setExpanded] = useState(false);
@@ -38,33 +39,9 @@ export default function WalkSelected() {
             {!expanded && <Text style={styles.screenTitle}>Walk Selected</Text>}
           </View>
 
-          <View style={[styles.mapPlaceholder, expanded && styles.mapExpanded]}>
-            <Text style={styles.mapText}>Map Placeholder</Text>
-
-            <View style={styles.mapFloatingButtons}>
-              <Pressable style={styles.mapIconButton}>
-                <MaterialIcons name="map" size={22} color="#6b6b6b" />
-              </Pressable>
-
-              <Pressable style={styles.mapIconButton}>
-                <Ionicons
-                  name="paper-plane-outline"
-                  size={20}
-                  color="#6b6b6b"
-                />
-              </Pressable>
-            </View>
-
-            <View style={styles.userLocationBubble}>
-              <Text style={styles.userLocationText}>User location</Text>
-              <Ionicons name="close" size={14} color="#777" />
-            </View>
-
-            {/* AI-assisted placeholder map markers and route shape for UI demo */}
-            <View style={styles.routeOutline} />
-            <View style={[styles.mapPin, styles.redPin]} />
-            <View style={[styles.mapPin, styles.bluePin]} />
-            <View style={[styles.mapPin, styles.greenPin]} />
+          {/* Map takes up the full screen behind the bottom sheet */}
+          <View className="absolute inset-0">
+            <CaseyMap />
           </View>
 
           <View
