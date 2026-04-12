@@ -8,7 +8,7 @@ interface FourButtonProps {
 
 export const FourButton = ({ button }: FourButtonProps) => {
     return (
-        <View className="flex-row flex-wrap justify-between px-4">
+        <View className="flex-row flex-wrap justify-between px-4 pt-10">
             {button.map((item, index) => (
                 <View 
                     key={item.label} 
