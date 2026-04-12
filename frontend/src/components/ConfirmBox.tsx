@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
-type AlertBoxProps = {
+type ConfirmBoxProps = {
   title: string
   message: string
   confirmFunc: Function
@@ -10,7 +10,7 @@ export default function ConfirmBox({
   title = "{title}", 
   message = "{message}", 
   confirmFunc
-}: AlertBoxProps) {
+}: ConfirmBoxProps) {
   return (
     <View style={styles.content}>
       <View style={styles.textContent}>
