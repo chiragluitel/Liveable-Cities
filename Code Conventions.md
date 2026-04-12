@@ -87,44 +87,27 @@ Since this project will be primarily using React Native, TypeScript will be the 
 The React Native project folder structure of this project will be as follows:
 ```
 MyApp
-├── api
-│   ├── twitter.js
-│   ├── facebook.js
-│   └── instagram.js
-├── assets
-│   ├── app-icon.png
-│   └── splash-screen.png
-├── hooks
-│   ├── useInterval.js
-│   └── useLogin.js
-├── theme
-│   ├── colors.js
-│   ├── textStyles.js
-│   └── spacing.js
-├── utils
-│   ├── generateUuid.js
-│   └── formatCurrency.js
-├── components
-│   ├── buttons
-│   │   ├── RoundButton.js
-│   │   └── SquareButton.js
-│   ├── cards
-│   │   ├── ArticleCard.js
-│   │   ├── ImageCard.js
-│   │   └── VideoCard.js
-│   ├── Avatar.js
-│   └── List.js
-├── screens
-│   ├── Feed.js
-│   ├── Search.js
-│   ├── Post.js
-│   ├── Reply.js
-│   ├── Profile.js
-│   └── Settings.js
-├── navigation
-│   ├── RootStackNavigator.js
-│   └── ProfileTabNavigator.js
-└── App.js
+└── src
+    ├── app
+    │   ├── (tabs)
+    │   ├── _layout.tsx
+    │   └── index.tsx
+    ├── assets
+    │   ├── fonts
+    │   └── images
+    ├── components
+    │   ├── Dropdown
+    │   │   ├── Dropdown.tsx
+    │   │   └── DropdownItem.tsx
+    │   ├── settings
+    │   │   ├── ToggleSetting.tsx
+    │   └── AlertBox.tsx
+    ├── hooks
+    │   ├── useInterval.ts
+    │   └── useLogin.ts
+    └── theme
+        ├── colours.ts
+        └── textStyles.ts
 ```
 > File names shows are examples. <br>
 > Only project development files and folders are shown
