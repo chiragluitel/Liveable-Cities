@@ -1,5 +1,6 @@
-import { navigate } from "expo-router/build/global-state/routing";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import DropDown from "@/src/components/Dropdown/DropDown";
+import DropDownItem from "@/src/components/Dropdown/DropDownItem";
 
 export default function Index() {
   return (
@@ -10,14 +11,11 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-<Pressable 
-  className="bg-blue-600 px-6  py-4 rounded-2xl  items-center  justify-center shadow-lg cursor-pointer"
-  onPress={() => navigate('/(apps)/walkplanner')}
->
-  <Text className="text-white text-xl font-bold">
-    Get To Walk Planner
-  </Text>
-</Pressable>
+      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <DropDown title="Test" initialSelected="item1" hideSeperator={true}>
+        <DropDownItem title="Item 1" value="item1"/>
+        <DropDownItem title="Item 2" value="item2" hideSeperator={true} />
+      </DropDown>
     </View>
   );
 }
