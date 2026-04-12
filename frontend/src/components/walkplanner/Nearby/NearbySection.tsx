@@ -1,8 +1,8 @@
 import { Amenity } from '@/src/types/TypesForWalkPlanner';
 import React from 'react';
 import { View, useWindowDimensions } from 'react-native';
-import { ClickableHeader } from '../../shared/ClickableHeader';
-import { HorizontalCarousel } from '../../shared/HorizontalCarousel';
+import { ClickableHeader } from '@Components/shared/ClickableHeader';
+import { HorizontalCarousel } from '@Components/shared/HorizontalCarousel';
 import { NearbyCard } from './NearbyCard';
 
 interface NearbySectionProps {

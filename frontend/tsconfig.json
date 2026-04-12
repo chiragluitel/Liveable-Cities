@@ -7,7 +7,9 @@
         "./*"
       ],
       "@Assets/*": ["./src/assets/*"],
-      "@Components/*": ["./src/components/*"]
+      "@Components/*": ["./src/components/*"],
+      "@Hooks/*": ["./src/hooks/*"],
+      "@Types/*": ["./src/ypes/*"],
     }
   },
   "include": [

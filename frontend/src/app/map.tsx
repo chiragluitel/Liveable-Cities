@@ -2,7 +2,7 @@
 
 import { View } from 'react-native';
 import { Stack } from 'expo-router';
-import CaseyMap from '../components/map/CaseyMap';
+import CaseyMap from '@Components/map/CaseyMap';
 
 export default function Index() {
 	return (
