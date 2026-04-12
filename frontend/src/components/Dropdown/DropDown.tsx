@@ -23,8 +23,7 @@ export default function DropDown({
   initialSelected, 
   children
 }: DropDownProps) {
-  //@ts-ignore
-  const buttonRef = useRef<TouchableHighlight | null>(null); 
+  const buttonRef = useRef<View | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
@@ -114,7 +113,6 @@ export default function DropDown({
       </Modal>
 
       <TouchableHighlight 
-        ref={buttonRef}
         onPress={() => {
             getButtonPos();
             setModalVisible(true);
@@ -122,7 +120,10 @@ export default function DropDown({
         className="rounded-[10]"
         underlayColor="#747480"
       >
-        <View className="flex-row justify-between bg-white rounded-[10] p-[15]">
+        <View 
+          className="flex-row justify-between bg-white rounded-[10] p-[15]" 
+          ref={buttonRef}
+        >
           <Text style={{fontSize: 17}}>{title}</Text>
           <Text style={{fontSize: 17, color: "#8e8e93"}}>
             {selectedValue} <Ionicons name="chevron-expand" size={17} />
