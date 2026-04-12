@@ -46,3 +46,12 @@ export interface FilterOption {
   label: string;
   type: AmenityType;
 }
+
+export interface Places {
+  id: string,
+  title: string, 
+  streetAddress: string, 
+  suburb: string,
+  state: string,
+  country: string
+}

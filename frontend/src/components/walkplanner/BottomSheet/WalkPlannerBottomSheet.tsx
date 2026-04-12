@@ -6,6 +6,7 @@ import { BottomSheetSearchBar } from './BottomSheetSearchbar';
 import { WalkPlannerSheetContent } from './WalkPlannerSheetContent';
 import { SearchLogicReturnObject } from '@/src/hooks/useSearchLogic';
 import { useWalkPlannerSheet } from '@/src/hooks/useWalkPlannerSheet';
+import { SearchResultsContent } from './SearchResultContent';
 
 interface WalkPlannerSheetProps {
     searchState: SearchLogicReturnObject;
@@ -43,6 +44,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         }
     }, [killSearchFocus]);
 
+    const isSearchActive = searchState.query.trim().length > 0;
+
     return (
         <BottomSheet
             ref={sheetRef}
@@ -50,11 +53,10 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
             keyboardBehavior="interactive"
-            topInset={insets.top + 10}
+            topInset={insets.top + 10} 
             backgroundStyle={{ backgroundColor: '#ffffff' }}
         >
             <View className="flex-1">
-                {/* Static Header Layer */}
                 <View className="z-10 bg-white pb-2 pt-1 shadow-sm">
                     <BottomSheetSearchBar 
                         inputRef={searchInputRef} 
@@ -62,8 +64,15 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         onFocusAction={handleSearchFocus} 
                     />
                 </View>
-                {/* Scroll Layer */}
-                <WalkPlannerSheetContent onInteract={killSearchFocus} />
+                
+                {isSearchActive ? (
+                    <SearchResultsContent
+                        query={searchState.query} 
+                        onInteract={killSearchFocus} 
+                    />
+                ) : (
+                    <WalkPlannerSheetContent onInteract={killSearchFocus} />
+                )}
                 
             </View>
         </BottomSheet>

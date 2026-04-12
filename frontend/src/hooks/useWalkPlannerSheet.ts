@@ -4,7 +4,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 export const useWalkPlannerSheet = () => {
   const sheetRef = useRef<BottomSheet>(null);
   
-  const snapPoints = useMemo(() => ['12%', '40%', '90%'], []);
+  const snapPoints = useMemo(() => ['12%', '40%', '100%'], []);
 
   const collapseToSearch = useCallback(() => sheetRef.current?.snapToIndex(0), []);
   const snapToPartial = useCallback(() => sheetRef.current?.snapToIndex(1), []);

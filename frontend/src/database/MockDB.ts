@@ -1,4 +1,4 @@
-import { Amenity, FilterOption, FitnessGoal, Walk } from "@/src/types/TypesForWalkPlanner";
+import { Amenity, FilterOption, FitnessGoal, Places, Walk } from "@/src/types/TypesForWalkPlanner";
 
 export const MY_WALKS: Walk[] = [
   {
@@ -239,3 +239,70 @@ export const FILTER_OPTIONS: FilterOption[] = [
   { id: 'f4', label: 'Sports Facilities', type: 'Sports Facilities' },
   { id: 'f5', label: 'Scenic Fun', type: 'Scenic Fun' },
 ];
+
+export const PLACES: Places[] = [
+  {
+    id: 'p1',
+    title: 'Coles',
+    streetAddress: '100 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p2',
+    title: 'Woolies',
+    streetAddress: '11 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p3',
+    title: 'Aldi',
+    streetAddress: '12 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p4',
+    title: 'Casey Park',
+    streetAddress: '13 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p5',
+    title: 'Skate Park',
+    streetAddress: '14 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p6',
+    title: 'Maternity Center',
+    streetAddress: '15 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p7',
+    title: 'Casey Hospital',
+    streetAddress: '16 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+  {
+    id: 'p8',
+    title: 'Toilet',
+    streetAddress: '17 Chirag Place',
+    suburb: 'Casey',
+    state: 'Victoria',
+    country: 'Australia',
+  },
+]
