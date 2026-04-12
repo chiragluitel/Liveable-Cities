@@ -46,8 +46,8 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="About">
-          <SettingsSubPage title="Information" navigateFunc={() => router.navigate("/information")} />
-          <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/other")} hideSeperator={true} />
+          <SettingsSubPage title="Information" navigateFunc={() => router.navigate("/settings/information")} />
+          <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/settings/other")} hideSeperator={true} />
         </SettingsGroup>
       </ScrollView>
     </View>
