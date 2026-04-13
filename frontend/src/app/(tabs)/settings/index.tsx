@@ -35,7 +35,11 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Theme">
-          <ToggleSetting title="Dark Theme" initialValue={false} hideSeperator={true} />
+          <DropDown title="Theme" initialSelected="Auto" hideSeperator={true}>
+            <DropDownItem title="Auto" value="Auto" />
+            <DropDownItem title="Light" value="Light" />
+            <DropDownItem title="Dark" value="Dark" hideSeperator={true} />
+          </DropDown>
         </SettingsGroup>
         
         <SettingsGroup title="Night Detection">

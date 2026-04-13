@@ -30,7 +30,7 @@ export const WalkPlannerSheetContent = ({ onInteract }: WalkPlannerSheetContentP
                 button={[
                     { label: 'Share Location', onPress: () => console.log('Share My Location') },
                     { label: 'Report Problem', onPress: () => console.log('Report Problem') },
-                    { label: 'Custom Walk', onPress: () => router.push('/CustomWalk') },
+                    { label: 'Custom Walk', onPress: () => router.push('/customWalkPage') },
                     { label: 'Privacy Policy', onPress: () => console.log('Privacy Policy') }
                 ]}
             />          
