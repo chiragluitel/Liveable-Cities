@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import {
   Pressable,
   SafeAreaView,
@@ -7,9 +7,11 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity
 } from "react-native";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import CaseyMap from "@/src/components/map/CaseyMap";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function WalkSelected() {
   const [expanded, setExpanded] = useState(false);
@@ -24,23 +26,29 @@ export default function WalkSelected() {
     setExpanded((prev) => !prev);
   };
 
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
 
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.phoneFrame}>
-          <View style={styles.topSection}>
-            <Pressable style={styles.backRow}>
-              <Ionicons name="chevron-back" size={24} color="#111" />
-              <Text style={styles.backText}>Home</Text>
-            </Pressable>
+          <View style={[styles.topSection]}>
+            <TouchableOpacity
+              style={[styles.backBtn, { top: insets.top + 12 }]}
+              onPress={() => router.back()}
+              
+            >
+              <Text style={styles.backLabel}>‹ Back</Text>
+            </TouchableOpacity>
 
-            {!expanded && <Text style={styles.screenTitle}>Walk Selected</Text>}
+            {!expanded && <Text style={[styles.screenTitle, {left: 90}]}>Walk Selected</Text>}
           </View>
 
           {/* Map takes up the full screen behind the bottom sheet */}
-          <View className="absolute inset-0">
+          <View className="absolute inset-0 -z-[50]">
             <CaseyMap />
           </View>
 
@@ -201,7 +209,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     backgroundColor: "#ffffff",
-    paddingTop: 30,
+    paddingTop: 50,
     paddingHorizontal: 20,
     paddingBottom: 8,
   },
@@ -503,4 +511,20 @@ const styles = StyleSheet.create({
     color: "#111",
     fontWeight: "400",
   },
+  backBtn: {
+		position: 'absolute',
+		left: 16,
+		paddingVertical: 8,
+		paddingHorizontal: 14,
+		backgroundColor: 'white',
+		borderRadius: 8,
+		shadowColor: '#000',
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 4,
+	},
+	backLabel: {
+		fontSize: 16,
+		fontWeight: '600',
+	},
 });

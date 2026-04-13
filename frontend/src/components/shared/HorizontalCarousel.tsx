@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { FlatList, View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 interface HorizontalCarouselProps<T> {
   data: T[];

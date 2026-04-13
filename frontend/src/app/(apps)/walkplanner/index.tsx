@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { useRef } from "react";
-import { useRouter } from "expo-router";
+import { useRouter, Stack } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useSearchLogic from "@/src/hooks/useSearchLogic";
 import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/walkplanner/BottomSheet/WalkPlannerBottomSheet";
@@ -18,12 +18,13 @@ const WalkPlannerHomePage = () => {
 
 	return (
 		<View className="flex-1 bg-[#F2F2F7]">
+			<Stack.Screen options={{headerShown: false}} />
+
 			{/* Map takes up the full screen behind the bottom sheet */}
 			<View className="absolute inset-0" onTouchStart={handleMapInteraction}>
 				<CaseyMap />
 			</View>
 
-			{/* Please make this button point to the homepage when you do navigation */}
 			<TouchableOpacity
 				style={[styles.backBtn, { top: insets.top + 12 }]}
 				onPress={() => router.back()}

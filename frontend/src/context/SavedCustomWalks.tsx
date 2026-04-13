@@ -27,6 +27,8 @@ export const WalkProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SavedCustomWalks.Provider value={{ walks, saveWalk, deleteWalk }}>
         {children}
-    </SavedCustomWalks.Provider> 
+    </SavedCustomWalks.Provider>
   );
 }
+
+export const SavedCustomWalksProvider = WalkProvider;
