@@ -48,7 +48,7 @@ export default function DropDown({
     setSelectedValue(value);
   }
 
-  const isSelected = (value: string) => selectedValue === value;
+  const isSelected = (value: string) => {return selectedValue === value};
 
   function getButtonPos() {
     if (!buttonRef.current) {
