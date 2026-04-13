@@ -17,6 +17,21 @@ type Anchor = {
   height: number
 };
 
+import { createContext, useContext } from "react";
+
+type DropDownContextType = {
+  itemPressed: (value: string) => void
+  isSelected: (value: string) => boolean
+};
+
+const DropDownContext = createContext<DropDownContextType | null>(null);
+
+export const useDropDownContext = () => {
+  const ctx = useContext(DropDownContext);
+  if (!ctx) throw new Error("useDropDownContext must be used within provider");
+  return ctx;
+};
+
 export default function DropDown({
   title, 
   initialSelected, 
@@ -32,6 +47,8 @@ export default function DropDown({
     setModalVisible(false);
     setSelectedValue(value);
   }
+
+  const isSelected = (value: string) => selectedValue === value;
 
   function getButtonPos() {
     if (!buttonRef.current) {
@@ -105,7 +122,10 @@ export default function DropDown({
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
               >
-                {enhancedChildren}
+                <DropDownContext.Provider value={{ itemPressed, isSelected}}>
+                  {children}
+                </DropDownContext.Provider>
+                {/*enhancedChildren*/}
               </ScrollView>
             </View>
           )}
