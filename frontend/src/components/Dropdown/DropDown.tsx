@@ -2,6 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactElement, ReactNode, useRef, useState } from "react";
 import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { ItemProps } from "./DropDownItem";
+import useAsyncStorage from "@Hooks/useAsyncStorage";
 
 type DropDownProps = {
   title: string
@@ -28,7 +29,8 @@ export default function DropDown({
   const buttonRef = useRef<View | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
+  //const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
+  const [selectedValue, setSelectedValue] = useAsyncStorage(title, initialSelected ? initialSelected : "");
 
   function itemPressed(value: string) {
     setModalVisible(false);
