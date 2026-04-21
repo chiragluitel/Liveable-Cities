@@ -1,4 +1,4 @@
-import { colors } from "@/src/theme/colours";
+import { colors } from "@Theme/colours";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "nativewind";
