@@ -8,7 +8,7 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <View className="flex-1 bg-white px-5 pt-12">
+    <View className="flex-1 bg-background-50 dark:bg-dark-background-50 px-5 pt-12">
       {/* header */}
       <HomeHeader />
 
@@ -25,18 +25,18 @@ export default function HomePage() {
           
           {/* Coming Soon Box */}
           <View className="mt-6 border border-dashed border-gray-400 rounded-2xl p-8 items-center">
-            <Text className="text-gray-500 font-semibold">
+            <Text className="text-text-500 dark:text-dark-text-500 font-semibold">
               More features coming soon
             </Text>
 
-            <Text className="text-gray-400 text-sm mt-1">
+            <Text className="text-text-400 dark:text-dark-text-400 text-sm mt-1">
               Stay tuned
             </Text>
           </View>
         </View>
       </ScrollView>
 
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
     </View>
   );
 }
