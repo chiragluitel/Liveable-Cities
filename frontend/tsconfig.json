@@ -10,6 +10,7 @@
       "@Components/*": ["./src/components/*"],
       "@Hooks/*": ["./src/hooks/*"],
       "@Types/*": ["./src/ypes/*"],
+      "@Theme/*": ["./src/theme/*"]
     }
   },
   "include": [
