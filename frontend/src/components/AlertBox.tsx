@@ -29,8 +29,8 @@ export default function AlertBox({title, message, cancelFunc, confirmFunc}: Aler
           onPress={() => cancelFunc()}
           underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
         >
-          <View className="h-full justify-center bg-secondary-200 dark:bg-dark-secondary-200 rounded-bl-[20] border-r-hairline border-b-text-200 dark:border-b-dark-text-400">
-            <Text style={{textAlign: "center"}} className="text-accent-500 dark:text-dark-accent-700">Cancel</Text>
+          <View className="h-full justify-center bg-accent-200 dark:bg-dark-accent-200 rounded-bl-[20] border-r-hairline border-b-text-200 dark:border-b-dark-text-400">
+            <Text style={{textAlign: "center"}} className="text-accent-700 dark:text-dark-accent-700">Cancel</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight 
@@ -38,8 +38,8 @@ export default function AlertBox({title, message, cancelFunc, confirmFunc}: Aler
           onPress={() => confirmFunc()}
           underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
         >
-          <View className="h-full justify-center bg-warning-200 dark:bg-dark-warning-200 rounded-br-[20]">
-            <Text style={{textAlign: "center"}} className="text-warning-500 dark:text-dark-warning-600">Confirm</Text>
+          <View className="h-full justify-center bg-warning-200 dark:bg-dark-warning-300 rounded-br-[20]">
+            <Text style={{textAlign: "center"}} className="text-warning-600 dark:text-dark-warning-800">Confirm</Text>
           </View>
         </TouchableHighlight>
       </View>

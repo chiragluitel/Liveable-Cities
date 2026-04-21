@@ -27,8 +27,8 @@ export default function WebLinkButton({text, link}: WebLinkProps) {
       underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
     >
       <View className="flex-row items-center bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
-        <Ionicons name="open-outline" size={17} color={isLight ? colors.accent[400] : colors.dark.accent[600]} />
-        <Text style={{fontSize: 17, paddingLeft: 5}} className="text-accent-400 dark:text-accent-700">{text}</Text>
+        <Ionicons name="open-outline" size={17} color={isLight ? colors.accent[600] : colors.dark.accent[600]} />
+        <Text style={{fontSize: 17, paddingLeft: 5}} className="text-accent-600 dark:text-accent-600">{text}</Text>
       </View>
     </TouchableHighlight>
   );

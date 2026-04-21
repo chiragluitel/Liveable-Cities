@@ -32,7 +32,7 @@ export default function SlideToggle({value, onValueChange}: ToggleProps) {
     inputRange: [0, 1],
     outputRange: [
       isLight ? colors.background[200] : colors.dark.background[200], 
-      isLight ? colors.accent[400] : colors.dark.accent[400]
+      isLight ? colors.accent[600] : colors.dark.accent[400]
     ]
   });
 

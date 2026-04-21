@@ -32,7 +32,7 @@ export default function DropDownItem({
         <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">
           {title} 
         </Text>
-        <Entypo name="check" size={20} color={isLight ? colors.accent[400] : colors.dark.accent[700]} style={{opacity: isSelected ? 1 : 0}} />
+        <Entypo name="check" size={20} color={isLight ? colors.accent[600] : colors.dark.accent[700]} style={{opacity: isSelected ? 1 : 0}} />
       </View>
     </TouchableHighlight>
   );

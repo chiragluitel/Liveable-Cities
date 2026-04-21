@@ -21,7 +21,7 @@ export default function Information() {
           headerTitle: "Information", 
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: isLight ? colors.background[200] : colors.dark.background[100],
+            backgroundColor: isLight ? colors.background[100] : colors.dark.background[100],
           },
           headerTitleStyle: {
             color: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,

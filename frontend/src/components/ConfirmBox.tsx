@@ -28,8 +28,8 @@ export default function ConfirmBox({title, message, confirmFunc}: ConfirmBoxProp
           onPress={() => confirmFunc()}
           underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
         >
-          <View className="h-full justify-center bg-primary-200 dark:bg-dark-primary-200 rounded-b-[20]">
-            <Text style={{textAlign: "center"}} className="text-accent-500 dark:text-dark-accent-700">Confirm</Text>
+          <View className="h-full justify-center bg-accent-200 dark:bg-dark-accent-200 rounded-b-[20]">
+            <Text style={{textAlign: "center"}} className="text-accent-700 dark:text-dark-accent-700">Confirm</Text>
           </View>
         </TouchableHighlight>
       </View>

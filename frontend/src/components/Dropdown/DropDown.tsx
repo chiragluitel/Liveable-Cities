@@ -138,7 +138,7 @@ export default function DropDown({
         >
           <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">{title}</Text>
           <View className="flex-row items-center">
-            <Text style={{fontSize: 17}}  className="text-accent-400 dark:text-dark-accent-700">
+            <Text style={{fontSize: 17}}  className="text-accent-600 dark:text-dark-accent-700">
               {selectedValue}
             </Text>
             <Ionicons name="chevron-expand" size={17} color={isLight ? colors.primary[700] : colors.dark.primary[300]} />
