@@ -4,10 +4,27 @@ import SettingsGroup from "@Components/settings/SettingsGroup";
 import SettingsSubPage from "@Components/settings/SettingSubPage";
 import ToggleSetting from "@Components/settings/ToggleSetting";
 import { useRouter, Stack } from "expo-router";
+import { useColorScheme } from "nativewind";
 import { ScrollView, View, Text } from "react-native";
 
 export default function Settings() {
   const router = useRouter();
+
+  const { setColorScheme } = useColorScheme();
+
+  function setTheme(value: string) {
+    switch (value) {
+      case "Light":
+        setColorScheme("light");
+        break;
+      case "Dark":
+        setColorScheme("dark");
+        break;
+      case "Auto":
+      default:
+        setColorScheme("system");
+    }
+  }
 
   return (
     <View className="flex-1 w-full">
@@ -23,11 +40,11 @@ export default function Settings() {
         </Text>
 
         <SettingsGroup title="Measurements">
-          <DropDown title="Units" initialSelected="Metric">
+          <DropDown title="Units" initialSelected="Metric" actionFunc={(value: string) => {}}>
             <DropDownItem title="Metric" value="Metric" />
             <DropDownItem title="Imperial" value="Imperial" hideSeperator={true} />
           </DropDown>
-          <DropDown title="Walking Speed" initialSelected="Average" hideSeperator={true}>
+          <DropDown title="Walking Speed" initialSelected="Average" hideSeperator={true} actionFunc={(value: string) => {}}>
             <DropDownItem title="Slow (2km/h)" value="Slow" />
             <DropDownItem title="Average (4km/h)" value="Average" />
             <DropDownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
@@ -35,7 +52,7 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Theme">
-          <DropDown title="Theme" initialSelected="Auto" hideSeperator={true}>
+          <DropDown title="Theme" initialSelected="Auto" hideSeperator={true} actionFunc={setTheme}>
             <DropDownItem title="Auto" value="Auto" />
             <DropDownItem title="Light" value="Light" />
             <DropDownItem title="Dark" value="Dark" hideSeperator={true} />

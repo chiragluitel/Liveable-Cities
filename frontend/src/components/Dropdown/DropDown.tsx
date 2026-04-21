@@ -6,6 +6,7 @@ import { ItemProps } from "./DropDownItem";
 type DropDownProps = {
   title: string
   initialSelected: string
+  actionFunc: (value: string) => void
   hideSeperator?: boolean
   children: ReactNode
 };
@@ -20,6 +21,7 @@ type Anchor = {
 export default function DropDown({
   title, 
   initialSelected, 
+  actionFunc,
   hideSeperator = false, 
   children
 }: DropDownProps) {
@@ -31,6 +33,7 @@ export default function DropDown({
   function itemPressed(value: string) {
     setModalVisible(false);
     setSelectedValue(value);
+    actionFunc(value);
   }
 
   function getButtonPos() {
