@@ -1,4 +1,7 @@
+import { useColorScheme } from "nativewind";
 import { Linking, Text, TouchableHighlight, View } from "react-native";
+import { colors } from "@Theme/colours";
+import { Ionicons } from "@expo/vector-icons";
 
 type WebLinkProps = {
   text: string
@@ -6,6 +9,11 @@ type WebLinkProps = {
 };
 
 export default function WebLinkButton({text, link}: WebLinkProps) {
+  const { colorScheme } = useColorScheme();
+  
+  const isLight = colorScheme === "light";
+
+  
   function openLink() {
     Linking.canOpenURL(link).then(() => {
       Linking.openURL(link);
@@ -16,10 +24,11 @@ export default function WebLinkButton({text, link}: WebLinkProps) {
     <TouchableHighlight
       onPress={openLink}
       style={{borderRadius: 10}}
-      underlayColor="#747480"
+      underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
     >
-      <View className="bg-white rounded-[10] p-[15]">
-        <Text style={{fontSize: 17, color: "#007BFE"}}>{text}</Text>
+      <View className="flex-row items-center bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
+        <Ionicons name="open-outline" size={17} color={isLight ? colors.accent[400] : colors.dark.accent[600]} />
+        <Text style={{fontSize: 17, paddingLeft: 5}} className="text-accent-400 dark:text-accent-700">{text}</Text>
       </View>
     </TouchableHighlight>
   );

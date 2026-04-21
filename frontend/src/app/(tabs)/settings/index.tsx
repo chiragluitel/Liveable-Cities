@@ -27,7 +27,7 @@ export default function Settings() {
   }
 
   return (
-    <View className="flex-1 w-full">
+    <View className="flex-1 w-full bg-background-50 dark:bg-dark-background-50">
       <ScrollView
         contentContainerStyle={{
           alignItems: "center"
@@ -35,7 +35,7 @@ export default function Settings() {
       >
         <Stack.Screen options={{headerShown: false}} />
 
-        <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%]">
+        <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%] text-text dark:text-dark-text">
           Settings
         </Text>
 

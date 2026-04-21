@@ -1,4 +1,6 @@
+import { useColorScheme } from "nativewind";
 import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { colors } from "@Theme/colours";
 
 type AlertBoxProps = {
   title: string
@@ -8,32 +10,36 @@ type AlertBoxProps = {
 };
 
 export default function AlertBox({title, message, cancelFunc, confirmFunc}: AlertBoxProps) {
+  const { colorScheme } = useColorScheme();
+  
+  const isLight = colorScheme === "light";
+
   return (
     <View 
-      className="flex-col justify-evenly w-[60%] h-[15%] bg-white rounded-[20]" 
+      className="flex-col justify-evenly w-[60%] h-[15%] bg-background-200 dark:bg-dark-background-200 rounded-[20]" 
       style={styles.contentShadow}
     >
-      <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-[#C7C7CC]">
-        <Text style={{fontWeight: "bold", fontSize: 17}}>{title}</Text>
-        <Text style={{fontSize: 13}}>{message}</Text>
+      <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-text-200 dark:border-b-dark-text-400">
+        <Text style={{fontWeight: "bold", fontSize: 17}} className="text-text dark:text-dark-text">{title}</Text>
+        <Text style={{fontSize: 13}} className="text-text dark:text-dark-text">{message}</Text>
       </View>
       <View className="items-center w-full h-[40%] flex-row justify-evenly">
         <TouchableHighlight 
           className="w-[50%] rounded-bl-[20]"
           onPress={() => cancelFunc()}
-          underlayColor="#747480"
+          underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
         >
-          <View className="h-full justify-center bg-white rounded-bl-[20] border-r-hairline border-r-[#C7C7CC]">
-            <Text style={{textAlign: "center", color: "#007BFE"}}>Cancel</Text>
+          <View className="h-full justify-center bg-secondary-200 dark:bg-dark-secondary-200 rounded-bl-[20] border-r-hairline border-b-text-200 dark:border-b-dark-text-400">
+            <Text style={{textAlign: "center"}} className="text-accent-500 dark:text-dark-accent-700">Cancel</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight 
           className="w-[50%] rounded-br-[20]"
           onPress={() => confirmFunc()}
-          underlayColor="#747480"
+          underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
         >
-          <View className="h-full justify-center bg-white rounded-br-[20]">
-            <Text style={{textAlign: "center", color: "#FF382B"}}>Confirm</Text>
+          <View className="h-full justify-center bg-warning-200 dark:bg-dark-warning-200 rounded-br-[20]">
+            <Text style={{textAlign: "center"}} className="text-warning-500 dark:text-dark-warning-600">Confirm</Text>
           </View>
         </TouchableHighlight>
       </View>
