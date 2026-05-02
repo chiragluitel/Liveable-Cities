@@ -3,6 +3,7 @@ import {useRouter} from "expo-router";
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileActions from "@Components/ProfilePage/ProfileActions";
+import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,6 +23,9 @@ export default function ProfilePage() {
       />
 
       {/*<ProfileActions onBack={() => router.back()} />*/}
+
+      <ProfileFitnessGoal />
+        
     </View>
   );
 };
