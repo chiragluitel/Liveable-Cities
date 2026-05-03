@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { NearbyPlace } from "../../types/TypesForSelectedWalk";
+import { NearbyPlace } from "@Types/TypesForSelectedWalk";
 import SelectedWalkNearbyItem from "./SelectedWalkNearbyItem";
 
-type Props = {
-  nearby: NearbyPlace[];
-  selectedNearbyId: string | null;
-  onNearbyPress: (item: NearbyPlace) => void;
+type SelectedWalkNearbyListProps = {
+  nearbyList: NearbyPlace[];
 };
 
 export default function SelectedWalkNearbyList({
-  nearby,
-  selectedNearbyId,
-  onNearbyPress,
-}: Props) {
+  nearbyList,
+}: SelectedWalkNearbyListProps) {
+  const [selectedNearbyId, setSelectedNearbyId] = useState<string | null>(null);
+
+  const handleNearbyPress = (nearbyPlace: NearbyPlace) => {
+    setSelectedNearbyId(nearbyPlace.id);
+    console.log(`${nearbyPlace.label} pressed`);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Nearby</Text>
 
-      {nearby.map((item) => (
+      {nearbyList.map((nearbyPlace) => (
         <SelectedWalkNearbyItem
-          key={item.id}
-          item={item}
-          isSelected={selectedNearbyId === item.id}
-          onPress={onNearbyPress}
+          key={nearbyPlace.id}
+          place={nearbyPlace}
+          isSelected={selectedNearbyId === nearbyPlace.id}
+          onNearbyPress={handleNearbyPress}
         />
       ))}
     </View>

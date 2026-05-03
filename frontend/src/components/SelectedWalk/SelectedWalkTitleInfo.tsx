@@ -2,27 +2,25 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-type Props = {
+type SelectedWalkTitleInfoProps = {
   title: string;
   distanceText: string;
   durationText: string;
 };
 
-export default function SelectedWalkMeta({
+export default function SelectedWalkTitleInfo({
   title,
   distanceText,
   durationText,
-}: Props) {
+}: SelectedWalkTitleInfoProps) {
   return (
-    <>
+    <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.walkName}>{title}</Text>
 
-        <View style={styles.topRightIcons}>
-          <Pressable style={styles.circleIconButton}>
-            <Feather name="share" size={20} color="#8a8a8a" />
-          </Pressable>
-        </View>
+        <Pressable style={styles.circleIconButton}>
+          <Feather name="share" size={20} color="#8a8a8a" />
+        </Pressable>
       </View>
 
       <Text style={styles.walkMeta}>
@@ -30,11 +28,14 @@ export default function SelectedWalkMeta({
           {distanceText}, {durationText}
         </Text>
       </Text>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 6,
+  },
   titleRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -49,9 +50,6 @@ const styles = StyleSheet.create({
     color: "#111",
     marginRight: 12,
   },
-  topRightIcons: {
-    flexDirection: "row",
-  },
   circleIconButton: {
     width: 56,
     height: 56,
@@ -59,7 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#dfe3de",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 10,
   },
   walkMeta: {
     fontSize: 17,

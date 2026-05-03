@@ -1,30 +1,24 @@
 import React from "react";
-import BottomSheet, {
-  BottomSheetScrollView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { StyleSheet, View } from "react-native";
-import { NearbyPlace, SelectedWalkData } from "../../types/TypesForSelectedWalk";
-import SelectedWalkMeta from "./SelectedWalkMeta";
+import { SelectedWalkData } from "../../types/TypesForSelectedWalk";
+import SelectedWalkTitleInfo from "./SelectedWalkTitleInfo";
 import SelectedWalkActionRow from "./SelectedWalkActionRow";
 import SelectedWalkImageGallery from "./SelectedWalkImageGallery";
 import SelectedWalkInfoSection from "./SelectedWalkInfoSection";
 import SelectedWalkNearbyList from "./SelectedWalkNearbyList";
 
-type Props = {
+type SelectedWalkSheetProps = {
   sheetRef: React.RefObject<BottomSheet | null>;
   snapPoints: string[];
-  walkData: SelectedWalkData;
-  selectedNearbyId: string | null;
-  onNearbyPress: (item: NearbyPlace) => void;
+  selectedWalkData: SelectedWalkData;
 };
 
 export default function SelectedWalkSheet({
   sheetRef,
   snapPoints,
-  walkData,
-  selectedNearbyId,
-  onNearbyPress,
-}: Props) {
+  selectedWalkData,
+}: SelectedWalkSheetProps) {
   return (
     <BottomSheet
       ref={sheetRef}
@@ -38,26 +32,22 @@ export default function SelectedWalkSheet({
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <SelectedWalkMeta
-          title={walkData.title}
-          distanceText={walkData.distanceText}
-          durationText={walkData.durationText}
+        <SelectedWalkTitleInfo
+          title={selectedWalkData.title}
+          distanceText={selectedWalkData.distanceText}
+          durationText={selectedWalkData.durationText}
         />
 
         <SelectedWalkActionRow />
 
-        {walkData.showImages && <SelectedWalkImageGallery />}
+        {selectedWalkData.showImages && <SelectedWalkImageGallery />}
 
         <SelectedWalkInfoSection
-          title={walkData.infoTitle}
-          text={walkData.infoText}
+          title={selectedWalkData.infoTitle}
+          text={selectedWalkData.infoText}
         />
 
-        <SelectedWalkNearbyList
-          nearby={walkData.nearby}
-          selectedNearbyId={selectedNearbyId}
-          onNearbyPress={onNearbyPress}
-        />
+        <SelectedWalkNearbyList nearbyList={selectedWalkData.nearbyList} />
 
         <View style={styles.bottomSpace} />
       </BottomSheetScrollView>

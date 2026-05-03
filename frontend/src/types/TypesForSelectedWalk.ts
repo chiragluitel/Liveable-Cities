@@ -1,15 +1,14 @@
 export type SelectedWalkVariant = "default" | "custom";
 
+export type NearbyPlaceType = "public-toilets" | "park" | "rest-area";
+
 export type NearbyPlace = {
   id: string;
   label: string;
-  iconType: "wc" | "leaf-outline" | "event-seat";
-  iconFamily: "MaterialIcons" | "Ionicons";
-  bgColor: string;
+  placeType: NearbyPlaceType;
 };
 
 export type SelectedWalkData = {
-  backLabel: string;
   screenTitle: string;
   title: string;
   distanceText: string;
@@ -17,5 +16,5 @@ export type SelectedWalkData = {
   showImages: boolean;
   infoTitle: string;
   infoText: string;
-  nearby: NearbyPlace[];
+  nearbyList: NearbyPlace[];
 };

@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-type Props = {
+type SelectedWalkInfoSectionProps = {
   title: string;
   text: string;
 };
 
-export default function SelectedWalkInfoSection({ title, text }: Props) {
+export default function SelectedWalkInfoSection({
+  title,
+  text,
+}: SelectedWalkInfoSectionProps) {
   return (
     <View style={styles.infoBox}>
       <Text style={styles.infoTitle}>{title}</Text>

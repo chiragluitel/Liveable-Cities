@@ -1,15 +1,12 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import CaseyMap from "../map/CaseyMap";
-import {
-  SelectedWalkVariant,
-  NearbyPlace,
-} from "../../types/TypesForSelectedWalk";
-import { getSelectedWalkData } from "./SelectedWalkData";
-import { useSelectedWalkSheet } from "../../hooks/useSelectedWalkSheet";
+import { SelectedWalkVariant } from "@Types/TypesForSelectedWalk";
+import { useSelectedWalkSheet } from "@Hooks/useSelectedWalkSheet";
+import { getSelectedWalkData } from "@Database/SelectedWalkMockDB";
 import SelectedWalkSheet from "./SelectedWalkSheet";
 
-type Props = {
+type SelectedWalkScreenProps = {
   variant: SelectedWalkVariant;
   titleOverride?: string;
 };
@@ -17,21 +14,12 @@ type Props = {
 export default function SelectedWalkScreen({
   variant,
   titleOverride,
-}: Props) {
-  const {
-    sheetRef,
-    snapPoints,
-    selectedNearbyId,
-    handleNearbyPress,
-  } = useSelectedWalkSheet();
+}: SelectedWalkScreenProps) {
+  const { sheetRef, snapPoints } = useSelectedWalkSheet();
 
-  const walkData = useMemo(() => {
+  const selectedWalkData = useMemo(() => {
     return getSelectedWalkData(variant, titleOverride);
   }, [variant, titleOverride]);
-
-  const onNearbyPress = (item: NearbyPlace) => {
-    handleNearbyPress(item.id, item.label);
-  };
 
   return (
     <View style={styles.container}>
@@ -40,9 +28,7 @@ export default function SelectedWalkScreen({
       <SelectedWalkSheet
         sheetRef={sheetRef}
         snapPoints={snapPoints}
-        walkData={walkData}
-        selectedNearbyId={selectedNearbyId}
-        onNearbyPress={onNearbyPress}
+        selectedWalkData={selectedWalkData}
       />
     </View>
   );

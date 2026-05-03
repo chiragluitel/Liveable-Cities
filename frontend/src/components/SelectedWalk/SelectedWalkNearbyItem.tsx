@@ -1,49 +1,64 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { NearbyPlace } from "../../types/TypesForSelectedWalk";
+import { NearbyPlace, NearbyPlaceType } from "@Types/TypesForSelectedWalk";
 
-type Props = {
-  item: NearbyPlace;
+type SelectedWalkNearbyItemProps = {
+  place: NearbyPlace;
   isSelected: boolean;
-  onPress: (item: NearbyPlace) => void;
+  onNearbyPress: (place: NearbyPlace) => void;
+};
+
+const getPlaceStyle = (placeType: NearbyPlaceType) => {
+  switch (placeType) {
+    case "public-toilets":
+      return {
+        backgroundColor: "#9b94f1",
+        icon: <MaterialIcons name="wc" size={28} color="#111" />,
+      };
+
+    case "park":
+      return {
+        backgroundColor: "#19c58a",
+        icon: <Ionicons name="leaf-outline" size={26} color="#111" />,
+      };
+
+    case "rest-area":
+      return {
+        backgroundColor: "#b8c0b7",
+        icon: <MaterialIcons name="event-seat" size={28} color="#111" />,
+      };
+
+    default:
+      return {
+        backgroundColor: "#dcdedd",
+        icon: <Ionicons name="location-outline" size={26} color="#111" />,
+      };
+  }
 };
 
 export default function SelectedWalkNearbyItem({
-  item,
+  place,
   isSelected,
-  onPress,
-}: Props) {
-  const renderIcon = () => {
-    if (item.iconFamily === "MaterialIcons") {
-      return (
-        <MaterialIcons
-          name={item.iconType as keyof typeof MaterialIcons.glyphMap}
-          size={28}
-          color="#111"
-        />
-      );
-    }
-
-    return (
-      <Ionicons
-        name={item.iconType as keyof typeof Ionicons.glyphMap}
-        size={26}
-        color="#111"
-      />
-    );
-  };
+  onNearbyPress,
+}: SelectedWalkNearbyItemProps) {
+  const placeStyle = getPlaceStyle(place.placeType);
 
   return (
     <Pressable
       style={[styles.container, isSelected && styles.selectedContainer]}
-      onPress={() => onPress(item)}
+      onPress={() => onNearbyPress(place)}
     >
-      <View style={[styles.iconCircle, { backgroundColor: item.bgColor }]}>
-        {renderIcon()}
+      <View
+        style={[
+          styles.iconCircle,
+          { backgroundColor: placeStyle.backgroundColor },
+        ]}
+      >
+        {placeStyle.icon}
       </View>
 
-      <Text style={styles.label}>{item.label}</Text>
+      <Text style={styles.label}>{place.label}</Text>
     </Pressable>
   );
 }
@@ -73,4 +88,4 @@ const styles = StyleSheet.create({
     color: "#111",
     fontWeight: "400",
   },
-});
+})

@@ -1,12 +1,13 @@
 import React from "react";
-import { useLocalSearchParams, Stack } from "expo-router";
-import SelectedWalkScreen from "../components/SelectedWalk/SelectedWalkScreen";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import SelectedWalkScreen from "@Components/SelectedWalk/SelectedWalkScreen";
 
 export default function CustomWalkSelectedPage() {
   const params = useLocalSearchParams<{ title?: string }>();
 
   return (
-    <>
+    <View style={styles.page}>
       <Stack.Screen
         options={{
           title: "Custom Walk",
@@ -14,10 +15,13 @@ export default function CustomWalkSelectedPage() {
         }}
       />
 
-      <SelectedWalkScreen
-        variant="custom"
-        titleOverride={params.title}
-      />
-    </>
+      <SelectedWalkScreen variant="custom" titleOverride={params.title} />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+  },
+});
