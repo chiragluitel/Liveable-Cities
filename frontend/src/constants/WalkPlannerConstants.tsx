@@ -1,0 +1,1 @@
+export const SPRING_CONFIG = { damping: 22, stiffness: 220, mass: 0.8, overshootClamping: false, restDisplacementThreshold: 0.5, restSpeedThreshold: 0.5 };
