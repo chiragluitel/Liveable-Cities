@@ -105,7 +105,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
 
       <FilterButton onToggle={handleFilterToggle} />
 
-      <RecentreButton onPress={() => send({ type: 'RECENTRE' })} />
+      <RecentreButton onRecentrePress={() => send({ type: 'RECENTRE' })} />
 
       <ZoomControls
         onZoomIn={() => send({ type: 'ZOOM_IN' })}
