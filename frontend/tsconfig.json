@@ -9,7 +9,7 @@
       "@Assets/*": ["./src/assets/*"],
       "@Components/*": ["./src/components/*"],
       "@Hooks/*": ["./src/hooks/*"],
-      "@Types/*": ["./src/ypes/*"],
+      "@Types/*": ["./src/types/*"],
     }
   },
   "include": [
