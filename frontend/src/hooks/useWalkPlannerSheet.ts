@@ -1,20 +1,16 @@
-import { useRef, useCallback, useMemo } from 'react';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { useRef, useCallback } from 'react';
+import { WalkPlannerSheetRef } from '@/src/components/walkplanner/BottomSheet/WalkPlannerBottomSheet';
+import { SelectedItem } from '../types/TypesForWalkPlanner';
+
 
 export const useWalkPlannerSheet = () => {
-  const sheetRef = useRef<BottomSheet>(null);
-  
-  const snapPoints = useMemo(() => ['12%', '40%', '100%'], []);
+  const sheetRef = useRef<WalkPlannerSheetRef>(null);
 
-  const collapseToSearch = useCallback(() => sheetRef.current?.snapToIndex(0), []);
-  const snapToPartial = useCallback(() => sheetRef.current?.snapToIndex(1), []);
-  const expandFully = useCallback(() => sheetRef.current?.snapToIndex(2), []);
+  const collapseToSearch = useCallback(() => sheetRef.current?.collapseToSearch(), []);
+  const selectPlace = useCallback(
+    (item: SelectedItem) => sheetRef.current?.selectPlace(item),
+    []
+  );
 
-  return { 
-    sheetRef, 
-    snapPoints, 
-    collapseToSearch, 
-    snapToPartial, 
-    expandFully 
-  };
+  return { sheetRef, collapseToSearch, selectPlace };
 };

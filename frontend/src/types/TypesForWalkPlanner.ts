@@ -54,4 +54,10 @@ export interface Places {
   suburb: string,
   state: string,
   country: string
+  type: string
 }
+
+export type SelectedItem =
+  | { type: 'walk';  data: Walk   }
+  | { type: 'place'; data: Places }
+  | null;
