@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text } from 'react-native';
 
-type Props = { onZoomIn: () => void; onZoomOut: () => void };
+type ZoomControlsProps = { onZoomIn: () => void; onZoomOut: () => void };
 
-export default function ZoomControls({ onZoomIn, onZoomOut }: Props) {
+export default function ZoomControls({ onZoomIn, onZoomOut }: ZoomControlsProps) {
   return (
     <>
       <TouchableOpacity

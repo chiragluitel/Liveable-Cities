@@ -4,11 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DEFAULT_VISIBLE_ICONS } from '../config/mapConfig';
 import { ICON_DEFINITIONS, IconName } from '../config/mapIcons';
 
-type Props = {
+type FilterButtonProps = {
   onToggle: (iconType: IconName, visible: boolean) => void;
 };
 
-export default function FilterButton({ onToggle }: Props) {
+export default function FilterButton({ onToggle }: FilterButtonProps) {
   const insets = useSafeAreaInsets();
 
   const [open, setOpen] = useState(false);

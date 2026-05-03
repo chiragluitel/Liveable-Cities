@@ -189,6 +189,16 @@ function buildMapHTML(): string {
     window.addEventListener('message', function(e) { try { handleCommand(JSON.parse(e.data)); } catch(_) {} });
     document.addEventListener('message', function(e) { try { handleCommand(JSON.parse(e.data)); } catch(_) {} });
 
+    fetch('https://nominatim.openstreetmap.org/search?q=City+of+Casey,Victoria,Australia&format=geojson&polygon_geojson=1&limit=1', { headers: { 'Accept-Language': 'en' } })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var feature = data.features && data.features[0];
+        if (feature && feature.geometry && (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon')) {
+          handleCommand({ type: 'SET_BOUNDARY', feature: feature });
+        }
+      })
+      .catch(function() {});
+
     sendToRN({ type: 'MAP_READY' });
   </script>
 </body>

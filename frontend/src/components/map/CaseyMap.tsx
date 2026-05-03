@@ -24,22 +24,6 @@ type CaseyMapProps = {
   onRouteTap?: (id: string) => void;
 };
 
-let cachedBoundary: object | null = null;
-
-async function fetchCaseyBoundary(): Promise<object | null> {
-  if (cachedBoundary) return cachedBoundary;
-  try {
-    const r = await fetch(
-      'https://nominatim.openstreetmap.org/search?q=City+of+Casey,Victoria,Australia&format=geojson&polygon_geojson=1&limit=1',
-      { headers: { 'Accept-Language': 'en' } }
-    );
-    const data = await r.json();
-    cachedBoundary = data.features[0];
-    return cachedBoundary;
-  } catch {
-    return null;
-  }
-}
 
 const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRouteTap }, ref) => {
   const webViewRef = useRef<WebView>(null);
@@ -68,10 +52,6 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
       isReady.current = true;
 
       setTimeout(() => {
-        fetchCaseyBoundary().then(feature => {
-          if (feature) send({ type: 'SET_BOUNDARY', feature });
-        });
-
         // Apply default visibility for any types hidden by default
         (Object.keys(ICON_DEFINITIONS) as IconName[]).forEach(iconType => {
           if (!DEFAULT_VISIBLE_ICONS.includes(iconType)) {

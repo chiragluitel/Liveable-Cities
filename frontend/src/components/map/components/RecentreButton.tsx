@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text } from 'react-native';
 
-type Props = { onPress: () => void };
+type RecentreButtonProps = { onPress: () => void };
 
-export default function RecentreButton({ onPress }: Props) {
+export default function RecentreButton({ onPress }: RecentreButtonProps) {
   return (
     <TouchableOpacity
       className="absolute bottom-[120px] left-4 py-[10px] px-4 bg-white rounded-lg shadow-md"
