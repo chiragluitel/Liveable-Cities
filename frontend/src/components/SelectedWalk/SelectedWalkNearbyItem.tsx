@@ -1,6 +1,5 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { NearbyPlace, NearbyPlaceType } from "@Types/TypesForSelectedWalk";
 
 type SelectedWalkNearbyItemProps = {
@@ -11,28 +10,34 @@ type SelectedWalkNearbyItemProps = {
 
 const getPlaceStyle = (placeType: NearbyPlaceType) => {
   switch (placeType) {
-    case "public-toilets":
+    case "bbq":
       return {
-        backgroundColor: "#9b94f1",
-        icon: <MaterialIcons name="wc" size={28} color="#111" />,
+        backgroundColor: "#f4d7b5",
+        emoji: "🍖",
       };
 
-    case "park":
+    case "library":
       return {
-        backgroundColor: "#19c58a",
-        icon: <Ionicons name="leaf-outline" size={26} color="#111" />,
+        backgroundColor: "#d9e8ff",
+        emoji: "📚",
       };
 
-    case "rest-area":
+    case "bench":
       return {
-        backgroundColor: "#b8c0b7",
-        icon: <MaterialIcons name="event-seat" size={28} color="#111" />,
+        backgroundColor: "#dfe3de",
+        emoji: "🪑",
+      };
+
+    case "toilet":
+      return {
+        backgroundColor: "#d9d4ff",
+        emoji: "🚻",
       };
 
     default:
       return {
         backgroundColor: "#dcdedd",
-        icon: <Ionicons name="location-outline" size={26} color="#111" />,
+        emoji: "📍",
       };
   }
 };
@@ -55,7 +60,7 @@ export default function SelectedWalkNearbyItem({
           { backgroundColor: placeStyle.backgroundColor },
         ]}
       >
-        {placeStyle.icon}
+        <Text style={styles.emoji}>{placeStyle.emoji}</Text>
       </View>
 
       <Text style={styles.label}>{place.label}</Text>
@@ -83,9 +88,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 18,
   },
+  emoji: {
+    fontSize: 30,
+  },
   label: {
     fontSize: 18,
     color: "#111",
     fontWeight: "400",
   },
-})
+});
