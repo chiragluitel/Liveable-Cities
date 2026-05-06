@@ -1,13 +1,13 @@
 import {View} from "react-native"
 import {GreetComponent} from "./GreetComponent"
-import WeatherComponent from "./WeatherComponent";
+// import WeatherComponent from "./Weather/WeatherDisplay";
 
 
 const HomeHeader = () => {
   return(
     <View className="flex-row justify-between items-start mb-10 px-2 pt-8">
       <GreetComponent username = "Test User" />
-        <WeatherComponent />
+        {/* <WeatherComponent /> */}
     </View>
   )
 }
