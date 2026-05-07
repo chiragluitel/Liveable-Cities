@@ -48,7 +48,6 @@ export default function RootLayout() {
         >
           <Stack.Screen name="(tabs)" options={{headerShown: false}} />
           <Stack.Screen name="(apps)" options={{headerShown: false}} />
-          <Stack.Screen name="CustomWalk" options={{headerShown: false}} />
         </Stack>
       </WalkProvider>
     </GestureHandlerRootView>
