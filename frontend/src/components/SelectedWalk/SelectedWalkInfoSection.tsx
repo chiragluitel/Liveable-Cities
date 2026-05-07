@@ -15,15 +15,15 @@ export default function SelectedWalkInfoSection({
   const hasSelectedFilters = selectedFilters && selectedFilters.length > 0;
 
   return (
-    <View style={styles.infoBox}>
-      <Text style={styles.infoTitle}>{title}</Text>
-      <Text style={styles.infoText}>{text}</Text>
+    <View className="pt-[8] pb-[12] mb-[12]">
+      <Text className="text-base font-bold text-text dark:text-dark-text mb-[8]">{title}</Text>
+      <Text className="text-base text-text-700 dark:text-dark-text-700">{text}</Text>
 
       {hasSelectedFilters && (
-        <View style={styles.filterTagContainer}>
+        <View className="flex-row flex-wrap mt-[14]">
           {selectedFilters.map((filter) => (
-            <View key={filter} style={styles.filterTag}>
-              <Text style={styles.filterTagText}>{filter}</Text>
+            <View key={filter} className="bg-background-200 dark:bg-dark-background-400 rounded-[20] px-[14] py-[8] mr-[10] mb-[10]">
+              <Text className="text-text dark:text-dark-text-900 text-sm font-semibold">{filter}</Text>
             </View>
           ))}
         </View>
@@ -31,40 +31,3 @@ export default function SelectedWalkInfoSection({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  infoBox: {
-    paddingTop: 6,
-    paddingBottom: 12,
-    marginBottom: 10,
-  },
-  infoTitle: {
-    fontSize: 17,
-    fontWeight: "700",
-    color: "#111",
-    marginBottom: 8,
-  },
-  infoText: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: "#222",
-  },
-  filterTagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 14,
-  },
-  filterTag: {
-    backgroundColor: "#d7d7db",
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  filterTagText: {
-    color: "#111",
-    fontSize: 13,
-    fontWeight: "600",
-  },
-});

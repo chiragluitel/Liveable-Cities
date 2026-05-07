@@ -1,6 +1,9 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { useColorScheme } from "nativewind";
+import { colours } from "@Theme/colours";
+
 
 type SelectedWalkTitleInfoProps = {
   title: string;
@@ -13,57 +16,24 @@ export default function SelectedWalkTitleInfo({
   distanceText,
   durationText,
 }: SelectedWalkTitleInfoProps) {
-  return (
-    <View style={styles.container}>
-      <View style={styles.titleRow}>
-        <Text style={styles.walkName}>{title}</Text>
+	const { colorScheme } = useColorScheme();
+	const isLight = colorScheme === "light";
 
-        <Pressable style={styles.circleIconButton}>
-          <Feather name="share" size={20} color="#8a8a8a" />
+  return (
+    <View className="mb-[6]">
+      <View className="flex-row justify-between items-start mb-[6]">
+        <Text className="flex-1 text-3xl font-extrabold text-text dark:text-dark-text mr-[12]">{title}</Text>
+
+        <Pressable className="w-[56] h-[56] rounded-[28] bg-background-100 dark:bg-dark-background-300 justify-center items-center">
+          <Feather name="share" size={20} color={isLight ? colours.text[600] : colours.dark.text[600]} />
         </Pressable>
       </View>
 
-      <Text style={styles.walkMeta}>
-        <Text style={styles.blueText}>
+      <Text className="text-base text-text dark:text-dark-text mb-[22]">
+        <Text className="text-accent dark:text-dark-accent-700">
           {distanceText}, {durationText}
         </Text>
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 6,
-  },
-  titleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 6,
-  },
-  walkName: {
-    flex: 1,
-    fontSize: 29,
-    lineHeight: 35,
-    fontWeight: "800",
-    color: "#111",
-    marginRight: 12,
-  },
-  circleIconButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#dfe3de",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  walkMeta: {
-    fontSize: 17,
-    color: "#111",
-    marginBottom: 22,
-  },
-  blueText: {
-    color: "#2677e8",
-  },
-});
