@@ -1,6 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from "nativewind";
+import { colours } from "@Theme/colours";
 
 type SaveButtonProps = {
   onPress: () => void;
@@ -8,30 +10,13 @@ type SaveButtonProps = {
 };
 
 export default function SaveButton({ onPress, title }: SaveButtonProps) {
+  const { colorScheme } = useColorScheme();
+	const isLight = colorScheme === "light";
+
   return (
-    <TouchableOpacity style={styles.saveButton} onPress={onPress}>
-      <Ionicons name="save" size={24} color="#FFF" />
-      <Text style={styles.saveButtonText}>{title}</Text>
+    <TouchableOpacity className='flex-row bg-accent-400 dark:bg-dark-accent-400 p-[16] rounded-[12] items-center justify-center mt-[20] mb-[40]' onPress={onPress}>
+      <Ionicons name="save" size={24} color={isLight ? colours.text[50] : colours.dark.text.DEFAULT} />
+      <Text className='text-text-50 dark:text-dark-text text-lg font-semibold ml-[8]'>{title}</Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  saveButton: {
-    flexDirection: 'row',
-    backgroundColor: '#208b00',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 40,
-  },
-
-  saveButtonText: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
-});

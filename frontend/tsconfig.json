@@ -8,6 +8,7 @@
       "@Components/*": ["./src/components/*"],
       "@Hooks/*": ["./src/hooks/*"],
       "@Types/*": ["./src/types/*"],
+      "@Theme/*": ["./src/theme/*"],
       "@Database/*": ["./src/database/*"]
     }
   },
