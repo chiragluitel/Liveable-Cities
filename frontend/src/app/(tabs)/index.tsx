@@ -46,7 +46,7 @@ export default function HomePage() {
         </View>
       </ScrollView>
 
-      <StatusBar style={isLight ? "light" : "dark"} />
+      <StatusBar style="auto" />
     </View>
   );
 }

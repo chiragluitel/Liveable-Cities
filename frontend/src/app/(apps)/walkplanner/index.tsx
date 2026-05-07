@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useSearchLogic from "@/src/hooks/useSearchLogic";
 import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/walkplanner/BottomSheet/WalkPlannerBottomSheet";
 import CaseyMap from "@/src/components/map/CaseyMap";
+import { useColorScheme } from "nativewind";
+import { colors } from "@Theme/colours";
 
 const WalkPlannerHomePage = () => {
 	const searchState = useSearchLogic();
@@ -16,9 +18,22 @@ const WalkPlannerHomePage = () => {
 		bottomSheetRef.current?.collapseToSearch();
 	};
 
+	const { colorScheme } = useColorScheme();
+	
+	const isLight = colorScheme === "light";
+
 	return (
-		<View className="flex-1 bg-[#F2F2F7]">
-			<Stack.Screen options={{headerShown: false}} />
+		<View className="flex-1 bg-background-50 dark:bg-dark-background-50">
+			<Stack.Screen options={{
+				headerShown: false,
+				headerStyle: {
+					backgroundColor: isLight ? colors.background[100] : colors.dark.background[100],
+				},
+				headerTitleStyle: {
+					color: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+				},
+				headerTintColor: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+				}} />
 
 			{/* Map takes up the full screen behind the bottom sheet */}
 			<View className="absolute inset-0" onTouchStart={handleMapInteraction}>
@@ -26,11 +41,11 @@ const WalkPlannerHomePage = () => {
 			</View>
 
 			<TouchableOpacity
-				style={[styles.backBtn, { top: insets.top + 12 }]}
+				style={[styles.backBtnShadown, { top: insets.top + 12 }]}
 				onPress={() => router.back()}
-				
+				className="absolute left-[16] py-[8] px-[14] bg-background-200 dark:bg-dark-background-400 rounded-[8]"
 			>
-				<Text style={styles.backLabel}>‹ Back</Text>
+				<Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">‹ Back</Text>
 			</TouchableOpacity>
 
 			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} />
@@ -39,22 +54,12 @@ const WalkPlannerHomePage = () => {
 }
 
 const styles = StyleSheet.create({
-	backBtn: {
-		position: 'absolute',
-		left: 16,
-		paddingVertical: 8,
-		paddingHorizontal: 14,
-		backgroundColor: 'white',
-		borderRadius: 8,
+	backBtnShadown: {
 		shadowColor: '#000',
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 4,
-	},
-	backLabel: {
-		fontSize: 16,
-		fontWeight: '600',
-	},
+	}
 });
 
 
