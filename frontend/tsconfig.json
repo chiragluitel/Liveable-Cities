@@ -3,14 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ],
+      "@/*": ["./*"],
       "@Assets/*": ["./src/assets/*"],
       "@Components/*": ["./src/components/*"],
       "@Hooks/*": ["./src/hooks/*"],
-      "@Types/*": ["./src/ypes/*"],
-      "@Theme/*": ["./src/theme/*"]
+      "@Types/*": ["./src/types/*"],
+      "@Theme/*": ["./src/theme/*"],
+      "@Database/*": ["./src/database/*"]
     }
   },
   "include": [

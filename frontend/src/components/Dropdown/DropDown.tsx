@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
-import React, { ReactElement, ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { ItemProps } from "./DropDownItem";
 import useAsyncStorage from "@Hooks/useAsyncStorage";
@@ -19,6 +19,21 @@ type Anchor = {
   y: number
   width: number
   height: number
+};
+
+import { createContext, useContext } from "react";
+
+type DropDownContextType = {
+  itemPressed: (value: string) => void
+  isSelected: (value: string) => boolean
+};
+
+const DropDownContext = createContext<DropDownContextType | null>(null);
+
+export const useDropDownContext = () => {
+  const ctx = useContext(DropDownContext);
+  if (!ctx) throw new Error("useDropDownContext must be used within provider");
+  return ctx;
 };
 
 export default function DropDown({
@@ -44,48 +59,21 @@ export default function DropDown({
     actionFunc(value);
   }
 
+  const isSelected = (value: string) => {
+    return selectedValue === value
+  }
+
   function getButtonPos() {
     if (!buttonRef.current) {
       return;
     }
 
     buttonRef.current.measure(
-      (
-        x: number, 
-        y: number,
-        width: number,
-        height: number,
-        pageX: number,
-        pageY: number,
-      ) => {
-        setAnchor({
-          x: pageX,
-          y: pageY,
-          width,
-          height,
-        });
+      (x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
+        setAnchor({x: pageX, y: pageY, width, height});
       }
     );
   }
-
-  // Update dropdown items with onPressFunc and selection state
-  const enhancedChildren = React.Children.map(children, (child) => {
-    if (!React.isValidElement(child)) {
-      return child;
-    }
-
-    if ((child as ReactElement<ItemProps>).props.value === selectedValue) {
-      return React.cloneElement(child as ReactElement<ItemProps>, {
-        onPressFunc: itemPressed,
-        isSelected: true,
-      });
-    } else {
-      return React.cloneElement(child as ReactElement<ItemProps>, {
-        onPressFunc: itemPressed,
-        isSelected: false,
-      });
-    }
-  });
 
   return (
     <View className={`w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] 
@@ -117,7 +105,9 @@ export default function DropDown({
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
               >
-                {enhancedChildren}
+                <DropDownContext.Provider value={{itemPressed, isSelected}}>
+                  {children}
+                </DropDownContext.Provider>
               </ScrollView>
             </View>
           )}

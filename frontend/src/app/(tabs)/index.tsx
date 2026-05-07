@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar"
 import { Text, View, ScrollView } from "react-native";
 import FeatureCard from "@Components/HomePage/FeatureCard";
 import HomeHeader from "@Components/HomePage/HomeHeader";
+import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
 
 export default function HomePage() {
   const router = useRouter();
@@ -13,7 +14,11 @@ export default function HomePage() {
       <HomeHeader />
 
       <ScrollView>
-        {/* content */}
+      {/* content */}
+
+        {/* weather widget */}
+        <WeatherWidget />
+
         <View className="gap-y-4 pb-[20]">
           {/* walk planner app */}
           <FeatureCard
