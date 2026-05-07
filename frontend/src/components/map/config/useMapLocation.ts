@@ -12,6 +12,17 @@ async function requestPermission(): Promise<boolean> {
   return true;
 }
 
+export async function getLocation(): Promise<UserLocation | null> {
+  const granted = await requestPermission();
+  if (!granted) return null;
+
+  const loc = await Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.High,
+  });
+
+  return { lat: loc.coords.latitude, lng: loc.coords.longitude };
+}
+
 // Watches the user's position continuously, firing onUpdate each time they move 5+ metres.
 export async function watchLocation(
   onUpdate: (loc: UserLocation) => void
