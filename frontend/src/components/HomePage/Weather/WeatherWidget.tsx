@@ -10,7 +10,7 @@ export default function WeatherWidget(){
 
     if (loading) {
         return (
-            <View className="bg-green-900 p-5 rounded-2xl mt-5">
+            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
                 {/* loading spinner animation */}
                 <ActivityIndicator color="white" />
             </View>
@@ -19,8 +19,8 @@ export default function WeatherWidget(){
 
     if (!weather) {
         return (
-            <View className="bg-green-900 p-5 rounded-2xl mt-5">
-                <Text className="text-white">
+            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
+                <Text className="text-text dark:text-dark-text">
                     Unable to load weather!
                 </Text>
             </View>

@@ -17,11 +17,11 @@ const FeatureCard = ({
     <Pressable onPress={onPress}> 
 
       <View className="mt-6 rounded-2xl p-5 bg-primary-400 dark:bg-primary-800">
-        <Text className="text-text dark:text-dark-text text-lg font-bold">
+        <Text className="text-dark-text dark:text-dark-text text-lg font-bold">
           {title}
         </Text>
 
-        <Text className="text-text-800 dark:text-dark-text-800 text-sm mt-1">
+        <Text className="text-dark-text-900 dark:text-dark-text-800 text-sm mt-1">
           {description}
         </Text>
         

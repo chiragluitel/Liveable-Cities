@@ -1,7 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactNode, useRef, useState } from "react";
 import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
-import { ItemProps } from "./DropDownItem";
 import useAsyncStorage from "@Hooks/useAsyncStorage";
 import { colors } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
