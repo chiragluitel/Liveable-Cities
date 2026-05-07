@@ -45,6 +45,7 @@ export default function SelectedWalkSheet({
         <SelectedWalkInfoSection
           title={selectedWalkData.infoTitle}
           text={selectedWalkData.infoText}
+          selectedFilters={selectedWalkData.selectedFilters}
         />
 
         <SelectedWalkNearbyList nearbyList={selectedWalkData.nearbyList} />

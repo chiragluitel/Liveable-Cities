@@ -1,6 +1,6 @@
 export type SelectedWalkVariant = "default" | "custom";
 
-export type NearbyPlaceType = "public-toilets" | "park" | "rest-area";
+export type NearbyPlaceType = "bbq" | "library" | "bench" | "toilet";
 
 export type NearbyPlace = {
   id: string;
@@ -16,5 +16,6 @@ export type SelectedWalkData = {
   showImages: boolean;
   infoTitle: string;
   infoText: string;
+  selectedFilters?: string[];
   nearbyList: NearbyPlace[];
 };

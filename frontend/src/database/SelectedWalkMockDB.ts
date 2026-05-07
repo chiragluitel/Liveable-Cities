@@ -3,6 +3,29 @@ import {
   SelectedWalkVariant,
 } from "@Types/TypesForSelectedWalk";
 
+const nearbyMapPlaces = [
+  {
+    id: "bbq",
+    label: "BBQ",
+    placeType: "bbq",
+  },
+  {
+    id: "library",
+    label: "Library",
+    placeType: "library",
+  },
+  {
+    id: "bench",
+    label: "Bench",
+    placeType: "bench",
+  },
+  {
+    id: "toilet",
+    label: "Toilet",
+    placeType: "toilet",
+  },
+] as const;
+
 const selectedWalkMockData: Record<SelectedWalkVariant, SelectedWalkData> = {
   default: {
     screenTitle: "Walk Selected",
@@ -13,23 +36,7 @@ const selectedWalkMockData: Record<SelectedWalkVariant, SelectedWalkData> = {
     infoTitle: "About",
     infoText:
       "A calm scenic walk with paved paths, shaded areas, and nearby community facilities.",
-    nearbyList: [
-      {
-        id: "public-toilets",
-        label: "Public Toilets",
-        placeType: "public-toilets",
-      },
-      {
-        id: "parks",
-        label: "Parks",
-        placeType: "park",
-      },
-      {
-        id: "rest-areas",
-        label: "Rest Areas",
-        placeType: "rest-area",
-      },
-    ],
+    nearbyList: [...nearbyMapPlaces],
   },
 
   custom: {
@@ -41,23 +48,8 @@ const selectedWalkMockData: Record<SelectedWalkVariant, SelectedWalkData> = {
     infoTitle: "Route Summary",
     infoText:
       "This route was generated based on your selected walking preferences.",
-    nearbyList: [
-      {
-        id: "public-toilets",
-        label: "Public Toilets",
-        placeType: "public-toilets",
-      },
-      {
-        id: "parks",
-        label: "Parks",
-        placeType: "park",
-      },
-      {
-        id: "rest-areas",
-        label: "Rest Areas",
-        placeType: "rest-area",
-      },
-    ],
+    selectedFilters: ["Water Fountain", "Park", "Rubbish Bins"],
+    nearbyList: [...nearbyMapPlaces],
   },
 };
 
