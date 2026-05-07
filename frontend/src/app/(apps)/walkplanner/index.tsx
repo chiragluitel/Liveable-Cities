@@ -33,7 +33,7 @@ const WalkPlannerHomePage = () => {
 			<TouchableOpacity
 				style={[styles.backBtnShadown, { top: insets.top + 12 }]}
 				onPress={() => router.back()}
-				className="absolute left-[16] py-[8] px-[14] bg-background-200 dark:bg-dark-background-400 rounded-[8]"
+				className="absolute left-[16] py-[8] px-[14] bg-background-300 dark:bg-dark-background-400 rounded-[8]"
 			>
 				<Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">‹ Back</Text>
 			</TouchableOpacity>

@@ -45,7 +45,7 @@ export default function DropDown({
   const buttonRef = useRef<View | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  //const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
+  
   const [selectedValue, setSelectedValue] = useAsyncStorage(title, initialSelected ? initialSelected : "");
 
   const { colorScheme } = useColorScheme();

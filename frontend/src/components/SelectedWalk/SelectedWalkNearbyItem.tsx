@@ -52,7 +52,7 @@ export default function SelectedWalkNearbyItem({
   return (
     <Pressable
       //style={[styles.container, isSelected && styles.selectedContainer]}
-      className={`flex-row items-center mb-[22] rounded-[16] py-[6] px-[4] ${isSelected ? "bg-primary-300 dark:bg-dark-primary-300" : ""}`}
+      className={`flex-row items-center mb-[22] rounded-[16] py-[6] px-[4] ${isSelected ? "bg-primary-100 dark:bg-dark-primary-300" : ""}`}
       onPress={() => onNearbyPress(place)}
     >
       <View
