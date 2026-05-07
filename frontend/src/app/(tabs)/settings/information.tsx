@@ -1,4 +1,4 @@
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import WebLinkButton from "@Components/WebLinkButton";
 import SettingsGroup from "@Components/settings/SettingsGroup";
 import { Stack } from "expo-router";
@@ -21,12 +21,12 @@ export default function Information() {
           headerTitle: "Information", 
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: isLight ? colors.background[100] : colors.dark.background[100],
+            backgroundColor: isLight ? colours.background[100] : colours.dark.background[100],
           },
           headerTitleStyle: {
-            color: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+            color: isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT,
           },
-          headerTintColor: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+          headerTintColor: isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT,
         }} />
 
         <SettingsGroup title="Project Information">

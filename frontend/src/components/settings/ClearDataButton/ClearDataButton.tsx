@@ -3,7 +3,7 @@ import ConfirmBox from "@Components/ConfirmBox";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
 import { Modal, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 
 export default function ClearDataButton() {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -62,7 +62,7 @@ export default function ClearDataButton() {
       <TouchableHighlight
         onPress={() => setAlertVisible(true)}
         className="rounded-[10]"
-        underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+        underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
         <View className="bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
           <Text style={{fontSize: 17}} className="text-warning-400 dark:text-warning-500">Clear All Data</Text>

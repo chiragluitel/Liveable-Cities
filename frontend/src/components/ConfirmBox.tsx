@@ -1,6 +1,6 @@
 import { useColorScheme } from "nativewind";
 import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 
 type ConfirmBoxProps = {
   title: string
@@ -26,7 +26,7 @@ export default function ConfirmBox({title, message, confirmFunc}: ConfirmBoxProp
         <TouchableHighlight 
           className="w-full rounded-b-[20]"
           onPress={() => confirmFunc()}
-          underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+          underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
           <View className="h-full justify-center bg-accent-200 dark:bg-dark-accent-200 rounded-b-[20]">
             <Text style={{textAlign: "center"}} className="text-accent-700 dark:text-dark-accent-700">Confirm</Text>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Animated, Pressable, StyleSheet } from "react-native";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
 
 type ToggleProps = {
@@ -31,8 +31,8 @@ export default function SlideToggle({value, onValueChange}: ToggleProps) {
   const backgroundColor = anim.interpolate({
     inputRange: [0, 1],
     outputRange: [
-      isLight ? colors.background[200] : colors.dark.background[200], 
-      isLight ? colors.accent[600] : colors.dark.accent[400]
+      isLight ? colours.background[200] : colours.dark.background[200], 
+      isLight ? colours.accent[600] : colours.dark.accent[400]
     ]
   });
 

@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactNode, useRef, useState } from "react";
 import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import useAsyncStorage from "@Hooks/useAsyncStorage";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
 
 type DropDownProps = {
@@ -119,7 +119,7 @@ export default function DropDown({
             setModalVisible(true);
         }} 
         className="rounded-[10]"
-        underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+        underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
       >
         <View 
           className="flex-row justify-between bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]" 
@@ -130,7 +130,7 @@ export default function DropDown({
             <Text style={{fontSize: 17}}  className="text-accent-600 dark:text-dark-accent-700">
               {selectedValue}
             </Text>
-            <Ionicons name="chevron-expand" size={17} color={isLight ? colors.primary[700] : colors.dark.primary[300]} />
+            <Ionicons name="chevron-expand" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[300]} />
           </View>
         </View>
       </TouchableHighlight>

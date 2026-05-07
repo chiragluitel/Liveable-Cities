@@ -1,4 +1,4 @@
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import SlideToggle from "@Components/SlideToggle";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
@@ -23,7 +23,7 @@ export default function ToggleSetting({title, initialValue, hideSeperator = fals
       <TouchableHighlight
         onPress={() => setValue(!value)}
         className="rounded-[10]"
-        underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+        underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
       >
         <View className="flex-row justify-between bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
           <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">{title}</Text>

@@ -4,14 +4,9 @@ import { Text, View, ScrollView } from "react-native";
 import FeatureCard from "@Components/HomePage/FeatureCard";
 import HomeHeader from "@Components/HomePage/HomeHeader";
 import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
-import { useColorScheme } from "nativewind";
 
 export default function HomePage() {
   const router = useRouter();
-
-  const { colorScheme } = useColorScheme();
-    
-  const isLight = colorScheme === "light";
 
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-50 px-5 pt-12">

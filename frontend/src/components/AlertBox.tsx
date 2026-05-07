@@ -1,6 +1,6 @@
 import { useColorScheme } from "nativewind";
 import { Platform, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 
 type AlertBoxProps = {
   title: string
@@ -27,7 +27,7 @@ export default function AlertBox({title, message, cancelFunc, confirmFunc}: Aler
         <TouchableHighlight 
           className="w-[50%] rounded-bl-[20]"
           onPress={() => cancelFunc()}
-          underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+          underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
           <View className="h-full justify-center bg-accent-200 dark:bg-dark-accent-200 rounded-bl-[20] border-r-hairline border-b-text-200 dark:border-b-dark-text-400">
             <Text style={{textAlign: "center"}} className="text-accent-700 dark:text-dark-accent-700">Cancel</Text>
@@ -36,7 +36,7 @@ export default function AlertBox({title, message, cancelFunc, confirmFunc}: Aler
         <TouchableHighlight 
           className="w-[50%] rounded-br-[20]"
           onPress={() => confirmFunc()}
-          underlayColor={isLight ? colors.background[400] : colors.dark.background[50]}
+          underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
           <View className="h-full justify-center bg-warning-200 dark:bg-dark-warning-300 rounded-br-[20]">
             <Text style={{textAlign: "center"}} className="text-warning-600 dark:text-dark-warning-800">Confirm</Text>

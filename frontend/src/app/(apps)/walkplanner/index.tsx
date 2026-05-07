@@ -6,7 +6,7 @@ import useSearchLogic from "@/src/hooks/useSearchLogic";
 import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/walkplanner/BottomSheet/WalkPlannerBottomSheet";
 import CaseyMap from "@/src/components/map/CaseyMap";
 import { useColorScheme } from "nativewind";
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 
 const WalkPlannerHomePage = () => {
 	const searchState = useSearchLogic();
@@ -27,12 +27,12 @@ const WalkPlannerHomePage = () => {
 			<Stack.Screen options={{
 				headerShown: false,
 				headerStyle: {
-					backgroundColor: isLight ? colors.background[100] : colors.dark.background[100],
+					backgroundColor: isLight ? colours.background[100] : colours.dark.background[100],
 				},
 				headerTitleStyle: {
-					color: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+					color: isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT,
 				},
-				headerTintColor: isLight ? colors.text.DEFAULT : colors.dark.text.DEFAULT,
+				headerTintColor: isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT,
 				}} />
 
 			{/* Map takes up the full screen behind the bottom sheet */}

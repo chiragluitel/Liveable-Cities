@@ -1,4 +1,4 @@
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 
@@ -10,7 +10,7 @@ export default function Layout() {
   return <Stack screenOptions={{
     animation: "slide_from_right",
     contentStyle: {
-      backgroundColor: isLight ? colors.background[50] : colors.dark.background[50]
+      backgroundColor: isLight ? colours.background[50] : colours.dark.background[50]
     }
   }} />;
 }

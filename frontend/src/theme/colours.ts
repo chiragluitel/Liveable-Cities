@@ -1,4 +1,4 @@
-export const colors = {
+export const colours = {
   text: {
     DEFAULT: '#000000',
     50: '#f2f2f2',

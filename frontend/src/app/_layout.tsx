@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import '@/global.css'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { WalkProvider } from '@/src/context/SavedCustomWalks';
-import { colors } from "@Theme/colours";
+import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
 import useAsyncStorage from "@Hooks/useAsyncStorage";
 import { useEffect } from "react";
@@ -40,8 +40,8 @@ export default function RootLayout() {
             {
               contentStyle: {
                 backgroundColor: isLight
-                  ? colors.background[50]
-                  : colors.dark.background[50]
+                  ? colours.background[50]
+                  : colours.dark.background[50]
               }
             }
           }
