@@ -24,14 +24,9 @@ export function NearbySection({ amenities, onHeaderPress, onAmenityPress }: Near
     <View className="mt-6 mb-4">
       <ClickableHeader header="Nearby" onHeaderPress={() => onHeaderPress?.()} />
 
-      <HorizontalCarousel<Amenity> 
-        data={amenities} 
-        rows={3} 
-        keyExtractor={(item) => item.id} 
-        snapToInterval={SNAP_INTERVAL} 
-        renderItem={({ item }) => (
-          <NearbyCard amenity={item} width={CARD_WIDTH} onPress={onAmenityPress} /> 
-        )}
+      <HorizontalCarousel<Amenity> data={amenities} rows={3} keyExtractor={(item) => item.id} snapToInterval={SNAP_INTERVAL} renderItem={({ item }) => (
+                <NearbyCard amenity={item} width={CARD_WIDTH} onPress={onAmenityPress} /> 
+            )}
       />
     </View>
   );

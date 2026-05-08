@@ -25,15 +25,7 @@ const  CommunityWalkSection = ({walks, onHeaderPress, onWalkPress}: CommunityWal
     return (
         <View className="mt-6 mb-4">
             <ClickableHeader header="Community Walks" onHeaderPress={onHeaderPress} />
-            <HorizontalCarousel<Walk> 
-                data={walks} 
-                keyExtractor={(item) => item.id} 
-                snapToInterval={SNAP_INTERVAL} 
-                renderItem={({ item }) => (
-                    <CommunityWalkCard walk={item} onPress={onWalkPress} width={CARD_WIDTH} />
-                )} 
-                rows={3}
-            />
+            <HorizontalCarousel<Walk> data={walks} keyExtractor={(item) => item.id} snapToInterval={SNAP_INTERVAL} renderItem={({ item }) => (<CommunityWalkCard walk={item} onPress={onWalkPress} width={CARD_WIDTH} />)} rows={3}/>
         </View>
     )
 }

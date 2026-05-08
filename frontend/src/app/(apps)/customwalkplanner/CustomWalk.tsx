@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, ScrollView, } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useWalks } from '../../../context/SavedCustomWalks';
 
 import InputField from '@/src/components/customwalkplan/InputField';
 import FilterSwitch from '@/src/components/customwalkplan/FilterSwitch';
 import SaveButton from '@/src/components/customwalkplan/SaveButton';
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function WalkPlannerScreen() {
-  const insets = useSafeAreaInsets();
-  
   const router = useRouter();
   const params = useLocalSearchParams();
   const { saveWalk, walks } = useWalks(); //Connects to global walks state
@@ -63,11 +60,9 @@ export default function WalkPlannerScreen() {
     router.back(); // Navigate back to the dashboard
   };
   return (
-    <View className='flex-1 bg-background-50 dark:bg-dark-background-100'>      
-      <ScrollView contentContainerStyle={{padding: 20, top: insets.top + 12}}>
-        <Text className='text-3xl font-bold mb-[24] text-text dark:text-dark-text'>
-          Custom Walk Settings
-        </Text>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.headerTitle}>Custom Walk Settings</Text>
 
         <InputField
           label="Enter a name for the walk:"
@@ -86,9 +81,7 @@ export default function WalkPlannerScreen() {
         
         />
 
-        <Text className='text-xl font-semibold mt-[10] mb-[16] text-text dark:text-dark-text'>
-          Environmental Filters
-        </Text>
+        <Text style={styles.sectionTitle}>Environmental Filters</Text>
 
         {/* Water Fountain Filter */}
         <FilterSwitch
@@ -143,6 +136,30 @@ export default function WalkPlannerScreen() {
 
       </ScrollView>
 
-    </View>
+    </SafeAreaView>
   );
 }
+
+// StyleSheet architecture for consistent rendering
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#F2F2F7', // Standard iOS system background color
+  },
+  container: {
+    padding: 20,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    color: '#000',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 10,
+    marginBottom: 16,
+    color: '#000',
+  },
+});
