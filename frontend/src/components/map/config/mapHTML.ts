@@ -1,12 +1,8 @@
 // map HTML lives here. Leaflet needs a browser context so we use a WebView. Other options with react native support required API connection with pay per use.
 
 import { CASEY_COORDINATES, DEFAULT_ZOOM } from './mapConfig';
-import { useColorScheme } from "nativewind";
-import { colours } from "@Theme/colours";
 
 function buildMapHTML(): string {
-  const { colorScheme } = useColorScheme();
-	const isLight = colorScheme === "light";
 
   const { latitude, longitude } = CASEY_COORDINATES;
 
@@ -19,7 +15,7 @@ function buildMapHTML(): string {
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
 
   <style>
-    html, body, #map { margin: 0; height: 100%; background: ${isLight ? colours.background.DEFAULT : colours.dark.background.DEFAULT}; }
+    html, body, #map { margin: 0; height: 100%; background: #ffffff; }
   </style>
 </head>
 
