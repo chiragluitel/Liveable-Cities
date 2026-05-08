@@ -6,6 +6,7 @@ import { useWalks } from '../../../context/SavedCustomWalks';
 import InputField from '@/src/components/customwalkplan/InputField';
 import FilterSwitch from '@/src/components/customwalkplan/FilterSwitch';
 import SaveButton from '@/src/components/customwalkplan/SaveButton';
+import DistanceSlider from '@/src/components/customwalkplan/DistanceSlider';
 
 export default function WalkPlannerScreen() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function WalkPlannerScreen() {
   const { saveWalk, walks } = useWalks(); //Connects to global walks state
 
   // State initialization 
-  const [distance, setDistance] = useState('');
+  const [distance, setDistance] = useState(1);
   const [cuswalkname, setcuswalk] = useState('');
   const [hasWaterFountain, setHasWaterFountain] = useState(false);
   const [hasDisabledToilets, setHasDisabledToilets] = useState(false);
@@ -29,7 +30,7 @@ export default function WalkPlannerScreen() {
       const existingWalk = walks.find((w: any) => w.id === params.id);
       if (existingWalk) {
         setcuswalk(existingWalk.cuswalkname);
-        setDistance(existingWalk.distance);
+        setDistance(Number(existingWalk.distance) || 1);
         setHasWaterFountain(existingWalk.hasWaterFountain);
         setHasDisabledToilets(existingWalk.hasDisabledToilets);
         setHasPark(existingWalk.hasPark);
@@ -72,13 +73,13 @@ export default function WalkPlannerScreen() {
         />
 
         {/* Distance Input */}
-        <InputField
-          label="Select a distance range for your walk (km): "
+        <DistanceSlider
+          label="Select a distance for your walk:"
           value={distance}
-          onChangeText={setDistance}
-          keyboardType="numeric"
-          placeholder='1 - 5'
-        
+          onChange={setDistance}
+          minimumValue={1}
+          maximumValue={10}
+          step={1}
         />
 
         <Text style={styles.sectionTitle}>Environmental Filters</Text>
