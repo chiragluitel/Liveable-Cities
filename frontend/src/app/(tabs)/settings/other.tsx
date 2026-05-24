@@ -1,5 +1,5 @@
-import ClearDataButton from "@Components/settings/ClearDataButton/ClearDataButton";
-import SettingsGroup from "@Components/settings/SettingsGroup";
+import ClearDataButton from "@Components/Settings/ClearDataButton";
+import SettingsGroup from "@Components/Settings/SettingsGroup";
 import { Stack } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 

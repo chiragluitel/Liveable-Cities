@@ -5,17 +5,17 @@ import { Ionicons } from "@expo/vector-icons";
 export default function SelectedWalkActionRow() {
   return (
     <View style={styles.actionRow}>
-      <Pressable style={styles.primaryAction}>
+      <Pressable style={styles.primaryAction} onPress={() => console.log('Start Walk pressed')}>
         <Ionicons name="navigate-circle-outline" size={22} color="#fff" />
         <Text style={styles.primaryActionText}>Start Walk</Text>
       </Pressable>
 
-      <Pressable style={styles.secondaryAction}>
+      <Pressable style={styles.secondaryAction} onPress={() => console.log('Download pressed')}>
         <Ionicons name="download-outline" size={22} color="#111" />
         <Text style={styles.secondaryActionText}>Download</Text>
       </Pressable>
 
-      <Pressable style={styles.secondaryAction}>
+      <Pressable style={styles.secondaryAction} onPress={() => console.log('More pressed')}>
         <Ionicons name="ellipsis-horizontal" size={22} color="#111" />
         <Text style={styles.secondaryActionText}>More</Text>
       </Pressable>

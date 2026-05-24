@@ -1,6 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { StyleSheet, Text, View } from "react-native";
 
 type SelectedWalkTitleInfoProps = {
   title: string;
@@ -17,10 +16,6 @@ export default function SelectedWalkTitleInfo({
     <View style={styles.container}>
       <View style={styles.titleRow}>
         <Text style={styles.walkName}>{title}</Text>
-
-        <Pressable style={styles.circleIconButton}>
-          <Feather name="share" size={20} color="#8a8a8a" />
-        </Pressable>
       </View>
 
       <Text style={styles.walkMeta}>
@@ -49,14 +44,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     color: "#111",
     marginRight: 12,
-  },
-  circleIconButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#dfe3de",
-    justifyContent: "center",
-    alignItems: "center",
   },
   walkMeta: {
     fontSize: 17,

@@ -11,7 +11,7 @@ export default function WalkSelectedPage() {
       <Stack.Screen
         options={{
           title: "Walk Selected",
-          headerBackTitle: "Back",
+          headerBackTitle: "Home",
         }}
       />
 

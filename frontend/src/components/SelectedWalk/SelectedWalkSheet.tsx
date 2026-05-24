@@ -1,12 +1,8 @@
 import React from "react";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { StyleSheet, View } from "react-native";
-import { SelectedWalkData } from "../../types/TypesForSelectedWalk";
-import SelectedWalkTitleInfo from "./SelectedWalkTitleInfo";
-import SelectedWalkActionRow from "./SelectedWalkActionRow";
-import SelectedWalkImageGallery from "./SelectedWalkImageGallery";
-import SelectedWalkInfoSection from "./SelectedWalkInfoSection";
-import SelectedWalkNearbyList from "./SelectedWalkNearbyList";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { StyleSheet } from "react-native";
+import { SelectedWalkData } from "../../types/walkDetailTypes";
+import SelectedWalkContent from "./SelectedWalkContent";
 
 type SelectedWalkSheetProps = {
   sheetRef: React.RefObject<BottomSheet | null>;
@@ -28,30 +24,7 @@ export default function SelectedWalkSheet({
       handleIndicatorStyle={styles.handleIndicator}
       backgroundStyle={styles.background}
     >
-      <BottomSheetScrollView
-        contentContainerStyle={styles.contentContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        <SelectedWalkTitleInfo
-          title={selectedWalkData.title}
-          distanceText={selectedWalkData.distanceText}
-          durationText={selectedWalkData.durationText}
-        />
-
-        <SelectedWalkActionRow />
-
-        {selectedWalkData.showImages && <SelectedWalkImageGallery />}
-
-        <SelectedWalkInfoSection
-          title={selectedWalkData.infoTitle}
-          text={selectedWalkData.infoText}
-          selectedFilters={selectedWalkData.selectedFilters}
-        />
-
-        <SelectedWalkNearbyList nearbyList={selectedWalkData.nearbyList} />
-
-        <View style={styles.bottomSpace} />
-      </BottomSheetScrollView>
+      <SelectedWalkContent walk={selectedWalkData} />
     </BottomSheet>
   );
 }
@@ -67,12 +40,5 @@ const styles = StyleSheet.create({
     height: 7,
     borderRadius: 999,
     backgroundColor: "#a8a8a8",
-  },
-  contentContainer: {
-    paddingHorizontal: 18,
-    paddingBottom: 50,
-  },
-  bottomSpace: {
-    height: 30,
   },
 });

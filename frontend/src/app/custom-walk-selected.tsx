@@ -11,7 +11,7 @@ export default function CustomWalkSelectedPage() {
       <Stack.Screen
         options={{
           title: "Custom Walk",
-          headerBackTitle: "Back",
+          headerBackTitle: "Home",
         }}
       />
 
