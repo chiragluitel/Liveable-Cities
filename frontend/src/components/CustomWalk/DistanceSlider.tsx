@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
 
 type DistanceSliderProps = {
@@ -20,13 +20,13 @@ export default function DistanceSlider({
   step = 1,
 }: DistanceSliderProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+    <View className="mb-6">
+      <Text className="text-base font-medium mb-2 text-[#333]">{label}</Text>
 
-      <Text style={styles.valueText}>{value} km</Text>
+      <Text className="text-lg font-semibold text-black mb-2">{value} km</Text>
 
       <Slider
-        style={styles.slider}
+        style={{ width: '100%', height: 40 }}
         minimumValue={minimumValue}
         maximumValue={maximumValue}
         step={step}
@@ -37,45 +37,10 @@ export default function DistanceSlider({
         thumbTintColor="#208b00"
       />
 
-      <View style={styles.rangeLabels}>
-        <Text style={styles.rangeText}>{minimumValue} km</Text>
-        <Text style={styles.rangeText}>{maximumValue} km</Text>
+      <View className="flex-row justify-between">
+        <Text className="text-sm text-[#666]">{minimumValue} km</Text>
+        <Text className="text-sm text-[#666]">{maximumValue} km</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 24,
-  },
-
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
-    color: '#333',
-  },
-
-  valueText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
-    marginBottom: 8,
-  },
-
-  slider: {
-    width: '100%',
-    height: 40,
-  },
-
-  rangeLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  rangeText: {
-    fontSize: 14,
-    color: '#666',
-  },
-});

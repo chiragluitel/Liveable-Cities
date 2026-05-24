@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 type SelectedWalkInfoSectionProps = {
   title: string;
@@ -15,15 +15,15 @@ export default function SelectedWalkInfoSection({
   const hasSelectedFilters = selectedFilters && selectedFilters.length > 0;
 
   return (
-    <View style={styles.infoBox}>
-      <Text style={styles.infoTitle}>{title}</Text>
-      <Text style={styles.infoText}>{text}</Text>
+    <View className="pt-[6px] pb-3 mb-[10px]">
+      <Text className="text-[17px] font-bold text-[#111] mb-2">{title}</Text>
+      <Text className="text-[15px] leading-6 text-[#222]">{text}</Text>
 
       {hasSelectedFilters && (
-        <View style={styles.filterTagContainer}>
+        <View className="flex-row flex-wrap mt-[14px]">
           {selectedFilters.map((filter) => (
-            <View key={filter} style={styles.filterTag}>
-              <Text style={styles.filterTagText}>{filter}</Text>
+            <View key={filter} className="bg-[#d7d7db] rounded-full px-[14px] py-2 mr-[10px] mb-[10px]">
+              <Text className="text-[#111] text-[13px] font-semibold">{filter}</Text>
             </View>
           ))}
         </View>
@@ -31,40 +31,3 @@ export default function SelectedWalkInfoSection({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  infoBox: {
-    paddingTop: 6,
-    paddingBottom: 12,
-    marginBottom: 10,
-  },
-  infoTitle: {
-    fontSize: 17,
-    fontWeight: "700",
-    color: "#111",
-    marginBottom: 8,
-  },
-  infoText: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: "#222",
-  },
-  filterTagContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 14,
-  },
-  filterTag: {
-    backgroundColor: "#d7d7db",
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  filterTagText: {
-    color: "#111",
-    fontSize: 13,
-    fontWeight: "600",
-  },
-});

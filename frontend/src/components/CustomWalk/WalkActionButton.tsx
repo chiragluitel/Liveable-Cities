@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 type WalkActionButtonProps = {
-  iconName: keyof typeof Ionicons.glyphMap;//Ensuring icon name is a valid icon name from "Ionicons"
+  iconName: keyof typeof Ionicons.glyphMap;
   label: string;
   color: string;
   onPress?: () => void;
@@ -16,23 +16,9 @@ export default function WalkActionButton({
   onPress,
 }: WalkActionButtonProps) {
   return (
-    <TouchableOpacity style={styles.actionButton} onPress={onPress}>
+    <TouchableOpacity className="flex-row items-center ml-4" onPress={onPress}>
       <Ionicons name={iconName} size={20} color={color} />
-      <Text style={[styles.actionText, { color }]}>{label}</Text>
+      <Text className="ml-1 text-[15px] font-medium" style={{ color }}>{label}</Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 16,
-  },
-
-  actionText: {
-    marginLeft: 4,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-});

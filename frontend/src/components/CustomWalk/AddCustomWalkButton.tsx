@@ -1,33 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function AddCustomWalkButton() {
   return (
     <Link href={"/custom-walk" as any} asChild>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity className="flex-row bg-[#007AFF] rounded-xl items-center justify-center mb-6 p-4">
         <Ionicons name="add" size={24} color="#FFF" />
-        <Text style={styles.addButtonText}>Add Custom Walk</Text>
+        <Text className="text-white text-lg font-semibold ml-2">Add Custom Walk</Text>
       </TouchableOpacity>
     </Link>
   );
 }
-
-const styles = StyleSheet.create({
-  addButton: {
-    flexDirection: 'row',
-    backgroundColor: '#007AFF',
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 24,
-  },
-
-  addButtonText: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
-});

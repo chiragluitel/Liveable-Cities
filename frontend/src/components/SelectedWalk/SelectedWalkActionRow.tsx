@@ -1,61 +1,24 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function SelectedWalkActionRow() {
   return (
-    <View style={styles.actionRow}>
-      <Pressable style={styles.primaryAction} onPress={() => console.log('Start Walk pressed')}>
+    <View className="flex-row mb-5">
+      <Pressable className="flex-1 bg-black rounded-[18px] py-[18px] justify-center items-center mr-[10px]" onPress={() => console.log('Start Walk pressed')}>
         <Ionicons name="navigate-circle-outline" size={22} color="#fff" />
-        <Text style={styles.primaryActionText}>Start Walk</Text>
+        <Text className="text-white font-bold text-[15px] mt-2">Start Walk</Text>
       </Pressable>
 
-      <Pressable style={styles.secondaryAction} onPress={() => console.log('Download pressed')}>
+      <Pressable className="flex-1 bg-[#dcdedd] rounded-[18px] py-[18px] justify-center items-center mr-[10px]" onPress={() => console.log('Download pressed')}>
         <Ionicons name="download-outline" size={22} color="#111" />
-        <Text style={styles.secondaryActionText}>Download</Text>
+        <Text className="text-[#111] font-bold text-[15px] mt-2">Download</Text>
       </Pressable>
 
-      <Pressable style={styles.secondaryAction} onPress={() => console.log('More pressed')}>
+      <Pressable className="flex-1 bg-[#dcdedd] rounded-[18px] py-[18px] justify-center items-center mr-[10px]" onPress={() => console.log('More pressed')}>
         <Ionicons name="ellipsis-horizontal" size={22} color="#111" />
-        <Text style={styles.secondaryActionText}>More</Text>
+        <Text className="text-[#111] font-bold text-[15px] mt-2">More</Text>
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  actionRow: {
-    flexDirection: "row",
-    marginBottom: 20,
-  },
-  primaryAction: {
-    flex: 1,
-    backgroundColor: "#000",
-    borderRadius: 18,
-    paddingVertical: 18,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  primaryActionText: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 15,
-    marginTop: 8,
-  },
-  secondaryAction: {
-    flex: 1,
-    backgroundColor: "#dcdedd",
-    borderRadius: 18,
-    paddingVertical: 18,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  secondaryActionText: {
-    color: "#111",
-    fontWeight: "700",
-    fontSize: 15,
-    marginTop: 8,
-  },
-});

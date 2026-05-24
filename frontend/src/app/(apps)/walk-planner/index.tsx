@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
+import { View, TouchableOpacity, Text, Dimensions } from "react-native";
 import { useRef, useCallback } from "react";
 import { useSharedValue } from "react-native-reanimated";
 import { useRouter, Stack } from "expo-router";
@@ -44,42 +44,22 @@ const WalkPlannerHomePage = () => {
 		<View className="flex-1 bg-[#F2F2F7]">
 			<Stack.Screen options={{headerShown: false}} />
 
-			{/* Map takes up the full screen behind the bottom sheet */}
 			<View className="absolute inset-0" onTouchStart={handleMapInteraction}>
 				<CaseyMap ref={mapRef} animatedSheetPosition={sheetPosition} onIconTap={handleIconTap} onRouteInfo={handleRouteInfo} />
 			</View>
 
 			<TouchableOpacity
-				style={[styles.backBtn, { top: insets.top + 12 }]}
+				className="absolute left-4 py-2 px-[14px] bg-white rounded-lg shadow"
+				style={{ top: insets.top + 12 }}
 				onPress={() => router.back()}
-				
 			>
-				<Text style={styles.backLabel}>Home</Text>
+				<Text className="text-base font-semibold">Home</Text>
 			</TouchableOpacity>
 
 			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} />
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	backBtn: {
-		position: 'absolute',
-		left: 16,
-		paddingVertical: 8,
-		paddingHorizontal: 14,
-		backgroundColor: 'white',
-		borderRadius: 8,
-		shadowColor: '#000',
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 4,
-	},
-	backLabel: {
-		fontSize: 16,
-		fontWeight: '600',
-	},
-});
 
 
 export default WalkPlannerHomePage;

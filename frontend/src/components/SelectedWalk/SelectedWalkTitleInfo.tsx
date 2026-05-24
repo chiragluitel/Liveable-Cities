@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 type SelectedWalkTitleInfoProps = {
   title: string;
@@ -13,44 +13,16 @@ export default function SelectedWalkTitleInfo({
   durationText,
 }: SelectedWalkTitleInfoProps) {
   return (
-    <View style={styles.container}>
-      <View style={styles.titleRow}>
-        <Text style={styles.walkName}>{title}</Text>
+    <View className="mb-[6px]">
+      <View className="flex-row justify-between items-start mb-[6px]">
+        <Text className="flex-1 text-[29px] leading-[35px] font-black text-[#111] mr-3">{title}</Text>
       </View>
 
-      <Text style={styles.walkMeta}>
-        <Text style={styles.blueText}>
+      <Text className="text-[17px] text-[#111] mb-[22px]">
+        <Text className="text-[#2677e8]">
           {distanceText}, {durationText}
         </Text>
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 6,
-  },
-  titleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 6,
-  },
-  walkName: {
-    flex: 1,
-    fontSize: 29,
-    lineHeight: 35,
-    fontWeight: "800",
-    color: "#111",
-    marginRight: 12,
-  },
-  walkMeta: {
-    fontSize: 17,
-    color: "#111",
-    marginBottom: 22,
-  },
-  blueText: {
-    color: "#2677e8",
-  },
-});

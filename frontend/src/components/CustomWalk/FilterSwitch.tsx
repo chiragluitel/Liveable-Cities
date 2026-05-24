@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Switch, StyleSheet } from 'react-native';
+import { View, Text, Switch } from 'react-native';
 
 type FilterSwitchProps = {
   label: string;
@@ -13,33 +13,10 @@ export default function FilterSwitch({
   onChange,
 }: FilterSwitchProps) {
   return (
-    <View style={styles.switchContainer}>
-      <Text style={styles.switchLabel}>{label}</Text>
+    <View className="flex-row items-center justify-between bg-white py-3 px-4 rounded-[10px] mb-[10px] shadow-sm">
+      <Text className="text-[17px] text-black">{label}</Text>
 
       <Switch value={value} onValueChange={onChange} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  switchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFF',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-
-  switchLabel: {
-    fontSize: 17,
-    color: '#000',
-  },
-});

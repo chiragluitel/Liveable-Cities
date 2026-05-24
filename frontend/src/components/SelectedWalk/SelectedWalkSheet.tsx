@@ -1,6 +1,5 @@
 import React from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { StyleSheet } from "react-native";
 import { SelectedWalkData } from "../../types/walkDetailTypes";
 import SelectedWalkContent from "./SelectedWalkContent";
 
@@ -21,24 +20,19 @@ export default function SelectedWalkSheet({
       index={1}
       snapPoints={snapPoints}
       enablePanDownToClose={false}
-      handleIndicatorStyle={styles.handleIndicator}
-      backgroundStyle={styles.background}
+      handleIndicatorStyle={{
+        width: 64,
+        height: 7,
+        borderRadius: 999,
+        backgroundColor: "#a8a8a8",
+      }}
+      backgroundStyle={{
+        backgroundColor: "#eef0ec",
+        borderTopLeftRadius: 28,
+        borderTopRightRadius: 28,
+      }}
     >
       <SelectedWalkContent walk={selectedWalkData} />
     </BottomSheet>
   );
 }
-
-const styles = StyleSheet.create({
-  background: {
-    backgroundColor: "#eef0ec",
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-  },
-  handleIndicator: {
-    width: 64,
-    height: 7,
-    borderRadius: 999,
-    backgroundColor: "#a8a8a8",
-  },
-});

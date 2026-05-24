@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, ScrollView } from 'react-native';
+import { Text, SafeAreaView, ScrollView } from 'react-native';
 
 import { useCustomWalks } from '../context/CustomWalkContext';
 import AddCustomWalkButton from '../components/CustomWalk/AddCustomWalkButton';
@@ -10,9 +10,9 @@ export default function Index() {
   const { walks, deleteWalk } = useCustomWalks();
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.headerTitle}>My Custom Walks</Text>
+    <SafeAreaView className="flex-1 bg-[#F2F2F7]">
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        <Text className="text-[28px] font-bold mb-6 text-black">My Custom Walks</Text>
 
         <AddCustomWalkButton />
 
@@ -27,21 +27,3 @@ export default function Index() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F2F2F7',
-  },
-
-  container: {
-    padding: 20,
-  },
-
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 24,
-    color: '#000',
-  },
-});

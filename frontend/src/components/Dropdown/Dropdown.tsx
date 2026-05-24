@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactNode, useRef, useState } from "react";
-import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Modal, Platform, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 type DropdownProps = {
   title: string
@@ -32,6 +32,17 @@ export const useDropdownContext = () => {
   return ctx;
 };
 
+const dropdownShadow = {
+  backgroundColor: "white",
+  margin: 5,
+  borderRadius: 20,
+  shadowColor: Platform.OS === "ios" ? "black" : "#0000007f",
+  shadowOffset: { width: 5, height: 5 },
+  shadowOpacity: 0.13,
+  shadowRadius: 9.8,
+  elevation: 8,
+};
+
 export default function Dropdown({
   title,
   initialSelected,
@@ -39,7 +50,7 @@ export default function Dropdown({
   onValueChange,
   children
 }: DropdownProps) {
-  const buttonRef = useRef<View | null>(null); 
+  const buttonRef = useRef<View | null>(null);
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
@@ -74,13 +85,13 @@ export default function Dropdown({
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <TouchableOpacity 
+        <TouchableOpacity
           className="flex-1 items-center justify-center"
           activeOpacity={1}
           onPressOut={() => setModalVisible(false)}
         >
           { anchor && (
-            <View 
+            <View
               style={{
                 position: "absolute",
                 left: anchor.x,
@@ -89,9 +100,8 @@ export default function Dropdown({
                 width: "85%",
               }}
             >
-              <ScrollView 
-                className="bg-white m-[5] rounded-[20]"
-                style={styles.contentShadow}
+              <ScrollView
+                style={dropdownShadow}
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
               >
@@ -104,20 +114,20 @@ export default function Dropdown({
         </TouchableOpacity>
       </Modal>
 
-      <TouchableHighlight 
+      <TouchableHighlight
         onPress={() => {
             getButtonPos();
             setModalVisible(true);
-        }} 
+        }}
         className="rounded-[10]"
         underlayColor="#747480"
       >
-        <View 
-          className="flex-row justify-between bg-white rounded-[10] p-[15]" 
+        <View
+          className="flex-row justify-between bg-white rounded-[10] p-[15]"
           ref={buttonRef}
         >
-          <Text style={{fontSize: 17}}>{title}</Text>
-          <Text style={{fontSize: 17, color: "#8e8e93"}}>
+          <Text className="text-[17px]">{title}</Text>
+          <Text className="text-[17px] text-[#8e8e93]">
             {selectedValue} <Ionicons name="chevron-expand" size={17} />
           </Text>
         </View>
@@ -125,19 +135,3 @@ export default function Dropdown({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  contentShadow: {
-    backgroundColor: "white",
-    margin: 5,
-    borderRadius: 20,
-    shadowColor: Platform.OS === "ios" ? "black" : "#0000007f", // Make shadow lighter on Android
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.13,
-    shadowRadius: 9.8,
-    elevation: 8,
-  }
-});

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Text, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { X } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -12,9 +12,8 @@ import DistanceSlider from '@/src/components/CustomWalk/DistanceSlider';
 export default function WalkPlannerScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const { saveWalk, walks } = useCustomWalks(); //Connects to global walks state
+  const { saveWalk, walks } = useCustomWalks();
 
-  // State initialization 
   const [distance, setDistance] = useState(1);
   const [cuswalkname, setcuswalk] = useState('');
   const [hasWaterFountain, setHasWaterFountain] = useState(false);
@@ -22,10 +21,9 @@ export default function WalkPlannerScreen() {
   const [hasPark, setHasPark] = useState(false);
   const [hasPlayground, setHasPlayground] = useState(false);
   const [hasWellLitStreets, setHasWellLitStreets] = useState(false);
-  const [hasRubbishBin, setHasRubbishBin] = useState(false)
-  const [hasOffLeash, setHasOffLeash] = useState(false)
+  const [hasRubbishBin, setHasRubbishBin] = useState(false);
+  const [hasOffLeash, setHasOffLeash] = useState(false);
 
-  // If routing parameters contain an 'id', we are editing. Hydrate the local state.
   useEffect(() => {
     if (params.id) {
       const existingWalk = walks.find((w: any) => w.id === params.id);
@@ -44,9 +42,8 @@ export default function WalkPlannerScreen() {
   }, [params.id, walks]);
 
   const handleSave = () => {
-    // Package all state variables into a single data object
     const walkData = {
-      id: params.id, // Will be undefined if creating a new walk
+      id: params.id,
       cuswalkname,
       distance,
       hasWaterFountain,
@@ -57,20 +54,21 @@ export default function WalkPlannerScreen() {
       hasRubbishBin,
       hasOffLeash,
     };
-    
-    saveWalk(walkData); // Push object to global memory
-    router.back(); // Navigate back to the dashboard
+
+    saveWalk(walkData);
+    router.back();
   };
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView className="flex-1 bg-[#F2F2F7]">
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.xBtn}>
+      <View className="flex-row justify-end px-4 pt-2 pb-1">
+        <TouchableOpacity onPress={() => router.back()} className="w-8 h-8 rounded-full bg-[#e5e5e5] items-center justify-center">
           <X size={16} color="#444" />
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.headerTitle}>Custom Walk Settings</Text>
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        <Text className="text-[28px] font-bold mb-6 text-black">Custom Walk Settings</Text>
 
         <InputField
           label="Enter a name for the walk:"
@@ -79,7 +77,6 @@ export default function WalkPlannerScreen() {
           placeholder="Park Walk"
         />
 
-        {/* Distance Input */}
         <DistanceSlider
           label="Select a distance for your walk:"
           value={distance}
@@ -89,57 +86,50 @@ export default function WalkPlannerScreen() {
           step={1}
         />
 
-        <Text style={styles.sectionTitle}>Environmental Filters</Text>
+        <Text className="text-xl font-semibold mt-[10px] mb-4 text-black">Environmental Filters</Text>
 
-        {/* Water Fountain Filter */}
         <FilterSwitch
           label="Water Fountain"
           value={hasWaterFountain}
           onChange={setHasWaterFountain}
         />
 
-        {/* Disabled Toilets Filter */}
         <FilterSwitch
           label="Disabled Toilets"
           value={hasDisabledToilets}
           onChange={setHasDisabledToilets}
         />
 
-        {/* Park Filter */}
         <FilterSwitch
           label="Park"
           value={hasPark}
           onChange={setHasPark}
         />
 
-        {/* Playground Filter */}
         <FilterSwitch
           label="Playground"
           value={hasPlayground}
           onChange={setHasPlayground}
         />
 
-        {/* Rubish Bins */}
         <FilterSwitch
           label="Rubbish Bins"
           value={hasRubbishBin}
           onChange={setHasRubbishBin}
         />
 
-        {/* Off leash Dog Zones */}
         <FilterSwitch
           label="Off Leash Zones"
           value={hasOffLeash}
           onChange={setHasOffLeash}
         />
-        {/* Well lit streets */}
+
         <FilterSwitch
           label="Well Lit Streets"
           value={hasWellLitStreets}
           onChange={setHasWellLitStreets}
         />
 
-        {/* Saving the walk button*/}
         <SaveButton title='Save Custom Walk' onPress={handleSave} />
 
       </ScrollView>
@@ -147,42 +137,3 @@ export default function WalkPlannerScreen() {
     </SafeAreaView>
   );
 }
-
-// StyleSheet architecture for consistent rendering
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F2F2F7',
-  },
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 4,
-  },
-  xBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#e5e5e5',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    padding: 20,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 24,
-    color: '#000',
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginTop: 10,
-    marginBottom: 16,
-    color: '#000',
-  },
-});

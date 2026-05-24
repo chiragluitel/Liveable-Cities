@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import SelectedWalkActionRow from '../SelectedWalk/SelectedWalkActionRow';
 
@@ -9,10 +9,10 @@ export default function CustomWalkDetail({ walk }: { walk: any }) {
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.titleBlock}>
-        <Text style={styles.walkName}>{walk.cuswalkname || 'Custom Walk'}</Text>
-        <Text style={styles.walkMeta}>
-          <Text style={styles.blueText}>{walk.distance} km</Text>
+      <View className="mb-[6px]">
+        <Text className="text-[29px] leading-[35px] font-black text-[#111] mb-1">{walk.cuswalkname || 'Custom Walk'}</Text>
+        <Text className="text-[17px] mb-[22px]">
+          <Text className="text-[#2677e8]">{walk.distance} km</Text>
         </Text>
       </View>
 
@@ -20,23 +20,3 @@ export default function CustomWalkDetail({ walk }: { walk: any }) {
     </BottomSheetScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleBlock: {
-    marginBottom: 6,
-  },
-  walkName: {
-    fontSize: 29,
-    lineHeight: 35,
-    fontWeight: '800',
-    color: '#111',
-    marginBottom: 4,
-  },
-  walkMeta: {
-    fontSize: 17,
-    marginBottom: 22,
-  },
-  blueText: {
-    color: '#2677e8',
-  },
-});

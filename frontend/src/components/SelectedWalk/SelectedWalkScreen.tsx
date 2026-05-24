@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import CaseyMap from "../Map/CaseyMap";
 import { SelectedWalkVariant } from "@Types/walkDetailTypes";
 import { useSelectedWalkSheet } from "@Hooks/useSelectedWalkSheet";
@@ -22,7 +22,7 @@ export default function SelectedWalkScreen({
   }, [variant, titleOverride]);
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-white">
       <CaseyMap />
 
       <SelectedWalkSheet
@@ -33,10 +33,3 @@ export default function SelectedWalkScreen({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
-});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 type SaveButtonProps = {
@@ -9,29 +9,9 @@ type SaveButtonProps = {
 
 export default function SaveButton({ onPress, title }: SaveButtonProps) {
   return (
-    <TouchableOpacity style={styles.saveButton} onPress={onPress}>
+    <TouchableOpacity className="flex-row bg-[#208b00] p-4 rounded-xl items-center justify-center mt-5 mb-10" onPress={onPress}>
       <Ionicons name="save" size={24} color="#FFF" />
-      <Text style={styles.saveButtonText}>{title}</Text>
+      <Text className="text-white text-lg font-semibold ml-2">{title}</Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  saveButton: {
-    flexDirection: 'row',
-    backgroundColor: '#208b00',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 40,
-  },
-
-  saveButtonText: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: '600',
-    marginLeft: 8,
-  },
-});

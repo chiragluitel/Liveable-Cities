@@ -1,5 +1,5 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useCustomWalks } from '@/src/context/CustomWalkContext';
 import CustomWalkCard from '@/src/components/CustomWalk/CustomWalkCard';
@@ -15,20 +15,20 @@ export default function CustomWalkSheetContent({ onWalkPress }: CustomWalkSheetC
 
   return (
     <BottomSheetScrollView
-      contentContainerStyle={styles.content}
+      contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 40 }}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={styles.sectionTitle}>My Walks</Text>
+      <Text className="text-xl font-bold text-[#111] mb-3">My Walks</Text>
 
       {walks.length === 0 ? (
-        <Text style={styles.emptyText}>No custom walks created</Text>
+        <Text className="text-[15px] text-[#888] text-center py-6 mb-2">No custom walks created</Text>
       ) : (
         walks.map((walk: any) => (
           <CustomWalkCard key={walk.id} walk={walk} onDelete={deleteWalk} onPress={() => onWalkPress(walk)} />
         ))
       )}
 
-      <View style={styles.buttonWrap}>
+      <View className="mt-2">
         <CustomButton
           label="Plan a Custom Walk"
           onPress={() => router.push('/custom-walk' as any)}
@@ -37,26 +37,3 @@ export default function CustomWalkSheetContent({ onWalkPress }: CustomWalkSheetC
     </BottomSheetScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {
-    paddingHorizontal: 16,
-    paddingBottom: 40,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#111',
-    marginBottom: 12,
-  },
-  emptyText: {
-    fontSize: 15,
-    color: '#888',
-    textAlign: 'center',
-    paddingVertical: 24,
-    marginBottom: 8,
-  },
-  buttonWrap: {
-    marginTop: 8,
-  },
-});

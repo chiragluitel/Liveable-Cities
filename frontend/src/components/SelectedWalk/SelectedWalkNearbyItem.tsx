@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Flame, BookOpen, Armchair, PersonStanding, MapPin } from "lucide-react-native";
 import { NearbyPlace, NearbyPlaceType } from "@Types/walkDetailTypes";
 
@@ -27,41 +27,17 @@ export default function SelectedWalkNearbyItem({
 
   return (
     <Pressable
-      style={[styles.container, isSelected && styles.selectedContainer]}
+      className={`flex-row items-center mb-[22px] rounded-2xl py-[6px] px-1 ${isSelected ? "bg-[#f0f1ed]" : ""}`}
       onPress={() => onNearbyPress(place)}
     >
-      <View style={[styles.iconCircle, { backgroundColor: placeStyle.backgroundColor }]}>
+      <View
+        className="w-[74px] h-[74px] rounded-full justify-center items-center mr-[18px]"
+        style={{ backgroundColor: placeStyle.backgroundColor }}
+      >
         {placeStyle.icon}
       </View>
 
-      <Text style={styles.label}>{place.label}</Text>
+      <Text className="text-lg text-[#111] font-normal">{place.label}</Text>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 22,
-    borderRadius: 16,
-    paddingVertical: 6,
-    paddingHorizontal: 4,
-  },
-  selectedContainer: {
-    backgroundColor: "#f0f1ed",
-  },
-  iconCircle: {
-    width: 74,
-    height: 74,
-    borderRadius: 37,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 18,
-  },
-  label: {
-    fontSize: 18,
-    color: "#111",
-    fontWeight: "400",
-  },
-});
