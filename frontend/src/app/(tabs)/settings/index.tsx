@@ -60,12 +60,12 @@ export default function Settings() {
         </SettingsGroup>
         
         <SettingsGroup title="Night Detection">
-          <ToggleSetting title="Auto Enable Street Lights" initialValue={true} hideSeperator={true} />
+          <ToggleSetting title="Auto Enable Street Lights" valueKey="autoLights" initialValue={true} hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="Accessibility">
-          <ToggleSetting title="Reduce Motion" initialValue={false} />
-          <ToggleSetting title="Increase Contrast" initialValue={false} hideSeperator={true} />
+          <ToggleSetting title="Reduce Motion" valueKey="lowMotion" initialValue={false} />
+          <ToggleSetting title="Increase Contrast" valueKey="highContrast" initialValue={false} hideSeperator={true} />
         </SettingsGroup>
         
         <SettingsGroup title="About">
