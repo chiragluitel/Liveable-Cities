@@ -3,15 +3,17 @@ import SlideToggle from "@Components/SlideToggle";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
 import { Text, TouchableHighlight, View } from "react-native";
+import useAsyncStorage from "@Hooks/useAsyncStorage";
 
 type ToggleProps = {
   title: string
+  valueKey: string
   initialValue: boolean
   hideSeperator?: boolean
 };
 
-export default function ToggleSetting({title, initialValue, hideSeperator = false}: ToggleProps) {
-  const [value, setValue] = useState(initialValue);
+export default function ToggleSetting({title, valueKey, initialValue, hideSeperator = false}: ToggleProps) {
+  const [value, setValue] = useAsyncStorage(valueKey, initialValue ? initialValue : false);
 
   const { colorScheme } = useColorScheme();
     
