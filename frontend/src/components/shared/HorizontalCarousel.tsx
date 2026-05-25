@@ -70,8 +70,8 @@ export function HorizontalCarousel<T>({
             key={i}
             className={`h-2 rounded-full transition-all duration-300 ${
               i === activeIndex
-                ? 'w-4 bg-text-700 dark:bg-dark-text-700' 
-                : 'w-2 bg-text-300 dark:bg-dark-text-300'
+                ? 'w-4 bg-gray-800 dark:bg-white' 
+                : 'w-2 bg-gray-300 dark:bg-gray-600'
             }`}
           />
         ))}

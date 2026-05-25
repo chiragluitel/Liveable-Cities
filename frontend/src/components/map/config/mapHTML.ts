@@ -3,7 +3,6 @@
 import { CASEY_COORDINATES, DEFAULT_ZOOM } from './mapConfig';
 
 function buildMapHTML(): string {
-
   const { latitude, longitude } = CASEY_COORDINATES;
 
   return /* html */ `<!DOCTYPE html>
@@ -15,7 +14,7 @@ function buildMapHTML(): string {
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
 
   <style>
-    html, body, #map { margin: 0; height: 100%; background: #ffffff; }
+    html, body, #map { margin: 0; height: 100%; background: #f0f0f0; }
   </style>
 </head>
 

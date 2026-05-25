@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
-import SlideToggle from '../SlideToggle';
 
 type FilterSwitchProps = {
   label: string;
@@ -14,20 +13,33 @@ export default function FilterSwitch({
   onChange,
 }: FilterSwitchProps) {
   return (
-    <View style={styles.switchContainerShadow} className='flex-row items-center justify-between bg-background-100 dark:bg-dark-primary-200 py-[12] px-[16] rounded-[10] mb-[10]'>
-      <Text className='text-lg text-text dark:text-dark-text'>{label}</Text>
+    <View style={styles.switchContainer}>
+      <Text style={styles.switchLabel}>{label}</Text>
 
-      <SlideToggle value={value} onValueChange={onChange} />
+      <Switch value={value} onValueChange={onChange} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  switchContainerShadow: {
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFF',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 2,
+  },
+
+  switchLabel: {
+    fontSize: 17,
+    color: '#000',
   },
 });

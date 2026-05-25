@@ -7,9 +7,6 @@ import SelectedWalkActionRow from "./SelectedWalkActionRow";
 import SelectedWalkImageGallery from "./SelectedWalkImageGallery";
 import SelectedWalkInfoSection from "./SelectedWalkInfoSection";
 import SelectedWalkNearbyList from "./SelectedWalkNearbyList";
-import { useColorScheme } from "nativewind";
-import { colours } from "@Theme/colours";
-
 
 type SelectedWalkSheetProps = {
   sheetRef: React.RefObject<BottomSheet | null>;
@@ -22,23 +19,17 @@ export default function SelectedWalkSheet({
   snapPoints,
   selectedWalkData,
 }: SelectedWalkSheetProps) {
-	const { colorScheme } = useColorScheme();
-	const isLight = colorScheme === "light";
-  
   return (
     <BottomSheet
       ref={sheetRef}
       index={1}
       snapPoints={snapPoints}
       enablePanDownToClose={false}
-      handleIndicatorStyle={{ backgroundColor: isLight ? colours.background[800] : colours.dark.background[800] }}
-      backgroundStyle={{backgroundColor: isLight ? colours.background[50] : colours.dark.background[200]}}
+      handleIndicatorStyle={styles.handleIndicator}
+      backgroundStyle={styles.background}
     >
       <BottomSheetScrollView
-        contentContainerStyle={{
-          paddingHorizontal: 18,
-          paddingBottom: 50,
-        }}
+        contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
         <SelectedWalkTitleInfo
@@ -59,17 +50,29 @@ export default function SelectedWalkSheet({
 
         <SelectedWalkNearbyList nearbyList={selectedWalkData.nearbyList} />
 
-        
+        <View style={styles.bottomSpace} />
       </BottomSheetScrollView>
     </BottomSheet>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#eef0ec",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+  },
   handleIndicator: {
     width: 64,
     height: 7,
     borderRadius: 999,
     backgroundColor: "#a8a8a8",
+  },
+  contentContainer: {
+    paddingHorizontal: 18,
+    paddingBottom: 50,
+  },
+  bottomSpace: {
+    height: 30,
   },
 });

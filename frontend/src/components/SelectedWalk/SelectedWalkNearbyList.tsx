@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { NearbyPlace } from "@Types/TypesForSelectedWalk";
 import SelectedWalkNearbyItem from "./SelectedWalkNearbyItem";
 
@@ -18,8 +18,8 @@ export default function SelectedWalkNearbyList({
   };
 
   return (
-    <View className="mt-[8]">
-      <Text className="text-lg font-medium text-text dark:text-dark-text mt-[14]">Nearby</Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>Nearby</Text>
 
       {nearbyList.map((nearbyPlace) => (
         <SelectedWalkNearbyItem
@@ -32,3 +32,15 @@ export default function SelectedWalkNearbyList({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 8,
+  },
+  heading: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#111",
+    marginBottom: 14,
+  },
+});

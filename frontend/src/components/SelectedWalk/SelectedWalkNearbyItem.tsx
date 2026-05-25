@@ -51,18 +51,49 @@ export default function SelectedWalkNearbyItem({
 
   return (
     <Pressable
-      //style={[styles.container, isSelected && styles.selectedContainer]}
-      className={`flex-row items-center mb-[22] rounded-[16] py-[6] px-[4] ${isSelected ? "bg-primary-100 dark:bg-dark-primary-300" : ""}`}
+      style={[styles.container, isSelected && styles.selectedContainer]}
       onPress={() => onNearbyPress(place)}
     >
       <View
-        style={{ backgroundColor: placeStyle.backgroundColor }}
-        className="w-[74] h-[74] rounded-[37] justify-center items-center mr-[18]"
+        style={[
+          styles.iconCircle,
+          { backgroundColor: placeStyle.backgroundColor },
+        ]}
       >
-        <Text className="text-3xl">{placeStyle.emoji}</Text>
+        <Text style={styles.emoji}>{placeStyle.emoji}</Text>
       </View>
 
-      <Text className="text-lg text-text dark:text-dark-text font-normal">{place.label}</Text>
+      <Text style={styles.label}>{place.label}</Text>
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 22,
+    borderRadius: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+  },
+  selectedContainer: {
+    backgroundColor: "#f0f1ed",
+  },
+  iconCircle: {
+    width: 74,
+    height: 74,
+    borderRadius: 37,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 18,
+  },
+  emoji: {
+    fontSize: 30,
+  },
+  label: {
+    fontSize: 18,
+    color: "#111",
+    fontWeight: "400",
+  },
+});
