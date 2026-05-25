@@ -1,4 +1,6 @@
+import { colours } from "@Theme/colours";
 import Entypo from "@expo/vector-icons/Entypo"
+import { useColorScheme } from "nativewind";
 import { Text, TouchableHighlight, View } from "react-native";
 import { useDropDownContext } from "./DropDown";
 
@@ -19,17 +21,22 @@ export default function DropDownItem({
   const { itemPressed, isSelected } = useDropDownContext();
 
   selVal = isSelected(value);
+
+  const { colorScheme } = useColorScheme();
   
+  const isLight = colorScheme === "light";
+
   return (
     <TouchableHighlight 
       onPress={() => itemPressed(value)}
-      underlayColor="#747480"
+      underlayColor={isLight ? colours.background[300] : colours.dark.background[100]}
     >
-      <View className={`flex-row justify-between bg-white p-[15] pl-[20] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
-        <Text style={{fontSize: 17}}>
+      <View className={`flex-row justify-between bg-background-50 dark:bg-dark-background-200 p-[15] pl-[20] 
+        ${hideSeperator ? "" : "border-b-text-200 dark:border-b-dark-text-400 border-b-hairline"}`}>
+        <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">
           {title} 
         </Text>
-        <Entypo name="check" size={20} color={"#007bfe"} style={{opacity: selVal ? 1 : 0}} />
+        <Entypo name="check" size={20} color={isLight ? colours.accent[600] : colours.dark.accent[700]} style={{opacity: selVal ? 1 : 0}} />
       </View>
     </TouchableHighlight>
   );

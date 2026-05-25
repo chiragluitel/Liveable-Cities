@@ -1,10 +1,14 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import React, { ReactNode, useRef, useState } from "react";
 import { Modal, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import useAsyncStorage from "@Hooks/useAsyncStorage";
+import { colours } from "@Theme/colours";
+import { useColorScheme } from "nativewind";
 
 type DropDownProps = {
   title: string
   initialSelected: string
+  actionFunc: (value: string) => void
   hideSeperator?: boolean
   children: ReactNode
 };
@@ -34,17 +38,24 @@ export const useDropDownContext = () => {
 export default function DropDown({
   title, 
   initialSelected, 
+  actionFunc,
   hideSeperator = false, 
   children
 }: DropDownProps) {
   const buttonRef = useRef<View | null>(null); 
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(initialSelected ? initialSelected : "");
+  
+  const [selectedValue, setSelectedValue] = useAsyncStorage(title, initialSelected ? initialSelected : "");
+
+  const { colorScheme } = useColorScheme();
+  
+  const isLight = colorScheme === "light";
 
   function itemPressed(value: string) {
     setModalVisible(false);
     setSelectedValue(value);
+    actionFunc(value);
   }
 
   const isSelected = (value: string) => {
@@ -64,7 +75,8 @@ export default function DropDown({
   }
 
   return (
-    <View className={`w-full bg-white rounded-[10] ${hideSeperator ? "" : "border-b-[#C7C7CC] border-b-hairline"}`}>
+    <View className={`w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] 
+    ${hideSeperator ? "" : "border-b-text-200 dark:border-b-dark-text-400 border-b-hairline"}`}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -87,7 +99,7 @@ export default function DropDown({
               }}
             >
               <ScrollView 
-                className="bg-white m-[5] rounded-[20]"
+                className="bg-background-100 dark:bg-dark-background-100 m-[5] rounded-[20]"
                 style={styles.contentShadow}
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}
@@ -107,16 +119,19 @@ export default function DropDown({
             setModalVisible(true);
         }} 
         className="rounded-[10]"
-        underlayColor="#747480"
+        underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
       >
         <View 
-          className="flex-row justify-between bg-white rounded-[10] p-[15]" 
+          className="flex-row justify-between bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]" 
           ref={buttonRef}
         >
-          <Text style={{fontSize: 17}}>{title}</Text>
-          <Text style={{fontSize: 17, color: "#8e8e93"}}>
-            {selectedValue} <Ionicons name="chevron-expand" size={17} />
-          </Text>
+          <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">{title}</Text>
+          <View className="flex-row items-center">
+            <Text style={{fontSize: 17}}  className="text-accent-600 dark:text-dark-accent-700">
+              {selectedValue}
+            </Text>
+            <Ionicons name="chevron-expand" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[300]} />
+          </View>
         </View>
       </TouchableHighlight>
     </View>
