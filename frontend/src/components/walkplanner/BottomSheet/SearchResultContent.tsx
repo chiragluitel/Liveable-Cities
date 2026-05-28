@@ -49,10 +49,10 @@ export const SearchResultsContent = ({ query, onInteract }: SearchResultsContent
             ListEmptyComponent={() => (
                 query.trim().length > 0 ? (
                     <View className="flex-1 items-center justify-center pt-10">
-                        <Text className="text-gray-500 text-[16px] font-medium">
+                        <Text className="text-text-600 dark:text-dark-text-600 text-[16px] font-medium">
                             No results found for "{query}"
                         </Text>
-                        <Text className="text-gray-400 text-[14px] mt-2">
+                        <Text className="text-text-500 dark:text-dark-text-500 text-[14px] mt-2">
                             Check the spelling or try a different suburb.
                         </Text>
                     </View>

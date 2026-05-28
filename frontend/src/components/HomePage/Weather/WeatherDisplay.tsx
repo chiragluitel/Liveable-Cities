@@ -17,20 +17,20 @@ export default function WeatherDisplay({
 }: Props) {
 
   return(
-    <View className="bg-green-900 rounded-xl px-5 py-2 mt-4 flex-row items-center justify-between">
+    <View className="bg-primary-400 dark:bg-primary-800 rounded-xl px-5 py-2 mt-4 flex-row items-center justify-between">
 
       <View>
-        <Text className="text-white text-xl font-semibold">
+        <Text className="text-dark-text dark:text-dark-text text-xl font-semibold">
           {suburb}
         </Text>
 
-        <Text className="text-white text-md font-semibold">
+        <Text className="text-dark-text dark:text-dark-text text-md font-semibold">
           {temp}°C
         </Text>
 
       </View>
 
-      <Text className="text-white text-3xl font-bold mt-1">
+      <Text className="text-dark-text dark:text-dark-text text-3xl font-bold mt-1">
         {getWeatherIcon(weatherCode)}
       </Text>
 

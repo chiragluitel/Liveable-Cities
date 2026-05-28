@@ -7,6 +7,8 @@ import { WalkPlannerSheetContent } from './WalkPlannerSheetContent';
 import { SearchLogicReturnObject } from '@/src/hooks/useSearchLogic';
 import { useWalkPlannerSheet } from '@/src/hooks/useWalkPlannerSheet';
 import { SearchResultsContent } from './SearchResultContent';
+import { useColorScheme } from "nativewind";
+import { colours } from "@Theme/colours";
 
 interface WalkPlannerSheetProps {
     searchState: SearchLogicReturnObject;
@@ -16,7 +18,11 @@ export interface WalkPlannerSheetRef {
     collapseToSearch: () => void;
 }
 
-export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlannerSheetProps>(({ searchState }, ref) => {
+export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlannerSheetProps>(({ searchState }, ref) => {    
+    const { colorScheme } = useColorScheme();
+
+    const isLight = colorScheme === "light";
+
     const { sheetRef, snapPoints, collapseToSearch, expandFully } = useWalkPlannerSheet();
     const searchInputRef = useRef<RNTextInput>(null);
     const insets = useSafeAreaInsets(); 
@@ -54,10 +60,11 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             onChange={handleSheetChanges}
             keyboardBehavior="interactive"
             topInset={insets.top + 10} 
-            backgroundStyle={{ backgroundColor: '#ffffff' }}
+            backgroundStyle={{ backgroundColor: isLight ? colours.background[50] : colours.dark.background[200] }}
+            handleIndicatorStyle={{ backgroundColor: isLight ? colours.background[800] : colours.dark.background[800] }}
         >
             <View className="flex-1">
-                <View className="z-10 bg-white pb-2 pt-1 shadow-sm">
+                <View className="z-10 bg-background-50 dark:bg-dark-background-200 pb-2 pt-1 shadow-sm">
                     <BottomSheetSearchBar 
                         inputRef={searchInputRef} 
                         searchState={searchState} 

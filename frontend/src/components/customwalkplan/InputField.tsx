@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native';
+import { View, Text, TextInput, KeyboardTypeOptions } from 'react-native';
 
 type InputFieldProps = {
     label: string;
@@ -17,11 +17,11 @@ export default function InputField({
   keyboardType = 'default',
 }: InputFieldProps) {
   return (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>{label}</Text>
+    <View className='mb-[24]'>
+      <Text className='text-base font-medium mb-[8] text-text-600 dark:text-dark-text-600'>{label}</Text>
 
       <TextInput
-        style={styles.textInput}
+        className='border-hairline border-text-100 dark:border-dark-text-50 p-[14] rounded-[10] bg-background-100 dark:bg-dark-background-200 text-text dark:text-dark-text'
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -30,25 +30,3 @@ export default function InputField({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    marginBottom: 24,
-  },
-
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
-    color: '#333',
-  },
-
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#D1D1D6',
-    padding: 14,
-    borderRadius: 10,
-    backgroundColor: '#FFF',
-    fontSize: 16,
-  },
-});

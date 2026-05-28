@@ -8,14 +8,14 @@ interface WalkDetailsProps {
 export const WalkDetails = ({ walk }: WalkDetailsProps) => {
   return (
     <View className="flex-1 ml-3">
-      <Text className="text-base font-bold text-gray-900 dark:text-white" numberOfLines={1}>
+      <Text className="text-base font-bold text-text dark:text-dark-text" numberOfLines={1}>
         {walk.title}
       </Text>
-      <Text className="text-sm text-gray-500 mb-1" numberOfLines={1}>
+      <Text className="text-sm text-text-600 dark:text-dark-text-600 mb-1" numberOfLines={1}>
         {walk.subtitle}
       </Text>
 
-      <Text className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">
+      <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
         {walk.distanceKm} km • {walk.durationMin} min
       </Text>
 
@@ -23,9 +23,9 @@ export const WalkDetails = ({ walk }: WalkDetailsProps) => {
         {walk.tags.map((tag) => (
           <View 
             key={tag} 
-            className="bg-gray-100 dark:bg-gray-700 rounded-md px-2 py-1"
+            className="bg-primary-50 dark:bg-dark-primary-200 rounded-md px-2 py-1"
           >
-            <Text className="text-[10px] font-semibold text-gray-600 dark:text-gray-300 uppercase">
+            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
               {tag}
             </Text>
           </View>
