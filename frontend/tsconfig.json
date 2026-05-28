@@ -2,13 +2,10 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "forceConsistentCasingInFileNames": false,
     "paths": {
       "@/*": ["./*"],
       "@Assets/*": ["./src/assets/*"],
       "@Components/*": ["./src/components/*"],
-      "@Components/WalkPlanner/*": ["./src/components/walkplanner/*"],
-      "@/src/components/WalkPlanner/*": ["./src/components/walkplanner/*"],
       "@Hooks/*": ["./src/hooks/*"],
       "@Types/*": ["./src/types/*"],
       "@Database/*": ["./src/database/*"]
