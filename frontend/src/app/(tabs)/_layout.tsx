@@ -1,19 +1,34 @@
+import { colours } from "@Theme/colours";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
+import { useColorScheme } from "nativewind";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function TabLayout() {
+  const { colorScheme } = useColorScheme();
+
+  const isLight = colorScheme === "light";
+
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: "#0091ff",
-          tabBarInactiveTintColor: "#777777",
-          tabBarActiveBackgroundColor: "white",
-          tabBarInactiveBackgroundColor: "white",
-          animation: "shift"
-        }}
+      key={colorScheme}
+        screenOptions={
+          {
+            headerShown: false,
+            animation: "shift",
+            tabBarActiveTintColor: isLight ? colours.accent[700] : colours.dark.accent[400],
+            tabBarInactiveTintColor: isLight ? colours.accent[400] : colours.dark.accent[200],
+            tabBarActiveBackgroundColor: isLight ? colours.primary[200] : colours.dark.primary[100],
+            tabBarInactiveBackgroundColor: isLight ? colours.primary[100] : colours.dark.primary[50],
+            tabBarStyle: {
+              borderTopWidth: 0,
+            },
+            sceneStyle: {
+              backgroundColor: isLight ? colours.background[50] : colours.dark.background[50]
+            }
+          }
+        }
       >
         <Tabs.Screen
           name="index"

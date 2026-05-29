@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { X } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -8,8 +8,11 @@ import InputField from '@/src/components/CustomWalk/InputField';
 import FilterSwitch from '@/src/components/CustomWalk/FilterSwitch';
 import SaveButton from '@/src/components/CustomWalk/SaveButton';
 import DistanceSlider from '@/src/components/CustomWalk/DistanceSlider';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function WalkPlannerScreen() {
+  const insets = useSafeAreaInsets();
+  
   const router = useRouter();
   const params = useLocalSearchParams();
   const { saveWalk, walks } = useCustomWalks();
@@ -60,15 +63,16 @@ export default function WalkPlannerScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#F2F2F7]">
+    <View className="flex-1 bg-background-50 dark:bg-dark-background-100">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-row justify-end px-4 pt-2 pb-1">
+        // TODO: update colours
         <TouchableOpacity onPress={() => router.back()} className="w-8 h-8 rounded-full bg-[#e5e5e5] items-center justify-center">
           <X size={16} color="#444" />
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        <Text className="text-[28px] font-bold mb-6 text-black">Custom Walk Settings</Text>
+      <ScrollView contentContainerStyle={{ padding: 20, top: insets.top + 12 }}>
+        <Text className="text-[28px] font-bold mb-6 text-text dark:text-dark-text">Custom Walk Settings</Text>
 
         <InputField
           label="Enter a name for the walk:"
@@ -86,7 +90,7 @@ export default function WalkPlannerScreen() {
           step={1}
         />
 
-        <Text className="text-xl font-semibold mt-[10px] mb-4 text-black">Environmental Filters</Text>
+        <Text className="text-xl font-semibold mt-[10px] mb-4 text-text dark:text-dark-text">Environmental Filters</Text>
 
         <FilterSwitch
           label="Water Fountain"
@@ -134,6 +138,6 @@ export default function WalkPlannerScreen() {
 
       </ScrollView>
 
-    </SafeAreaView>
+    </View>
   );
 }

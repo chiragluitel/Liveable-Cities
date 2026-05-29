@@ -96,12 +96,12 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   }));
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <WebView
         ref={webViewRef}
         originWhitelist={['*']}
         source={{ html: MAP_HTML }}
-        style={{ flex: 1 }}
+        className="flex-1"
         javaScriptEnabled
         onMessage={onMessage}
       />

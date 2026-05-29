@@ -46,30 +46,30 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
   return (
     <View className="absolute right-4 items-end" style={{ top: insets.top + 12 }}>
       <TouchableOpacity
-        className="py-2 bg-white rounded-lg shadow-md items-center"
+        className="py-2 bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md items-center"
         style={{ elevation: 4, width: 76 }}
         onPress={() => setOpen(o => !o)}
       >
-        <Text className="text-base font-semibold">
+        <Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">
           {open ? 'Close' : 'Filters'}
         </Text>
       </TouchableOpacity>
 
       {open && (
         <View
-          className="mt-[6px] bg-white rounded-lg shadow-md overflow-hidden min-w-40"
+          className="mt-[6px] bg-background-100 dark:bg-dark-background-200 rounded-lg shadow-md overflow-hidden min-w-40"
           style={{ elevation: 4 }}
         >
           {(Object.keys(ICON_DEFINITIONS) as IconName[]).map(name => (
             <TouchableOpacity
               key={name}
-              className="flex-row items-center py-[11px] px-[14px] gap-[10px] border-b border-[#e5e5e5]"
+              className="flex-row items-center py-[11px] px-[14px] gap-[10px] border-b border-text-200 dark:border-dark-text-400"
               onPress={() => toggle(name)}
             >
               <FilterIcon name={name} />
-              <Text className="flex-1 text-sm font-medium">{ICON_DEFINITIONS[name].label}</Text>
+              <Text className="flex-1 text-sm font-medium text-text dark:text-dark-text">{ICON_DEFINITIONS[name].label}</Text>
               {visibility[name] && (
-                <Text className="text-sm font-bold text-blue-600">✓</Text>
+                <Text className="text-sm font-bold text-accent-300 dark:text-dark-accent-700">✓</Text>
               )}
             </TouchableOpacity>
           ))}

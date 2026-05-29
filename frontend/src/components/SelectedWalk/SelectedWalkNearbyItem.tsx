@@ -27,7 +27,7 @@ export default function SelectedWalkNearbyItem({
 
   return (
     <Pressable
-      className={`flex-row items-center mb-[22px] rounded-2xl py-[6px] px-1 ${isSelected ? "bg-[#f0f1ed]" : ""}`}
+      className={`flex-row items-center mb-[22px] rounded-2xl py-[6px] px-1 ${isSelected ? "bg-primary-100 dark:bg-dark-primary-300" : ""}`}
       onPress={() => onNearbyPress(place)}
     >
       <View
@@ -37,7 +37,7 @@ export default function SelectedWalkNearbyItem({
         {placeStyle.icon}
       </View>
 
-      <Text className="text-lg text-[#111] font-normal">{place.label}</Text>
+      <Text className="text-lg text-text dark:text-dark-text font-normal">{place.label}</Text>
     </Pressable>
   );
 }

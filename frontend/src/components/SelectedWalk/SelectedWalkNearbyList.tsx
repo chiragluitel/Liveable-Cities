@@ -19,7 +19,7 @@ export default function SelectedWalkNearbyList({
 
   return (
     <View className="mt-2">
-      <Text className="text-lg font-medium text-[#111] mb-[14px]">Nearby</Text>
+      <Text className="text-lg font-medium text-text dark:text-dark-text mb-[14px]">Nearby</Text>
 
       {nearbyList.map((nearbyPlace) => (
         <SelectedWalkNearbyItem

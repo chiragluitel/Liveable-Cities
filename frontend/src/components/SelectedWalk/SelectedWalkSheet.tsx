@@ -2,6 +2,9 @@ import React from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { SelectedWalkData } from "../../types/walkDetailTypes";
 import SelectedWalkContent from "./SelectedWalkContent";
+import { useColorScheme } from "nativewind";
+import { colours } from "@Theme/colours";
+
 
 type SelectedWalkSheetProps = {
   sheetRef: React.RefObject<BottomSheet | null>;
@@ -14,6 +17,9 @@ export default function SelectedWalkSheet({
   snapPoints,
   selectedWalkData,
 }: SelectedWalkSheetProps) {
+	const { colorScheme } = useColorScheme();
+	const isLight = colorScheme === "light";
+  
   return (
     <BottomSheet
       ref={sheetRef}
@@ -24,10 +30,10 @@ export default function SelectedWalkSheet({
         width: 64,
         height: 7,
         borderRadius: 999,
-        backgroundColor: "#a8a8a8",
+        backgroundColor: isLight ? colours.background[800] : colours.dark.background[800],
       }}
       backgroundStyle={{
-        backgroundColor: "#eef0ec",
+        backgroundColor: isLight ? colours.background[50] : colours.dark.background[200],
         borderTopLeftRadius: 28,
         borderTopRightRadius: 28,
       }}

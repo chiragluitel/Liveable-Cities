@@ -22,7 +22,7 @@ export default function SelectedWalkScreen({
   }, [variant, titleOverride]);
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-background-50 dark:bg-dark-background-50">
       <CaseyMap />
 
       <SelectedWalkSheet

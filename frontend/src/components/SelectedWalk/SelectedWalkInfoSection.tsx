@@ -16,14 +16,14 @@ export default function SelectedWalkInfoSection({
 
   return (
     <View className="pt-[6px] pb-3 mb-[10px]">
-      <Text className="text-[17px] font-bold text-[#111] mb-2">{title}</Text>
-      <Text className="text-[15px] leading-6 text-[#222]">{text}</Text>
+      <Text className="text-[17px] font-bold text-text dark:text-dark-text mb-2">{title}</Text>
+      <Text className="text-[15px] leading-6 text-text-700 dark:text-dark-text-700">{text}</Text>
 
       {hasSelectedFilters && (
         <View className="flex-row flex-wrap mt-[14px]">
           {selectedFilters.map((filter) => (
-            <View key={filter} className="bg-[#d7d7db] rounded-full px-[14px] py-2 mr-[10px] mb-[10px]">
-              <Text className="text-[#111] text-[13px] font-semibold">{filter}</Text>
+            <View key={filter} className="bg-background-200 dark:bg-dark-background-400 rounded-full px-[14px] py-2 mr-[10px] mb-[10px]">
+              <Text className="text-text dark:text-dark-text-900 text-[13px] font-semibold">{filter}</Text>
             </View>
           ))}
         </View>

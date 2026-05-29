@@ -4,13 +4,30 @@ import SettingsGroup from "@Components/Settings/SettingsGroup";
 import SettingsSubPage from "@Components/Settings/SettingsSubPage";
 import ToggleSetting from "@Components/Settings/ToggleSetting";
 import { useRouter, Stack } from "expo-router";
+import { useColorScheme } from "nativewind";
 import { ScrollView, View, Text } from "react-native";
 
 export default function Settings() {
   const router = useRouter();
 
+  const { setColorScheme } = useColorScheme();
+
+  function setTheme(value: string) {
+    switch (value) {
+      case "Light":
+        setColorScheme("light");
+        break;
+      case "Dark":
+        setColorScheme("dark");
+        break;
+      case "Auto":
+      default:
+        setColorScheme("system");
+    }
+  }
+
   return (
-    <View className="flex-1 w-full">
+    <View className="flex-1 w-full bg-background-50 dark:bg-dark-background-50">
       <ScrollView
         contentContainerStyle={{
           alignItems: "center"
@@ -18,16 +35,16 @@ export default function Settings() {
       >
         <Stack.Screen options={{headerShown: false}} />
 
-        <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%]">
+        <Text className="text-5xl pb-[5] font-bold w-full mt-[20%] ml-[10%] text-text dark:text-dark-text">
           Settings
         </Text>
 
         <SettingsGroup title="Measurements">
-          <Dropdown title="Units" initialSelected="Metric">
+          <Dropdown title="Units" initialSelected="Metric" actionFunc={(value: string) => {}}>
             <DropdownItem title="Metric" value="Metric" />
             <DropdownItem title="Imperial" value="Imperial" hideSeperator={true} />
           </Dropdown>
-          <Dropdown title="Walking Speed" initialSelected="Average" hideSeperator={true}>
+          <Dropdown title="Walking Speed" initialSelected="Average" hideSeperator={true} actionFunc={(value: string) => {}}>
             <DropdownItem title="Slow (2km/h)" value="Slow" />
             <DropdownItem title="Average (4km/h)" value="Average" />
             <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
@@ -35,7 +52,7 @@ export default function Settings() {
         </SettingsGroup>
 
         <SettingsGroup title="Theme">
-          <Dropdown title="Theme" initialSelected="Auto" hideSeperator={true}>
+          <Dropdown title="Theme" initialSelected="Auto" hideSeperator={true} actionFunc={setTheme}>
             <DropdownItem title="Auto" value="Auto" />
             <DropdownItem title="Light" value="Light" />
             <DropdownItem title="Dark" value="Dark" hideSeperator={true} />
@@ -43,12 +60,12 @@ export default function Settings() {
         </SettingsGroup>
 
         <SettingsGroup title="Night Detection">
-          <ToggleSetting title="Auto Enable Street Lights" initialValue={true} hideSeperator={true} />
+          <ToggleSetting title="Auto Enable Street Lights" initialValue={true} hideSeperator={true} actionFunc={(value: boolean) => {}} />
         </SettingsGroup>
 
         <SettingsGroup title="Accessibility">
-          <ToggleSetting title="Reduce Motion" initialValue={false} />
-          <ToggleSetting title="Increase Contrast" initialValue={false} hideSeperator={true} />
+          <ToggleSetting title="Reduce Motion" initialValue={false} actionFunc={(value: boolean) => {}} />
+          <ToggleSetting title="Increase Contrast" initialValue={false} hideSeperator={true} actionFunc={(value: boolean) => {}} />
         </SettingsGroup>
 
         <SettingsGroup title="About">
