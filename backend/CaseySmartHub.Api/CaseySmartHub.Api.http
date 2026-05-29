@@ -1,6 +1,11 @@
 @CaseySmartHub.Api_HostAddress = http://localhost:5156
 
-GET {{CaseySmartHub.Api_HostAddress}}/weatherforecast/
+### Get all benches/seats from Casey Open Data
+GET {{CaseySmartHub.Api_HostAddress}}/api/GetBenches
+Accept: application/json
+
+### Get all drinking fountains from Casey Open Data
+GET {{CaseySmartHub.Api_HostAddress}}/api/GetDrinkingFountains
 Accept: application/json
 
 ###
