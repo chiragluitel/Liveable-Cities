@@ -62,11 +62,11 @@ export default function WalkPlannerScreen() {
     router.back();
   };
 
+  // TODO: update colours
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-100">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="flex-row justify-end px-4 pt-2 pb-1">
-        // TODO: update colours
         <TouchableOpacity onPress={() => router.back()} className="w-8 h-8 rounded-full bg-[#e5e5e5] items-center justify-center">
           <X size={16} color="#444" />
         </TouchableOpacity>

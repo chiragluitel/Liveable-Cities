@@ -8,6 +8,7 @@ import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/Wa
 import CaseyMap, { CaseyMapHandle } from "@/src/components/Map/CaseyMap";
 import { MapRoute } from "@/src/components/Map/config/mapRouting";
 
+
 const WalkPlannerHomePage = () => {
 	const searchState = useSearchLogic();
 	const bottomSheetRef = useRef<WalkPlannerSheetRef>(null);
@@ -41,7 +42,7 @@ const WalkPlannerHomePage = () => {
 	}, []);
 
 	return (
-		<View className="flex-1 bg-[#F2F2F7]">
+		<View className="flex-1 bg-background-50 dark:bg-dark-background-50">
 			<Stack.Screen options={{headerShown: false}} />
 
 			<View className="absolute inset-0" onTouchStart={handleMapInteraction}>
@@ -49,11 +50,11 @@ const WalkPlannerHomePage = () => {
 			</View>
 
 			<TouchableOpacity
-				className="absolute left-4 py-2 px-[14px] bg-white rounded-lg shadow"
+				className="absolute left-4 py-2 px-[14px] bg-background-300 dark:bg-dark-background-400 rounded-lg shadow"
 				style={{ top: insets.top + 12 }}
 				onPress={() => router.back()}
 			>
-				<Text className="text-base font-semibold">Home</Text>
+				<Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">Home</Text>
 			</TouchableOpacity>
 
 			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} />
