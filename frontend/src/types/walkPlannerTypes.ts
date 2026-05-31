@@ -30,6 +30,8 @@ export interface Amenity {
   name: string;
   type: AmenityType;
   distanceM: number;
+  lat?: number;
+  lng?: number;
 }
 
 

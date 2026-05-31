@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
-import { X } from 'lucide-react-native';
+import { ChevronLeft } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
 
 import InputField from '@/src/components/CustomWalk/InputField';
@@ -66,12 +66,13 @@ export default function WalkPlannerScreen() {
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-100">
       <Stack.Screen options={{ headerShown: false }} />
-      <View className="flex-row justify-end px-4 pt-2 pb-1">
-        <TouchableOpacity onPress={() => router.back()} className="w-8 h-8 rounded-full bg-[#e5e5e5] items-center justify-center">
-          <X size={16} color="#444" />
+      <View style={{ paddingTop: insets.top + 8 }} className="flex-row justify-start px-4 pb-3">
+        <TouchableOpacity onPress={() => router.back()} className="flex-row items-center gap-1.5 py-2 px-3 rounded-full bg-[#e5e5e5] active:opacity-70">
+          <ChevronLeft size={16} color="#444" />
+          <Text className="text-sm font-semibold text-[#444]">Cancel</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={{ padding: 20, top: insets.top + 12 }}>
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text className="text-[28px] font-bold mb-6 text-text dark:text-dark-text">Custom Walk Settings</Text>
 
         <InputField

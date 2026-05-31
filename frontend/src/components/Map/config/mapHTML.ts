@@ -10,7 +10,6 @@ function buildMapHTML(): string {
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/>
 
@@ -28,10 +27,30 @@ function buildMapHTML(): string {
   <script>
     var map = L.map('map', { zoomControl: false }).setView([${latitude}, ${longitude}], ${DEFAULT_ZOOM});
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var currentTileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'
     }).addTo(map);
+
+    function setTheme(isDark) {
+      map.removeLayer(currentTileLayer);
+      if (isDark) {
+        currentTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap, © CARTO',
+          subdomains: 'abcd'
+        }).addTo(map);
+        map.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(0.9)';
+        document.body.style.background = '#1a1a2e';
+      } else {
+        currentTileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap'
+        }).addTo(map);
+        map.getPanes().tilePane.style.filter = '';
+        document.body.style.background = '#f0f0f0';
+      }
+    }
 
     var userMarker = null;
     var userLocation = null;
@@ -87,7 +106,7 @@ function buildMapHTML(): string {
       routeStore = {};
     }
 
-    function addMapIcon(id, lat, lng, iconClass, color, label, iconType) {
+    function addMapIcon(id, lat, lng, iconSvg, color, label, iconType) {
       if (iconStore[id]) {
         if (iconStore[id].onMap) clusterGroup.removeLayer(iconStore[id].marker);
         delete iconStore[id];
@@ -95,7 +114,7 @@ function buildMapHTML(): string {
 
       var marker = L.marker([lat, lng], {
         icon: L.divIcon({
-          html: '<div style="width:40px;height:40px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.35)"><i class="' + iconClass + '" style="color:white;font-size:18px"></i></div>',
+          html: '<div style="width:40px;height:40px;border-radius:50%;background:' + color + ';display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.35)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + iconSvg + '</svg></div>',
           className: '',
           iconSize: [40, 40],
           iconAnchor: [20, 20],
@@ -163,7 +182,14 @@ function buildMapHTML(): string {
           map.zoomOut();
           break;
         case 'ADD_ICON':
-          addMapIcon(cmd.id, cmd.lat, cmd.lng, cmd.iconClass, cmd.color, cmd.label, cmd.iconType);
+          addMapIcon(cmd.id, cmd.lat, cmd.lng, cmd.iconSvg, cmd.color, cmd.label, cmd.iconType);
+          break;
+        case 'ROUTE_TO':
+          if (userLocation) {
+            drawRoute('nav-route', [userLocation, { lat: cmd.lat, lng: cmd.lng }]);
+          } else {
+            map.flyTo([cmd.lat, cmd.lng], 16);
+          }
           break;
         case 'CLEAR_ICONS':
           clearMapIcons();
@@ -182,6 +208,9 @@ function buildMapHTML(): string {
             : [bToLL(bc[0])];
           L.polygon([bworld].concat(bholes), { color:'none', fillColor:'#000', fillOpacity:0.35, interactive:false }).addTo(map);
           L.geoJSON(bf, { style:{ color:'#2563EB', weight:2, fillOpacity:0 } }).addTo(map);
+          break;
+        case 'SET_THEME':
+          setTheme(cmd.isDark);
           break;
         case 'DRAW_ROUTE':
           drawRoute(cmd.id, cmd.points);

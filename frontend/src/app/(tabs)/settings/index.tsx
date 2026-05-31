@@ -5,12 +5,14 @@ import SettingsSubPage from "@Components/Settings/SettingsSubPage";
 import ToggleSetting from "@Components/Settings/ToggleSetting";
 import { useRouter, Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
+import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import { ScrollView, View, Text } from "react-native";
 
 export default function Settings() {
   const router = useRouter();
 
   const { setColorScheme } = useColorScheme();
+  const { walkingSpeed, setWalkingSpeed } = useSettings();
 
   function setTheme(value: string) {
     switch (value) {
@@ -44,7 +46,7 @@ export default function Settings() {
             <DropdownItem title="Metric" value="Metric" />
             <DropdownItem title="Imperial" value="Imperial" hideSeperator={true} />
           </Dropdown>
-          <Dropdown title="Walking Speed" initialSelected="Average" hideSeperator={true} actionFunc={(value: string) => {}}>
+          <Dropdown title="Walking Speed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
             <DropdownItem title="Slow (2km/h)" value="Slow" />
             <DropdownItem title="Average (4km/h)" value="Average" />
             <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />

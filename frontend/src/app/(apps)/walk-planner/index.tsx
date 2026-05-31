@@ -7,6 +7,9 @@ import useSearchLogic from "@/src/hooks/useSearchLogic";
 import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/WalkPlanner/BottomSheet/WalkPlannerBottomSheet";
 import CaseyMap, { CaseyMapHandle } from "@/src/components/Map/CaseyMap";
 import { MapRoute } from "@/src/components/Map/config/mapRouting";
+import { useSettings, SPEED_KMH } from "@/src/context/SettingsContext";
+import { NearbyPressItem } from "@/src/components/WalkPlanner/Nearby/NearbySection";
+import LocationPermissionBanner from "@/src/components/Map/components/LocationPermissionBanner";
 
 
 const WalkPlannerHomePage = () => {
@@ -16,6 +19,7 @@ const WalkPlannerHomePage = () => {
 	const router = useRouter();
 	const insets = useSafeAreaInsets();
 	const sheetPosition = useSharedValue(Dimensions.get('window').height);
+	const { walkingSpeed } = useSettings();
 
 	const handleMapInteraction = () => {
 		bottomSheetRef.current?.collapseToSearch();
@@ -33,13 +37,22 @@ const WalkPlannerHomePage = () => {
 		bottomSheetRef.current?.showNavWalk(label);
 	}, []);
 
+	const handleNearbySelect = useCallback((item: NearbyPressItem) => {
+		mapRef.current?.routeTo(item.lat, item.lng);
+	}, []);
+
 	const handleRouteInfo = useCallback((id: string, distance: string) => {
 		if (id === 'nav-route') {
 			const km = parseFloat(distance);
-			const mins = Math.round((km / 5) * 60);
-			bottomSheetRef.current?.updateNavInfo(distance, `~${mins} min walk`);
+			const speedKmh = SPEED_KMH[walkingSpeed];
+			const totalMin = Math.round((km / speedKmh) * 60);
+			const timeText = totalMin < 60
+				? `~${totalMin} min walk`
+				: `~${Math.floor(totalMin / 60)} hr ${totalMin % 60 > 0 ? totalMin % 60 + ' min ' : ''}walk`;
+			bottomSheetRef.current?.updateNavInfo(distance, timeText);
 		}
-	}, []);
+	}, [walkingSpeed]);
+
 
 	return (
 		<View className="flex-1 bg-background-50 dark:bg-dark-background-50">
@@ -57,7 +70,9 @@ const WalkPlannerHomePage = () => {
 				<Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">Home</Text>
 			</TouchableOpacity>
 
-			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} />
+			<LocationPermissionBanner />
+
+			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} onNearbySelect={handleNearbySelect} />
 		</View>
 	);
 }
