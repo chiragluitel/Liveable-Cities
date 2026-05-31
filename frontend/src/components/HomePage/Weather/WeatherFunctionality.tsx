@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import * as Location from "expo-location";
 
-import {getLocation} from "@/src/components/map/config/useMapLocation";
+import {getLocation} from "@/src/components/Map/config/useMapLocation";
 
 export interface WeatherData {
     temp: number;

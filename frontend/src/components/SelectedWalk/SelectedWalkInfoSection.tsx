@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 type SelectedWalkInfoSectionProps = {
   title: string;
@@ -15,15 +15,15 @@ export default function SelectedWalkInfoSection({
   const hasSelectedFilters = selectedFilters && selectedFilters.length > 0;
 
   return (
-    <View className="pt-[8] pb-[12] mb-[12]">
-      <Text className="text-base font-bold text-text dark:text-dark-text mb-[8]">{title}</Text>
-      <Text className="text-base text-text-700 dark:text-dark-text-700">{text}</Text>
+    <View className="pt-[6px] pb-3 mb-[10px]">
+      <Text className="text-[17px] font-bold text-text dark:text-dark-text mb-2">{title}</Text>
+      <Text className="text-[15px] leading-6 text-text-700 dark:text-dark-text-700">{text}</Text>
 
       {hasSelectedFilters && (
-        <View className="flex-row flex-wrap mt-[14]">
+        <View className="flex-row flex-wrap mt-[14px]">
           {selectedFilters.map((filter) => (
-            <View key={filter} className="bg-background-200 dark:bg-dark-background-400 rounded-[20] px-[14] py-[8] mr-[10] mb-[10]">
-              <Text className="text-text dark:text-dark-text-900 text-sm font-semibold">{filter}</Text>
+            <View key={filter} className="bg-background-200 dark:bg-dark-background-400 rounded-full px-[14px] py-2 mr-[10px] mb-[10px]">
+              <Text className="text-text dark:text-dark-text-900 text-[13px] font-semibold">{filter}</Text>
             </View>
           ))}
         </View>

@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { View } from "react-native";
-import CaseyMap from "../map/CaseyMap";
-import { SelectedWalkVariant } from "@Types/TypesForSelectedWalk";
+import CaseyMap from "../Map/CaseyMap";
+import { SelectedWalkVariant } from "@Types/walkDetailTypes";
 import { useSelectedWalkSheet } from "@Hooks/useSelectedWalkSheet";
-import { getSelectedWalkData } from "@Database/SelectedWalkMockDB";
+import { getSelectedWalkData } from "@Database/walkDetailData";
 import SelectedWalkSheet from "./SelectedWalkSheet";
 
 type SelectedWalkScreenProps = {

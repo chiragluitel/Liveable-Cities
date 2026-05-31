@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { NearbyPlace } from "@Types/TypesForSelectedWalk";
+import { NearbyPlace } from "@Types/walkDetailTypes";
 import SelectedWalkNearbyItem from "./SelectedWalkNearbyItem";
 
 type SelectedWalkNearbyListProps = {
@@ -18,8 +18,8 @@ export default function SelectedWalkNearbyList({
   };
 
   return (
-    <View className="mt-[8]">
-      <Text className="text-lg font-medium text-text dark:text-dark-text mt-[14]">Nearby</Text>
+    <View className="mt-2">
+      <Text className="text-lg font-medium text-text dark:text-dark-text mb-[14px]">Nearby</Text>
 
       {nearbyList.map((nearbyPlace) => (
         <SelectedWalkNearbyItem

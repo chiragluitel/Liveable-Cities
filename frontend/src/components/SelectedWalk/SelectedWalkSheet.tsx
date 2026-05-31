@@ -1,12 +1,7 @@
 import React from "react";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { StyleSheet, View } from "react-native";
-import { SelectedWalkData } from "../../types/TypesForSelectedWalk";
-import SelectedWalkTitleInfo from "./SelectedWalkTitleInfo";
-import SelectedWalkActionRow from "./SelectedWalkActionRow";
-import SelectedWalkImageGallery from "./SelectedWalkImageGallery";
-import SelectedWalkInfoSection from "./SelectedWalkInfoSection";
-import SelectedWalkNearbyList from "./SelectedWalkNearbyList";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { SelectedWalkData } from "../../types/walkDetailTypes";
+import SelectedWalkContent from "./SelectedWalkContent";
 import { useColorScheme } from "nativewind";
 import { colours } from "@Theme/colours";
 
@@ -31,45 +26,19 @@ export default function SelectedWalkSheet({
       index={1}
       snapPoints={snapPoints}
       enablePanDownToClose={false}
-      handleIndicatorStyle={{ backgroundColor: isLight ? colours.background[800] : colours.dark.background[800] }}
-      backgroundStyle={{backgroundColor: isLight ? colours.background[50] : colours.dark.background[200]}}
+      handleIndicatorStyle={{
+        width: 64,
+        height: 7,
+        borderRadius: 999,
+        backgroundColor: isLight ? colours.background[800] : colours.dark.background[800],
+      }}
+      backgroundStyle={{
+        backgroundColor: isLight ? colours.background[50] : colours.dark.background[200],
+        borderTopLeftRadius: 28,
+        borderTopRightRadius: 28,
+      }}
     >
-      <BottomSheetScrollView
-        contentContainerStyle={{
-          paddingHorizontal: 18,
-          paddingBottom: 50,
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        <SelectedWalkTitleInfo
-          title={selectedWalkData.title}
-          distanceText={selectedWalkData.distanceText}
-          durationText={selectedWalkData.durationText}
-        />
-
-        <SelectedWalkActionRow />
-
-        {selectedWalkData.showImages && <SelectedWalkImageGallery />}
-
-        <SelectedWalkInfoSection
-          title={selectedWalkData.infoTitle}
-          text={selectedWalkData.infoText}
-          selectedFilters={selectedWalkData.selectedFilters}
-        />
-
-        <SelectedWalkNearbyList nearbyList={selectedWalkData.nearbyList} />
-
-        
-      </BottomSheetScrollView>
+      <SelectedWalkContent walk={selectedWalkData} />
     </BottomSheet>
   );
 }
-
-const styles = StyleSheet.create({
-  handleIndicator: {
-    width: 64,
-    height: 7,
-    borderRadius: 999,
-    backgroundColor: "#a8a8a8",
-  },
-});

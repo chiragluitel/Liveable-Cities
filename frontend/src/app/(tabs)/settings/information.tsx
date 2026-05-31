@@ -1,6 +1,6 @@
 import { colours } from "@Theme/colours";
 import WebLinkButton from "@Components/WebLinkButton";
-import SettingsGroup from "@Components/settings/SettingsGroup";
+import SettingsGroup from "@Components/Settings/SettingsGroup";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { ScrollView, Text, View } from "react-native";

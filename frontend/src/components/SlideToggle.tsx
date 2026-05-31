@@ -1,11 +1,19 @@
 import { useEffect, useRef } from "react";
-import { Animated, Pressable, StyleSheet } from "react-native";
+import { Animated, Pressable } from "react-native";
 import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
 
 type ToggleProps = {
   value: boolean,
   onValueChange: (value: boolean) => void
+};
+
+const knobShadow = {
+  shadowColor: "black",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.15,
+  shadowRadius: 3,
+  elevation: 2,
 };
 
 export default function SlideToggle({value, onValueChange}: ToggleProps) {
@@ -38,28 +46,15 @@ export default function SlideToggle({value, onValueChange}: ToggleProps) {
 
   return (
     <Pressable onPress={() => onValueChange(!value)}>
-      <Animated.View 
-        className="w-[36] h-[22] rounded-[15] justify-center" 
+      <Animated.View
+        className="w-[36] h-[22] rounded-[15] justify-center"
         style={{backgroundColor}}
       >
-        <Animated.View 
-          className="w-[18] h-[18] rounded-[13] bg-white absolute" 
-          style={[styles.shadow, { transform: [{translateX}]}]} 
+        <Animated.View
+          className="w-[18] h-[18] rounded-[13] bg-white absolute"
+          style={[knobShadow, { transform: [{translateX}]}]}
         />
       </Animated.View>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 2
-  }
-});

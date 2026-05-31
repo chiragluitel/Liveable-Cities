@@ -1,6 +1,7 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { NearbyPlace, NearbyPlaceType } from "@Types/TypesForSelectedWalk";
+import { Pressable, Text, View } from "react-native";
+import { Flame, BookOpen, Armchair, PersonStanding, MapPin } from "lucide-react-native";
+import { NearbyPlace, NearbyPlaceType } from "@Types/walkDetailTypes";
 
 type SelectedWalkNearbyItemProps = {
   place: NearbyPlace;
@@ -8,58 +9,32 @@ type SelectedWalkNearbyItemProps = {
   onNearbyPress: (place: NearbyPlace) => void;
 };
 
-const getPlaceStyle = (placeType: NearbyPlaceType) => {
-  switch (placeType) {
-    case "bbq":
-      return {
-        backgroundColor: "#f4d7b5",
-        emoji: "🍖",
-      };
-
-    case "library":
-      return {
-        backgroundColor: "#d9e8ff",
-        emoji: "📚",
-      };
-
-    case "bench":
-      return {
-        backgroundColor: "#dfe3de",
-        emoji: "🪑",
-      };
-
-    case "toilet":
-      return {
-        backgroundColor: "#d9d4ff",
-        emoji: "🚻",
-      };
-
-    default:
-      return {
-        backgroundColor: "#dcdedd",
-        emoji: "📍",
-      };
-  }
+const PLACE_STYLES: Record<string, { backgroundColor: string; icon: React.ReactElement }> = {
+  bbq:     { backgroundColor: '#f4d7b5', icon: <Flame size={30} color="#f97316" /> },
+  library: { backgroundColor: '#d9e8ff', icon: <BookOpen size={30} color="#3b82f6" /> },
+  bench:   { backgroundColor: '#dfe3de', icon: <Armchair size={30} color="#22c55e" /> },
+  toilet:  { backgroundColor: '#d9d4ff', icon: <PersonStanding size={30} color="#8b5cf6" /> },
 };
+
+const DEFAULT_PLACE_STYLE = { backgroundColor: '#dcdedd', icon: <MapPin size={30} color="#555" /> };
 
 export default function SelectedWalkNearbyItem({
   place,
   isSelected,
   onNearbyPress,
 }: SelectedWalkNearbyItemProps) {
-  const placeStyle = getPlaceStyle(place.placeType);
+  const placeStyle = PLACE_STYLES[place.placeType] ?? DEFAULT_PLACE_STYLE;
 
   return (
     <Pressable
-      //style={[styles.container, isSelected && styles.selectedContainer]}
-      className={`flex-row items-center mb-[22] rounded-[16] py-[6] px-[4] ${isSelected ? "bg-primary-100 dark:bg-dark-primary-300" : ""}`}
+      className={`flex-row items-center mb-[22px] rounded-2xl py-[6px] px-1 ${isSelected ? "bg-primary-100 dark:bg-dark-primary-300" : ""}`}
       onPress={() => onNearbyPress(place)}
     >
       <View
+        className="w-[74px] h-[74px] rounded-full justify-center items-center mr-[18px]"
         style={{ backgroundColor: placeStyle.backgroundColor }}
-        className="w-[74] h-[74] rounded-[37] justify-center items-center mr-[18]"
       >
-        <Text className="text-3xl">{placeStyle.emoji}</Text>
+        {placeStyle.icon}
       </View>
 
       <Text className="text-lg text-text dark:text-dark-text font-normal">{place.label}</Text>
