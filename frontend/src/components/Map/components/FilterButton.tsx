@@ -18,7 +18,7 @@ const FILTER_ICON_COMPONENTS: Record<IconName, React.ReactElement> = {
 function FilterIcon({ name }: { name: IconName }) {
   const { color } = ICON_DEFINITIONS[name];
   return (
-    <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: color, alignItems: 'center', justifyContent: 'center' }}>
+    <View className="w-8 h-8 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
       {FILTER_ICON_COMPONENTS[name]}
     </View>
   );
@@ -53,8 +53,8 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
   return (
     <View className="absolute right-4 items-end" style={{ top: insets.top + 12 }}>
       <TouchableOpacity
-        className="py-2 bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md items-center"
-        style={{ elevation: 4, width: 76 }}
+        className="py-2 w-[76px] bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md items-center"
+        style={{ elevation: 4 }}
         onPress={() => setOpen(o => !o)}
       >
         <Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">
@@ -64,8 +64,8 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
 
       {open && (
         <View
-          className="mt-[6px] bg-background-100 dark:bg-dark-background-100 rounded-[10px] overflow-hidden"
-          style={{ elevation: 4, minWidth: 200 }}
+          className="mt-[6px] min-w-[200px] bg-background-100 dark:bg-dark-background-100 rounded-[10px] overflow-hidden"
+          style={{ elevation: 4 }}
         >
           {iconNames.map((name, index) => (
             <TouchableHighlight
@@ -79,7 +79,7 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
               >
                 <View className="flex-row items-center gap-[10px]">
                   <FilterIcon name={name} />
-                  <Text style={{ fontSize: 17 }} className="text-text dark:text-dark-text">
+                  <Text className="text-[17px] text-text dark:text-dark-text">
                     {ICON_DEFINITIONS[name].label}
                   </Text>
                 </View>

@@ -50,7 +50,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   function sendIcon(entry: MapIconEntry) {
     const def = ICON_DEFINITIONS[entry.name];
     const id = `${entry.name}-${entry.lat}-${entry.lng}`;
-    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconSvg: def.iconSvg, color: def.color, label: def.label, iconType: entry.name });
+    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconClass: def.iconClass, color: def.color, label: def.label, iconType: entry.name });
   }
 
   function onMessage(e: WebViewMessageEvent) {

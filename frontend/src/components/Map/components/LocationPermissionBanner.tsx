@@ -49,26 +49,16 @@ export default function LocationPermissionBanner() {
   return (
     <Animated.View
       pointerEvents="box-none"
-      style={[
-        animStyle,
-        { position: 'absolute', top: insets.top + 12, left: 0, right: 0, alignItems: 'center', zIndex: 20 },
-      ]}
+      className="absolute left-0 right-0 items-center z-20"
+      style={[animStyle, { top: insets.top + 12 }]}
     >
       <TouchableOpacity
         onPress={handlePress}
         activeOpacity={0.85}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 6,
-          backgroundColor: 'rgba(20,20,20,0.82)',
-          paddingHorizontal: 16,
-          paddingVertical: 9,
-          borderRadius: 20,
-        }}
+        className="flex-row items-center gap-[6px] bg-[rgba(20,20,20,0.82)] px-4 py-[9px] rounded-[20px]"
       >
         <MapPin size={14} color="#fff" />
-        <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600', letterSpacing: 0.2 }}>
+        <Text className="text-white text-[13px] font-semibold tracking-[0.2]">
           Share Location
         </Text>
       </TouchableOpacity>
