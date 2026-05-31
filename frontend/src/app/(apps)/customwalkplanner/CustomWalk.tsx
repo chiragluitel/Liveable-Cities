@@ -39,7 +39,7 @@ export default function WalkPlannerScreen() {
         setHasPark(existingWalk.hasPark);
         setHasPlayground(existingWalk.hasPlayground);
         setHasWellLitStreets(existingWalk.hasWellLitStreets);
-        setHasRubbishBin(existingWalk.hasRubbishbin);
+        setHasRubbishBin(existingWalk.hasRubbishBin);
         setHasOffLeash(existingWalk.hasOffLeash);
       }
     }

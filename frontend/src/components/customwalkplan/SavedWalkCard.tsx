@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import WalkActionButton from './WalkActionButton';
 import { useColorScheme } from "nativewind";
@@ -8,7 +8,14 @@ import { colours } from "@Theme/colours";
 type Walk = {
   id: string;
   cuswalkname?: string;
-  distance?: string;
+  distance?: string | number;
+  hasWaterFountain?: boolean;
+  hasDisabledToilets?: boolean;
+  hasPark?: boolean;
+  hasPlayground?: boolean;
+  hasRubbishBin?: boolean;
+  hasOffLeash?: boolean;
+  hasWellLitStreets?: boolean;
 };
 
 type SavedWalkCardProps = {
@@ -16,14 +23,33 @@ type SavedWalkCardProps = {
   onDelete: (id: string) => void;
 };
 
+const getSelectedFilters = (walk: Walk) => {
+  const selectedFilters: string[] = [];
+
+  if (walk.hasWaterFountain) selectedFilters.push("Water Fountain");
+  if (walk.hasDisabledToilets) selectedFilters.push("Disabled Toilets");
+  if (walk.hasPark) selectedFilters.push("Park");
+  if (walk.hasPlayground) selectedFilters.push("Playground");
+  if (walk.hasRubbishBin) selectedFilters.push("Rubbish Bins");
+  if (walk.hasOffLeash) selectedFilters.push("Off Leash Zones");
+  if (walk.hasWellLitStreets) selectedFilters.push("Well Lit Streets");
+
+  return selectedFilters;
+};
+
 export default function SavedWalkCard({ walk, onDelete }: SavedWalkCardProps) {
   const { colorScheme } = useColorScheme();
-	const isLight = colorScheme === "light";
-  
+  const isLight = colorScheme === "light";
+
+  const selectedFilters = getSelectedFilters(walk);
+
   return (
-    <View style={styles.cardShadow} className="bg-background-100 dark:bg-dark-background-300 p-[16] rounded-[12] mb-[16]">
+    <View
+      style={styles.cardShadow}
+      className="bg-background-100 dark:bg-dark-background-300 p-[16] rounded-[12] mb-[16]"
+    >
       <View className="flex-row justify-between items-center mb-[16]">
-        <Text className='text-lg font-semibold text-text dark:text-dark-text'>
+        <Text className="text-lg font-semibold text-text dark:text-dark-text">
           {walk.cuswalkname || 'Unnamed Walk'}
         </Text>
 
@@ -32,7 +58,25 @@ export default function SavedWalkCard({ walk, onDelete }: SavedWalkCardProps) {
         </Text>
       </View>
 
-      <View className='flex-row justify-end border-t-hairline border-t-text-200 dark:border-t-dark-text-400'>
+      <Link
+        href={{
+          pathname: '/custom-walk-selected',
+          params: {
+            title: walk.cuswalkname || "Custom Walk",
+            distance: String(walk.distance ?? ""),
+            selectedFilters: selectedFilters.join("|"),
+          },
+        }}
+        asChild
+      >
+        <TouchableOpacity className="bg-accent dark:bg-dark-accent-700 rounded-[10] py-[10] items-center mb-[12]">
+          <Text className="text-white font-semibold text-base">
+            View Route
+          </Text>
+        </TouchableOpacity>
+      </Link>
+
+      <View className="flex-row justify-end border-t-hairline border-t-text-200 dark:border-t-dark-text-400">
         <Link href={{ pathname: './customwalkplanner/CustomWalk', params: { id: walk.id } }} asChild>
           <WalkActionButton
             iconName="pencil"

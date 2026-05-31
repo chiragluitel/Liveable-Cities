@@ -3,6 +3,12 @@ import {
   SelectedWalkVariant,
 } from "@Types/TypesForSelectedWalk";
 
+type SelectedWalkOverrides = {
+  titleOverride?: string;
+  distanceOverride?: string;
+  selectedFiltersOverride?: string[];
+};
+
 const nearbyMapPlaces = [
   {
     id: "bbq",
@@ -25,6 +31,17 @@ const nearbyMapPlaces = [
     placeType: "toilet",
   },
 ] as const;
+
+const estimateDurationFromDistance = (distanceText?: string) => {
+  const distanceNumber = Number(distanceText);
+
+  if (!distanceNumber || Number.isNaN(distanceNumber)) {
+    return "40 mins";
+  }
+
+  const estimatedMinutes = Math.round(distanceNumber * 12);
+  return `${estimatedMinutes} mins`;
+};
 
 const selectedWalkMockData: Record<SelectedWalkVariant, SelectedWalkData> = {
   default: {
@@ -55,12 +72,29 @@ const selectedWalkMockData: Record<SelectedWalkVariant, SelectedWalkData> = {
 
 export const getSelectedWalkData = (
   variant: SelectedWalkVariant,
-  titleOverride?: string
+  overrides?: SelectedWalkOverrides
 ): SelectedWalkData => {
   const selectedWalkData = selectedWalkMockData[variant];
 
+  const title = overrides?.titleOverride?.trim() || selectedWalkData.title;
+  const distanceText = overrides?.distanceOverride
+    ? `${overrides.distanceOverride} km`
+    : selectedWalkData.distanceText;
+
+  const durationText = overrides?.distanceOverride
+    ? estimateDurationFromDistance(overrides.distanceOverride)
+    : selectedWalkData.durationText;
+
+  const selectedFilters =
+    overrides?.selectedFiltersOverride && overrides.selectedFiltersOverride.length > 0
+      ? overrides.selectedFiltersOverride
+      : selectedWalkData.selectedFilters;
+
   return {
     ...selectedWalkData,
-    title: titleOverride?.trim() || selectedWalkData.title,
+    title,
+    distanceText,
+    durationText,
+    selectedFilters,
   };
 };
