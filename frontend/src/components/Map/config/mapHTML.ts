@@ -68,18 +68,52 @@ function buildMapHTML(): string {
         map.fitBounds(line.getBounds(), { padding: [40, 40] });
         routeStore[id] = [casing, line, start].concat(end ? [end] : []);
       }
-      fetch('https://routing.openstreetmap.de/routed-foot/route/v1/foot/'+coords+'?overview=full&geometries=geojson')
-        .then(function(r){return r.json();})
-        .then(function(data){
-          var route = data.routes[0];
-          var distKm = (route.distance / 1000).toFixed(1) + ' km';
-          sendToRN({ type: 'ROUTE_INFO', id: id, distance: distKm });
-          addLayers(route.geometry.coordinates.map(function(c){return [c[1],c[0]];}), casingStyle, lineStyle);
+      var start = points[0];
+      var end = points[points.length - 1];
+
+      fetch('http://localhost:5156/api/custom-walk-route', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: id,
+          start: {
+            lat: start.lat,
+            lng: start.lng
+          },
+          end: {
+            lat: end.lat,
+            lng: end.lng
+          }
         })
-        .catch(function(){
-          sendToRN({ type: 'ROUTE_FALLBACK', id: id });
-          addLayers(latlngs, fbCasing, fbLine);
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error('Route request failed');
+        return r.json();
+      })
+      .then(function(data) {
+        var routeGeoJson = data.routeGeoJson;
+        var feature = routeGeoJson.features[0];
+
+        sendToRN({
+          type: 'ROUTE_INFO',
+          id: id,
+          distance: data.distanceText
         });
+
+        addLayers(
+          feature.geometry.coordinates.map(function(c) {
+            return [c[1], c[0]];
+          }),
+          casingStyle,
+          lineStyle
+        );
+      })
+      .catch(function() {
+        sendToRN({ type: 'ROUTE_FALLBACK', id: id });
+        addLayers(latlngs, fbCasing, fbLine);
+      });
     }
 
     function clearRoutes() {

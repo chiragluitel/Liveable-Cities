@@ -2,6 +2,7 @@
 const { colours } = require("./src/theme/colours");
 
 module.exports = {
+  darkMode: 'class',
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./src/app/**/*.{js,jsx,ts,tsx}",          
@@ -10,7 +11,6 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
-    darkMode: 'class',
     extend: {
       colors: colours,
     }
