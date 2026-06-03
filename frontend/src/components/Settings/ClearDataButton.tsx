@@ -4,6 +4,7 @@ import { useColorScheme } from "nativewind";
 import { useState } from "react";
 import { Modal, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { colours } from "@Theme/colours";
+import { useSettings } from "@/src/context/SettingsContext";
 
 export default function ClearDataButton() {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -13,11 +14,13 @@ export default function ClearDataButton() {
   
   const isLight = colorScheme === "light";
   
+  const { reducedMotion } = useSettings();
+  
   return (
     <View>
       {/*Initial Alert*/}
       <Modal
-        animationType="fade"
+        animationType={reducedMotion ? "none" : "fade"}
         backdropColor="#00000000"
         visible={alertVisible}
         onRequestClose={() => setAlertVisible(false)}
@@ -41,7 +44,7 @@ export default function ClearDataButton() {
 
       {/*Confirm Message*/}
       <Modal
-        animationType="fade"
+        animationType={reducedMotion ? "none" : "fade"}
         backdropColor="#00000000"
         visible={confirmVisible}
         onRequestClose={() => setConfrimVisible(false)}

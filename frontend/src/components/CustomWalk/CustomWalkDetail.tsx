@@ -34,6 +34,8 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
 
+    const { reducedMotion } = useSettings();
+
     return (
         <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
             <View className="mb-[6px]">
@@ -60,7 +62,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
             </View>
 
             <Modal
-                animationType="fade"
+                animationType={reducedMotion ? "none" : "fade"}
                 backdropColor="#00000000"
                 visible={deleteModalVisible}
                 onRequestClose={() => setDeleteModalVisible(false)}

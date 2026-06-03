@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
 import { colours } from "@Theme/colours";
 import AlertBox from "@Components/AlertBox";
+import { useSettings } from "@/src/context/SettingsContext";
 
 type SelectedWalkActionRowProps = {
   onEdit?: () => void;
@@ -14,6 +15,8 @@ export default function SelectedWalkActionRow({ onEdit, onDelete }: SelectedWalk
   const { colorScheme } = useColorScheme();
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
+  const { reducedMotion } = useSettings();
 
   if (onEdit && onDelete) {
     return (
@@ -38,7 +41,7 @@ export default function SelectedWalkActionRow({ onEdit, onDelete }: SelectedWalk
         </View>
 
         <Modal
-          animationType="fade"
+          animationType={reducedMotion ? "none" : "fade"}
           backdropColor="#00000000"
           visible={deleteModalVisible}
           onRequestClose={() => setDeleteModalVisible(false)}
