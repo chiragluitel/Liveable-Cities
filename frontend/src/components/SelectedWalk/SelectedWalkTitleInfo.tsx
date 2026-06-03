@@ -26,7 +26,7 @@ export default function SelectedWalkTitleInfo({
 
       <Text className="text-[17px] text-text dark:text-dark-text mb-[22px]">
         <Text className="text-accent dark:text-dark-accent-700">
-          {distanceText}, {durationText}
+          {distanceText}{durationText ? `, ${durationText}` : ''}
         </Text>
       </Text>
     </View>

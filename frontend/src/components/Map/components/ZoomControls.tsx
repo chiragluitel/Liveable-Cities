@@ -1,4 +1,4 @@
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, interpolate, Extrapolation } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
 import { TouchableOpacity, Text, useWindowDimensions } from 'react-native';
 
@@ -10,6 +10,18 @@ type ZoomControlsProps = {
 
 export default function ZoomControls({ onZoomIn, onZoomOut, animatedSheetPosition }: ZoomControlsProps) {
   const { height } = useWindowDimensions();
+
+  const opacity = useAnimatedStyle(() => {
+    if (animatedSheetPosition == null) return { opacity: 1 };
+    return {
+      opacity: interpolate(
+        animatedSheetPosition.value,
+        [height * 0.55, height * 0.65],
+        [0, 1],
+        Extrapolation.CLAMP
+      ),
+    };
+  });
 
   const zoomInStyle = useAnimatedStyle(() => {
     const base = 184;
@@ -25,7 +37,7 @@ export default function ZoomControls({ onZoomIn, onZoomOut, animatedSheetPositio
 
   return (
     <>
-      <Animated.View className="absolute right-4 w-11 h-11" style={zoomInStyle}>
+      <Animated.View className="absolute right-4 w-11 h-11" style={[zoomInStyle, opacity]}>
         <TouchableOpacity
           className="w-11 h-11 bg-white rounded-lg items-center justify-center shadow-md"
           style={{ elevation: 4 }}
@@ -34,7 +46,7 @@ export default function ZoomControls({ onZoomIn, onZoomOut, animatedSheetPositio
           <Text className="text-[22px] font-bold leading-[26px]">+</Text>
         </TouchableOpacity>
       </Animated.View>
-      <Animated.View className="absolute right-4 w-11 h-11" style={zoomOutStyle}>
+      <Animated.View className="absolute right-4 w-11 h-11" style={[zoomOutStyle, opacity]}>
         <TouchableOpacity
           className="w-11 h-11 bg-white rounded-lg items-center justify-center shadow-md"
           style={{ elevation: 4 }}

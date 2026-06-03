@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { View } from 'react-native';
+import { useColorScheme } from 'nativewind';
 import type { SharedValue } from 'react-native-reanimated';
 import * as Location from 'expo-location';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
@@ -18,6 +19,7 @@ export type CaseyMapHandle = {
   clearIcons: () => void;
   drawRoute: (route: MapRoute) => void;
   clearRoutes: () => void;
+  routeTo: (lat: number, lng: number) => void;
 };
 
 type CaseyMapProps = {
@@ -32,6 +34,9 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   const webViewRef = useRef<WebView>(null);
   const isReady = useRef(false);
   const locationSub = useRef<Location.LocationSubscription | null>(null);
+  const { colorScheme } = useColorScheme();
+  const colorSchemeRef = useRef(colorScheme);
+  colorSchemeRef.current = colorScheme;
 
   function send(cmd: object) {
     if (!isReady.current) return;
@@ -55,6 +60,8 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
       isReady.current = true;
 
       setTimeout(() => {
+        send({ type: 'SET_THEME', isDark: colorSchemeRef.current === 'dark' });
+
         // Apply default visibility for any types hidden by default
         (Object.keys(ICON_DEFINITIONS) as IconName[]).forEach(iconType => {
           if (!DEFAULT_VISIBLE_ICONS.includes(iconType)) {
@@ -82,6 +89,12 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     send({ type: 'SET_TYPE_VISIBILITY', iconType, visible });
   }
 
+  useEffect(() => {
+    if (isReady.current) {
+      send({ type: 'SET_THEME', isDark: colorScheme === 'dark' });
+    }
+  }, [colorScheme]);
+
   // Stop tracking location when the map unmounts
   useEffect(() => {
     return () => { locationSub.current?.remove(); };
@@ -93,6 +106,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     clearIcons:  () => send({ type: 'CLEAR_ICONS' }),
     drawRoute:   (route: MapRoute) => sendRoute(route),
     clearRoutes: () => send({ type: 'CLEAR_ROUTES' }),
+    routeTo:     (lat: number, lng: number) => send({ type: 'ROUTE_TO', lat, lng }),
   }));
 
   return (

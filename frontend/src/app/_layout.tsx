@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import '@/global.css'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CustomWalkProvider } from '@/src/context/CustomWalkContext';
+import { SettingsProvider } from '@/src/context/SettingsContext';
 import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
 import useAsyncStorage from "@Hooks/useAsyncStorage";
@@ -34,6 +35,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{flex:1}}>
+      <SettingsProvider>
       <CustomWalkProvider>
         <Stack
           screenOptions={
@@ -50,6 +52,7 @@ export default function RootLayout() {
           <Stack.Screen name="(apps)" options={{headerShown: false}} />
         </Stack>
       </CustomWalkProvider>
+      </SettingsProvider>
     </GestureHandlerRootView>
   )
 }

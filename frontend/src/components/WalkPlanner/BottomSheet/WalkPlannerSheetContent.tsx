@@ -1,6 +1,6 @@
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { View } from "react-native";
-import { FITNESS_GOALS, MY_WALKS, NEARBY_AMENITIES } from "@/src/database/mockData";
+import { View, Linking } from "react-native";
+import { FITNESS_GOALS, MY_WALKS } from "@/src/database/mockData";
 import { GridButtons } from "../GridButtons";
 import { FitnessSection } from "../FitnessGoals/FitnessSection";
 import MyWalksSection from "../MyWalks/MyWalksSection";
@@ -8,15 +8,20 @@ import { NearbySection } from "../Nearby/NearbySection";
 import CommunityWalkSection from "../CommunityWalks/CommunityWalkSection";
 import CustomButton from "@Components/Shared/CustomButton";
 import { useRouter } from "expo-router";
+import { useCustomWalks } from "@/src/context/CustomWalkContext";
+import { NearbyPressItem } from "@/src/components/WalkPlanner/Nearby/NearbySection";
 
 interface WalkPlannerSheetContentProps {
     onInteract: () => void;
     onWalkPress?: (walkId: string) => void;
-    onCustomWalkPress?: () => void;
+    onCustomWalkCardPress?: (walk: any) => void;
+    onNearbyPress?: (item: NearbyPressItem) => void;
 }
 
-export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkPress }: WalkPlannerSheetContentProps) => {
+export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkCardPress, onNearbyPress }: WalkPlannerSheetContentProps) => {
     const router = useRouter();
+    const { walks } = useCustomWalks();
+
     return (
         <BottomSheetScrollView
             contentContainerStyle={{ paddingBottom: 40, paddingTop: 4 }}
@@ -26,18 +31,16 @@ export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkP
             onScrollBeginDrag={onInteract}
             onTouchStart={onInteract}
         >
-            <MyWalksSection walks={MY_WALKS} onHeaderPress={() => {}} onWalkPress={onWalkPress ?? (() => router.navigate("/custom-walk-selected"))} />
+            <MyWalksSection walks={walks} onWalkPress={onCustomWalkCardPress ?? (() => {})} />
             <View className="px-4 pb-4">
-                <CustomButton label="Custom Walk" onPress={onCustomWalkPress ?? (() => router.push('/custom-walk' as any))} />
+                <CustomButton label="Create a Custom Walk" onPress={() => router.push('/custom-walk' as any)} />
             </View>
-            <NearbySection amenities={NEARBY_AMENITIES} onAmenityPress={onWalkPress ?? (() => router.navigate("/walk-selected"))} />
+            <NearbySection onNearbyPress={onNearbyPress} />
             <CommunityWalkSection walks={MY_WALKS} onHeaderPress={() => {}} onWalkPress={onWalkPress ?? (() => router.navigate("/custom-walk-selected"))} />
             <FitnessSection goals={FITNESS_GOALS} />
             <GridButtons
                 button={[
-                    { label: 'Share Location', onPress: () => console.log('Share My Location') },
-                    { label: 'Report Problem', onPress: () => console.log('Report Problem') },
-                    { label: 'Privacy Policy', onPress: () => console.log('Privacy Policy') }
+                    { label: 'Report Problem', onPress: () => Linking.openURL('https://github.com/chiragluitel/Liveable-Cities/issues') }
                 ]}
             />
         </BottomSheetScrollView>

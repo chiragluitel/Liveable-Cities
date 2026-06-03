@@ -2,14 +2,14 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { SelectedWalkData } from "@/src/types/walkDetailTypes";
 import SelectedWalkTitleInfo from "./SelectedWalkTitleInfo";
 import SelectedWalkActionRow from "./SelectedWalkActionRow";
-import SelectedWalkInfoSection from "./SelectedWalkInfoSection";
-import SelectedWalkNearbyList from "./SelectedWalkNearbyList";
 
 type SelectedWalkContentProps = {
   walk: SelectedWalkData;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
-export default function SelectedWalkContent({ walk }: SelectedWalkContentProps) {
+export default function SelectedWalkContent({ walk, onEdit, onDelete }: SelectedWalkContentProps) {
   return (
     <BottomSheetScrollView
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }}
@@ -20,13 +20,7 @@ export default function SelectedWalkContent({ walk }: SelectedWalkContentProps) 
         distanceText={walk.distanceText}
         durationText={walk.durationText}
       />
-      <SelectedWalkActionRow />
-      <SelectedWalkInfoSection
-        title={walk.infoTitle}
-        text={walk.infoText}
-        selectedFilters={walk.selectedFilters}
-      />
-      <SelectedWalkNearbyList nearbyList={walk.nearbyList} />
+      <SelectedWalkActionRow onEdit={onEdit} onDelete={onDelete} />
     </BottomSheetScrollView>
   );
 }

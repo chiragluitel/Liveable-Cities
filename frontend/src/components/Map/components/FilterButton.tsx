@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Flame, BookOpen, Armchair, PersonStanding } from 'lucide-react-native';
+import { useColorScheme } from 'nativewind';
 import { DEFAULT_VISIBLE_ICONS } from '../config/mapConfig';
 import { ICON_DEFINITIONS, IconName } from '../config/mapIcons';
+import { colours } from '@Theme/colours';
+import SlideToggle from '@Components/SlideToggle';
 
 const FILTER_ICON_COMPONENTS: Record<IconName, React.ReactElement> = {
-  bbq:     <Flame size={18} color="#fff" />,
-  library: <BookOpen size={18} color="#fff" />,
-  bench:   <Armchair size={18} color="#fff" />,
+  bbq:     <Flame          size={18} color="#fff" />,
+  library: <BookOpen       size={18} color="#fff" />,
+  bench:   <Armchair       size={18} color="#fff" />,
   toilet:  <PersonStanding size={18} color="#fff" />,
 };
 
 function FilterIcon({ name }: { name: IconName }) {
   const { color } = ICON_DEFINITIONS[name];
   return (
-    <View style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: color, alignItems: 'center', justifyContent: 'center' }}>
+    <View className="w-8 h-8 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
       {FILTER_ICON_COMPONENTS[name]}
     </View>
   );
@@ -27,6 +30,8 @@ type FilterButtonProps = {
 
 export default function FilterButton({ onToggle }: FilterButtonProps) {
   const insets = useSafeAreaInsets();
+  const { colorScheme } = useColorScheme();
+  const isLight = colorScheme === 'light';
 
   const [open, setOpen] = useState(false);
   const [visibility, setVisibility] = useState<Record<IconName, boolean>>(() => {
@@ -43,11 +48,13 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
     onToggle(name, next);
   }
 
+  const iconNames = Object.keys(ICON_DEFINITIONS) as IconName[];
+
   return (
     <View className="absolute right-4 items-end" style={{ top: insets.top + 12 }}>
       <TouchableOpacity
-        className="py-2 bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md items-center"
-        style={{ elevation: 4, width: 76 }}
+        className="py-2 w-[76px] bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md items-center"
+        style={{ elevation: 4 }}
         onPress={() => setOpen(o => !o)}
       >
         <Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">
@@ -57,21 +64,28 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
 
       {open && (
         <View
-          className="mt-[6px] bg-background-100 dark:bg-dark-background-200 rounded-lg shadow-md overflow-hidden min-w-40"
+          className="mt-[6px] min-w-[200px] bg-background-100 dark:bg-dark-background-100 rounded-[10px] overflow-hidden"
           style={{ elevation: 4 }}
         >
-          {(Object.keys(ICON_DEFINITIONS) as IconName[]).map(name => (
-            <TouchableOpacity
+          {iconNames.map((name, index) => (
+            <TouchableHighlight
               key={name}
-              className="flex-row items-center py-[11px] px-[14px] gap-[10px] border-b border-text-200 dark:border-dark-text-400"
               onPress={() => toggle(name)}
+              underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
             >
-              <FilterIcon name={name} />
-              <Text className="flex-1 text-sm font-medium text-text dark:text-dark-text">{ICON_DEFINITIONS[name].label}</Text>
-              {visibility[name] && (
-                <Text className="text-sm font-bold text-accent-300 dark:text-dark-accent-700">✓</Text>
-              )}
-            </TouchableOpacity>
+              <View
+                className={`flex-row items-center justify-between px-[14px] py-[13px] bg-background-100 dark:bg-dark-background-100
+                  ${index < iconNames.length - 1 ? 'border-b border-b-text-200 dark:border-b-dark-text-400' : ''}`}
+              >
+                <View className="flex-row items-center gap-[10px]">
+                  <FilterIcon name={name} />
+                  <Text className="text-[17px] text-text dark:text-dark-text">
+                    {ICON_DEFINITIONS[name].label}
+                  </Text>
+                </View>
+                <SlideToggle value={visibility[name]} onValueChange={() => toggle(name)} />
+              </View>
+            </TouchableHighlight>
           ))}
         </View>
       )}
