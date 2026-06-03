@@ -1,18 +1,17 @@
 import { colours } from "@Theme/colours";
 import SlideToggle from "@Components/SlideToggle";
 import { useColorScheme } from "nativewind";
-import { useState } from "react";
 import { Text, TouchableHighlight, View } from "react-native";
 
 type ToggleProps = {
   title: string
-  initialValue: boolean
+  valueKey: string
+  value: boolean
+  setValue: (value: boolean) => void
   hideSeperator?: boolean
 };
 
-export default function ToggleSetting({title, initialValue, hideSeperator = false}: ToggleProps) {
-  const [value, setValue] = useState(initialValue);
-
+export default function ToggleSetting({title, valueKey, value, setValue, hideSeperator = false}: ToggleProps) {
   const { colorScheme } = useColorScheme();
     
   const isLight = colorScheme === "light";

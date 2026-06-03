@@ -22,6 +22,7 @@ type Anchor = {
 };
 
 import { createContext, useContext } from "react";
+import { useSettings } from "@/src/context/SettingsContext";
 
 type DropdownContextType = {
   itemPressed: (value: string) => void
@@ -83,11 +84,13 @@ export default function Dropdown({
     );
   }
 
+  const {reducedMotion} = useSettings();
+
   return (
     <View className={`w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] 
     ${hideSeperator ? "" : "border-b-text-200 dark:border-b-dark-text-400 border-b-hairline"}`}>
       <Modal
-        animationType="fade"
+        animationType={reducedMotion ? "none" : "fade"}
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
