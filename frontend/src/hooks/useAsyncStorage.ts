@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { store } from "expo-router/build/global-state/router-store";
 
 function useAsyncStorage(key: any, initialValue: any) {
   const [storedValue, setStoredValue] = useState(initialValue);

@@ -7,12 +7,17 @@ import { useRouter, Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import { ScrollView, View, Text } from "react-native";
+import { useState } from "react";
 
 export default function Settings() {
   const router = useRouter();
 
   const { setColorScheme } = useColorScheme();
   const { walkingSpeed, setWalkingSpeed } = useSettings();
+
+  const { reducedMotion, setReducedMotion } = useSettings();
+  const [streetLights, setStreetLights] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
 
   function setTheme(value: string) {
     switch (value) {
@@ -62,12 +67,12 @@ export default function Settings() {
         </SettingsGroup>
 
         <SettingsGroup title="Night Detection">
-          <ToggleSetting title="Auto Enable Street Lights" initialValue={true} hideSeperator={true} actionFunc={(value: boolean) => {}} />
+          <ToggleSetting title="Auto Enable Street Lights" valueKey="autoStreetLight" value={streetLights} setValue={setStreetLights} hideSeperator={true} />
         </SettingsGroup>
 
         <SettingsGroup title="Accessibility">
-          <ToggleSetting title="Reduce Motion" initialValue={false} actionFunc={(value: boolean) => {}} />
-          <ToggleSetting title="Increase Contrast" initialValue={false} hideSeperator={true} actionFunc={(value: boolean) => {}} />
+          <ToggleSetting title="Reduce Motion" valueKey="reduceMotion" value={reducedMotion} setValue={setReducedMotion} />
+          <ToggleSetting title="Increase Contrast" valueKey="highContrast" value={highContrast} setValue={setHighContrast} hideSeperator={true} />
         </SettingsGroup>
 
         <SettingsGroup title="About">
