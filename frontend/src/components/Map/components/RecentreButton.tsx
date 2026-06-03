@@ -25,10 +25,10 @@ export default function RecentreButton({ onRecentrePress, animatedSheetPosition 
   return (
     <Animated.View className="absolute left-4" style={animStyle}>
       <TouchableOpacity
-        className="py-[10px] px-4 bg-white rounded-lg shadow-md"
+        className="py-[10px] px-4 bg-background-200 dark:bg-dark-background-400 rounded-lg shadow-md"
         onPress={onRecentrePress}
       >
-        <Text className="font-semibold text-sm">Recentre</Text>
+        <Text className="font-semibold text-sm text-dark-text-200 dark:text-dark-text">Recentre</Text>
       </TouchableOpacity>
     </Animated.View>
   );

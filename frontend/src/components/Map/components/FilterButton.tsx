@@ -64,7 +64,7 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
 
       {open && (
         <View
-          className="mt-[6px] min-w-[200px] bg-background-100 dark:bg-dark-background-100 rounded-[10px] overflow-hidden"
+          className="mt-[6px] min-w-[200px] bg-background-100 dark:bg-dark-background-200 rounded-[10px] overflow-hidden"
           style={{ elevation: 4 }}
         >
           {iconNames.map((name, index) => (
@@ -74,7 +74,7 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
               underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
             >
               <View
-                className={`flex-row items-center justify-between px-[14px] py-[13px] bg-background-100 dark:bg-dark-background-100
+                className={`flex-row items-center justify-between px-[14px] py-[13px] bg-background-100 dark:bg-dark-background-200
                   ${index < iconNames.length - 1 ? 'border-b border-b-text-200 dark:border-b-dark-text-400' : ''}`}
               >
                 <View className="flex-row items-center gap-[10px]">

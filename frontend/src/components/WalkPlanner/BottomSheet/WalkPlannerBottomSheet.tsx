@@ -144,18 +144,21 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             onChange={handleSheetChanges}
             keyboardBehavior="interactive"
             topInset={insets.top + 10}
-            backgroundStyle={{ backgroundColor: colorScheme === 'dark' ? colours.dark.background[100] : '#ffffff' }}
+            backgroundStyle={{ backgroundColor: colorScheme === 'light' ? colours.background[100] : colours.dark.background[100] }}
             animatedPosition={animatedPosition}
+            handleIndicatorStyle={{
+                backgroundColor: colorScheme === 'light' ? colours.text.DEFAULT : colours.dark.background[900]
+            }}
         >
             <View className="flex-1">
-                <View className="z-10 bg-white dark:bg-dark-background-100 pb-2 pt-1">
+                <View className="z-10 bg-background dark:bg-dark-background-100 pb-2 pt-1">
                     {selectedWalk || selectedCustomWalk ? (
                         <View className="flex-row justify-end px-4" style={{ marginTop: 4 }}>
                             <TouchableOpacity
                                 onPress={selectedWalk ? handleBack : handleCustomWalkClose}
-                                style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: '#e5e5e5', alignItems: 'center', justifyContent: 'center' }}
+                                className='w-[28] h-[28] rounded-[14] items-center justify-center bg-background-50 dark:bg-dark-background-200'
                             >
-                                <X size={14} color="#444" />
+                                <X size={14} color={colorScheme === "light" ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                             </TouchableOpacity>
                         </View>
                     ) : (

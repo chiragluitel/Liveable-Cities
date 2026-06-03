@@ -20,7 +20,7 @@ export const BottomSheetSearchBar = ({ searchState, onFocusAction, placeholder =
     const isLight = colorScheme === "light";
 
     return (
-        <View className="flex-row items-center bg-background-100 dark:bg-dark-background-100 rounded-xl px-3 mx-4 mb-2" style={{ height: 44 }}>
+        <View className="flex-row items-center bg-background-100 dark:bg-dark-background-200 rounded-xl px-3 mx-4 mb-2" style={{ height: 44 }}>
             <Search size={20} color={isLight ? colours.text[500] : colours.dark.text[500]} className="mr-2" />
             <BottomSheetTextInput
                 // @ts-expect-error
