@@ -20,20 +20,25 @@ export function formatWalkTime(distanceKm: number, speed: WalkingSpeed): string 
 interface SettingsContextValue {
   walkingSpeed: WalkingSpeed;
   setWalkingSpeed: (speed: WalkingSpeed) => void;
+  reducedMotion: boolean;
+  setReducedMotion: (value: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue>({
   walkingSpeed: 'Average',
   setWalkingSpeed: () => {},
+  reducedMotion: false,
+  setReducedMotion: () => {}
 });
 
 export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
+  const [reducedMotion, setReducedMotion] = useAsyncStorage("reduceMotion", false);
   const [walkingSpeed, setWalkingSpeed] = useAsyncStorage('WalkingSpeed', 'Average');
 
   return (
-    <SettingsContext.Provider value={{ walkingSpeed: walkingSpeed as WalkingSpeed, setWalkingSpeed }}>
+    <SettingsContext.Provider value={{ walkingSpeed: walkingSpeed as WalkingSpeed, setWalkingSpeed, reducedMotion, setReducedMotion }}>
       {children}
     </SettingsContext.Provider>
   );

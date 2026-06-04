@@ -1,7 +1,9 @@
+import { useSettings } from "@/src/context/SettingsContext";
 import { colours } from "@Theme/colours";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from "expo-router";
 import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function TabLayout() {
@@ -9,14 +11,16 @@ export default function TabLayout() {
 
   const isLight = colorScheme === "light";
 
+  const { reducedMotion } = useSettings();
+
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Tabs
-      key={colorScheme}
+        key={`${colorScheme}-${reducedMotion}`}
         screenOptions={
           {
             headerShown: false,
-            animation: "shift",
+            animation: reducedMotion ? "none" : "shift",
             tabBarActiveTintColor: isLight ? colours.accent[700] : colours.dark.accent[400],
             tabBarInactiveTintColor: isLight ? colours.accent[400] : colours.dark.accent[200],
             tabBarActiveBackgroundColor: isLight ? colours.primary[200] : colours.dark.primary[100],
@@ -34,21 +38,21 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Home",
-            tabBarIcon: ({color}) => <Ionicons size={28} name="home" color={color} />
+            tabBarIcon: ({ color }) => <Ionicons size={28} name="home" color={color} />
           }}
         />
         <Tabs.Screen
           name="profile-page"
           options={{
             title: "Profile",
-            tabBarIcon: ({color}) => <Ionicons size={28} name="person" color={color} />
+            tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />
           }}
         />
         <Tabs.Screen
           name="settings"
           options={{
             title: "Settings",
-            tabBarIcon: ({color}) => <Ionicons size={28} name="settings" color={color} />
+            tabBarIcon: ({ color }) => <Ionicons size={28} name="settings" color={color} />
           }}
         />
       </Tabs>
