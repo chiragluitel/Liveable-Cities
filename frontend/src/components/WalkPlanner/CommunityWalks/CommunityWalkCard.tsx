@@ -19,7 +19,7 @@ export const CommunityWalkCard = ({walk, onPress, width}: CommuntiyWalkCardProps
     return (
         <Pressable
             onPress={() => onPress?.(walk.id)}
-            className="flex-row bg-background-100 dark:bg-dark-background-100 rounded-2xl p-4 shadow-sm border border-text-100 dark:border-dark-text-50 active:opacity-80"
+            className="flex-row bg-background-100 dark:bg-dark-background-200 rounded-2xl p-4 shadow-sm border border-text-100 dark:border-dark-text-50 active:opacity-80"
             style={{width}}
             accessibilityRole="button"
             accessibilityLabel={`View details for ${walk.title}`}

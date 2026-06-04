@@ -50,7 +50,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 {activeTags.length > 0 && (
                     <View className="flex-row flex-wrap gap-1.5 mb-[22px]">
                         {activeTags.map(({ key, label, Icon }) => (
-                            <View key={key} className="flex-row items-center bg-primary-50 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1">
+                            <View key={key} className="flex-row items-center bg-primary-100 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1">
                                 <Icon size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} strokeWidth={2} />
                                 <Text className="text-[11px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
                                     {label}
@@ -86,7 +86,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
 
             <View className="flex-row mb-5">
                 <Pressable
-                    className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+                    className="flex-1 bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
                     onPress={() => onEdit(walk.id)}
                 >
                     <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
@@ -95,11 +95,11 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
 
                 <Pressable
                     className="flex-1 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-                    style={{ backgroundColor: colours.warning[100] }}
+                    style={{ backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
                     onPress={() => setDeleteModalVisible(true)}
                 >
-                    <Ionicons name="trash-outline" size={22} color={colours.warning[500]} />
-                    <Text style={{ color: colours.warning[500] }} className="font-bold text-[15px] mt-2">Delete Walk</Text>
+                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[500] : colours.dark.warning[600]} />
+                    <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2">Delete Walk</Text>
                 </Pressable>
             </View>
         </BottomSheetScrollView>

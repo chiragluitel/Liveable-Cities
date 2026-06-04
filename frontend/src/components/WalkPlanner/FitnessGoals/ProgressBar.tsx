@@ -20,7 +20,7 @@ export const ProgressBar = ({ goal }: ProgressBarProps) => {
       <View className="h-12 w-full bg-background-50 dark:bg-dark-background-100 border-2 border-text dark:border-dark-text-300 rounded-full overflow-hidden justify-center px-1">
         
         <View 
-          className="h-9 bg-accent-300 dark:bg-accent-300 rounded-full" 
+          className="h-9 bg-accent-300 dark:bg-dark-accent-400 rounded-full" 
           style={{ width: `${percentage}%` }} 
         />
       </View>

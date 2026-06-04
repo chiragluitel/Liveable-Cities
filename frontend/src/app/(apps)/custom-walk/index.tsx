@@ -9,6 +9,8 @@ import FilterSwitch from '@/src/components/CustomWalk/FilterSwitch';
 import SaveButton from '@/src/components/CustomWalk/SaveButton';
 import DistanceSlider from '@/src/components/CustomWalk/DistanceSlider';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useColorScheme } from 'nativewind';
+import { colours } from '@/src/theme/colours';
 
 export default function WalkPlannerScreen() {
   const insets = useSafeAreaInsets();
@@ -62,14 +64,14 @@ export default function WalkPlannerScreen() {
     router.back();
   };
 
-  // TODO: update colours
+  const { colorScheme } = useColorScheme();
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-100">
       <Stack.Screen options={{ headerShown: false }} />
       <View style={{ paddingTop: insets.top + 8 }} className="flex-row justify-start px-4 pb-3">
-        <TouchableOpacity onPress={() => router.back()} className="flex-row items-center gap-1.5 py-2 px-3 rounded-full bg-[#e5e5e5] active:opacity-70">
-          <ChevronLeft size={16} color="#444" />
-          <Text className="text-sm font-semibold text-[#444]">Cancel</Text>
+        <TouchableOpacity onPress={() => router.back()} className="flex-row items-center gap-1.5 py-2 px-3 rounded-full bg-accent-200 dark:bg-dark-accent active:opacity-70">
+          <ChevronLeft size={16} color={colorScheme === "light" ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-sm font-semibold text-text dark:text-dark-text pr-2">Cancel</Text>
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={{ padding: 20 }}>

@@ -20,7 +20,7 @@ export const FitnessSection = ({ goals, onHeaderPress, onGoalPress }: FitnessSec
 
   return (
     <View className="mt-6 mb-4 ">
-      <ClickableHeader header="My Fitness Goals" onHeaderPress={() => onHeaderPress?.()} />
+        <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">My Fitness Goals</Text>
       <ProgressBar goal={FITNESS_GOALS[0]}/>
       <GoalCard goal={FITNESS_GOALS[1]} width={CARD_WIDTH} onPress={()=>console.log('Fitness Goal Clicked')} />
     </View>
