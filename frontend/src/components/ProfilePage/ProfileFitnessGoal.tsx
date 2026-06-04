@@ -1,50 +1,37 @@
 import { View, Text, TextInput } from "react-native";
 import { useState } from "react";
+import useAsyncStorage from "@/src/hooks/useAsyncStorage";
+import Dropdown from "../Dropdown/Dropdown";
+import DropdownItem from "../Dropdown/DropdownItem";
+import SettingsGroup from "../Settings/SettingsGroup";
+import { useSettings } from "@/src/context/SettingsContext";
 
 export default function ProfilePage() {
-    const [weeklyGoal, setWeeklyGoal] = useState("");
+    const { setDistGoal, setStepGoal } = useSettings();
 
     return (
         <View className="mt-8 bg-background-100 dark:bg-dark-background-100 rounded-2xl p-5">
             
             <Text className="text-xl font-semibold text-text dark:text-dark-text">
-                Weekly Fitness Goal
+                Fitness Goals
             </Text>
 
-            <Text className="text-text-600 dark:text-dark-text-800 mt-2">
-                How many kilometres do you plan to walk this week?
-            </Text>
+            <Dropdown title="Weekly Distance (km)" valueKey="distGoal" initialSelected="5" actionFunc={setDistGoal}>
+                <DropdownItem title="5km" value="5" />
+                <DropdownItem title="10km" value="10" />
+                <DropdownItem title="20km" value="20" />
+                <DropdownItem title="30km" value="30" />
+                <DropdownItem title="40km" value="40" hideSeperator={true} />
+            </Dropdown>
 
-            {/* user input box */}
-            <View className="flex-row items-center border border-text-300 dark:border-text-800 rounded-xl mt-5 px-4 bg-accent-50 dark:bg-dark-accent-200">
-            
-                <TextInput
-                    className="flex-1 py-4 text-lg text-text dark:text-dark-text"
-                    placeholder="Enter goal"
-                    keyboardType="numeric"
-                    value={weeklyGoal}
-                    onChangeText={(text) => {
-                    const cleaned = text.replace(/[^0-9]/g, "");
-                    setWeeklyGoal(cleaned);
-                    }}
-                />
-
-                <Text className="text-text-500 dark:text-dark-text-500 text-lg">
-                    km
-                </Text>
-            </View>
-
-            {/* display goal */}
-            <View className="mt-5 bg-accent-300 dark:bg-accent-700 rounded-xl p-4">
-                <Text className="text-dark-text dark:text-dark-text text-lg font-semibold">
-                    Your weekly goal:
-                </Text>
-
-                <Text className="text-dark-text dark:text-dark-text text-3xl font-bold mt-1">
-                    {weeklyGoal || "0"} km
-                </Text>
-            </View>
-
+            <Dropdown title="Daily Steps" valueKey="stepsGoal" initialSelected="5000" hideSeperator={true} actionFunc={setStepGoal}>
+                <DropdownItem title="3,000" value="3000" />
+                <DropdownItem title="5,000" value="5000" />
+                <DropdownItem title="7,500" value="7500" />
+                <DropdownItem title="10,000" value="10000" />
+                <DropdownItem title="12,500" value="12500" />
+                <DropdownItem title="15,000" value="15000" hideSeperator={true} />
+            </Dropdown>
         </View>
     );
 }

@@ -13,9 +13,11 @@ export default function Settings() {
   const router = useRouter();
 
   const { setColorScheme } = useColorScheme();
-  const { walkingSpeed, setWalkingSpeed } = useSettings();
+  const { 
+    walkingSpeed, setWalkingSpeed, 
+    reducedMotion, setReducedMotion,
+  } = useSettings();
 
-  const { reducedMotion, setReducedMotion } = useSettings();
   const [streetLights, setStreetLights] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
 
@@ -47,11 +49,7 @@ export default function Settings() {
         </Text>
 
         <SettingsGroup title="Measurements">
-          <Dropdown title="Units" initialSelected="Metric" actionFunc={(value: string) => {}}>
-            <DropdownItem title="Metric" value="Metric" />
-            <DropdownItem title="Imperial" value="Imperial" hideSeperator={true} />
-          </Dropdown>
-          <Dropdown title="Walking Speed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
+          <Dropdown title="Walking Speed" valueKey="walkSpeed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
             <DropdownItem title="Slow (2km/h)" value="Slow" />
             <DropdownItem title="Average (4km/h)" value="Average" />
             <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
@@ -59,7 +57,7 @@ export default function Settings() {
         </SettingsGroup>
 
         <SettingsGroup title="Theme">
-          <Dropdown title="Theme" initialSelected="Auto" hideSeperator={true} actionFunc={setTheme}>
+          <Dropdown title="Theme" valueKey="theme" initialSelected="Auto" hideSeperator={true} actionFunc={setTheme}>
             <DropdownItem title="Auto" value="Auto" />
             <DropdownItem title="Light" value="Light" />
             <DropdownItem title="Dark" value="Dark" hideSeperator={true} />

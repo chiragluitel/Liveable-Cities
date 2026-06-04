@@ -1,8 +1,6 @@
 import { Text, View, useWindowDimensions } from "react-native";
 import { FitnessGoal } from "@/src/types/walkPlannerTypes";
-import { ClickableHeader } from "@Components/Shared/ClickableHeader";
 import { GoalCard } from "./GoalCard";
-import { FITNESS_GOALS } from "@/src/database/mockData";
 import { ProgressBar } from "./ProgressBar";
 
 interface FitnessSectionProps {
@@ -21,8 +19,8 @@ export const FitnessSection = ({ goals, onHeaderPress, onGoalPress }: FitnessSec
   return (
     <View className="mt-6 mb-4 ">
         <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">My Fitness Goals</Text>
-      <ProgressBar goal={FITNESS_GOALS[0]}/>
-      <GoalCard goal={FITNESS_GOALS[1]} width={CARD_WIDTH} onPress={()=>console.log('Fitness Goal Clicked')} />
+      <ProgressBar goal={goals[0]}/>
+      <GoalCard goal={goals[1]} width={CARD_WIDTH} onPress={()=>console.log('Fitness Goal Clicked')} />
     </View>
   );
 };

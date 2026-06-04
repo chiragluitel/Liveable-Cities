@@ -7,6 +7,7 @@ import { useColorScheme } from "nativewind";
 
 type DropdownProps = {
   title: string
+  valueKey: string
   initialSelected: string
   actionFunc: (value: string) => void
   hideSeperator?: boolean
@@ -47,6 +48,7 @@ const dropdownShadow = {
 
 export default function Dropdown({
   title,
+  valueKey,
   initialSelected,
   actionFunc,
   hideSeperator = false,
@@ -56,7 +58,7 @@ export default function Dropdown({
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   
-  const [selectedValue, setSelectedValue] = useAsyncStorage(title, initialSelected ? initialSelected : "");
+  const [selectedValue, setSelectedValue] = useAsyncStorage(valueKey, initialSelected ? initialSelected : "");
 
   const { colorScheme } = useColorScheme();
   

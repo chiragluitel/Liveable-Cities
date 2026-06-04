@@ -23,7 +23,7 @@ export const GoalCard = ({ goal, width, onPress }: GoalCardProps) => {
         {goal.label}
       </Text>
 
-      <View className="flex-row items-center"> {/*active opacity 80*/}
+      <View className="flex-row items-center">
         <View className="w-20 h-20 rounded-full bg-accent-200 dark:bg-accent-700 items-center justify-center mr-5">
           <Footprints size={40} color={isLight ? colours.accent[600] : colours.dark.accent[800]} strokeWidth={2.5} />
         </View>
