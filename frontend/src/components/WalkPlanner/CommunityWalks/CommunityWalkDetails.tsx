@@ -24,7 +24,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
         {walk.tags.map((tag) => (
           <View 
             key={tag} 
-            className="bg-primary-50 dark:bg-dark-primary-200 rounded-md px-2 py-1"
+            className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1"
           >
             <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
               {tag}

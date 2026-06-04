@@ -75,9 +75,9 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
           <Pressable
             onPress={() => onNearbyPress?.(item)}
             style={{ width: CARD_WIDTH }}
-            className="flex-row items-center bg-background-100 dark:bg-dark-background-100 rounded-2xl p-3 border border-text-100 dark:border-dark-text-50 active:opacity-80"
+            className="flex-row items-center bg-background-100 dark:bg-dark-background-200 rounded-2xl p-3 border border-text-100 dark:border-dark-text-50 active:opacity-80"
           >
-            <View className="bg-background-50 dark:bg-dark-background-200 p-2 rounded-xl mr-3 shadow-sm">
+            <View className="bg-background-50 dark:bg-dark-background-300 p-2 rounded-xl mr-3 shadow-sm">
               {ICON_COMPONENT[item.name]}
             </View>
             <View className="flex-1">

@@ -39,20 +39,20 @@ export default function ZoomControls({ onZoomIn, onZoomOut, animatedSheetPositio
     <>
       <Animated.View className="absolute right-4 w-11 h-11" style={[zoomInStyle, opacity]}>
         <TouchableOpacity
-          className="w-11 h-11 bg-white rounded-lg items-center justify-center shadow-md"
+          className="w-11 h-11 bg-background-200 dark:bg-dark-background-400 rounded-lg items-center justify-center shadow-md"
           style={{ elevation: 4 }}
           onPress={onZoomIn}
         >
-          <Text className="text-[22px] font-bold leading-[26px]">+</Text>
+          <Text className="text-[22px] font-bold leading-[26px] text-dark-text-200 dark:text-dark-text">+</Text>
         </TouchableOpacity>
       </Animated.View>
       <Animated.View className="absolute right-4 w-11 h-11" style={[zoomOutStyle, opacity]}>
         <TouchableOpacity
-          className="w-11 h-11 bg-white rounded-lg items-center justify-center shadow-md"
+          className="w-11 h-11 bg-background-200 dark:bg-dark-background-400 rounded-lg items-center justify-center shadow-md"
           style={{ elevation: 4 }}
           onPress={onZoomOut}
         >
-          <Text className="text-[22px] font-bold leading-[26px]">−</Text>
+          <Text className="text-[22px] font-bold leading-[26px] text-dark-text-200 dark:text-dark-text">−</Text>
         </TouchableOpacity>
       </Animated.View>
     </>

@@ -4,11 +4,16 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import * as Location from 'expo-location';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapPin } from 'lucide-react-native';
+import { colours } from '@Theme/colours';
+import { useColorScheme } from 'nativewind';
 
 export default function LocationPermissionBanner() {
   const [visible, setVisible] = useState(false);
   const insets = useSafeAreaInsets();
   const opacity = useSharedValue(0);
+
+  const { colorScheme } = useColorScheme();
+  const isLight = colorScheme === 'light';
 
   const checkPermission = useCallback(async () => {
     const { status } = await Location.getForegroundPermissionsAsync();
@@ -55,11 +60,11 @@ export default function LocationPermissionBanner() {
       <TouchableOpacity
         onPress={handlePress}
         activeOpacity={0.85}
-        className="flex-row items-center gap-[6px] bg-[rgba(20,20,20,0.82)] px-4 py-[9px] rounded-[20px]"
+        className="flex-row items-center gap-[6px] bg-text-300 dark:bg-dark-text-400 px-4 py-[9px] rounded-[20px]"
       >
-        <MapPin size={14} color="#fff" />
-        <Text className="text-white text-[13px] font-semibold tracking-[0.2]">
-          Share Location
+        <MapPin size={14} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+        <Text className="text-text dark:text-dark-text text-[13px] font-semibold tracking-[0.2]">
+          Enable Location
         </Text>
       </TouchableOpacity>
     </Animated.View>

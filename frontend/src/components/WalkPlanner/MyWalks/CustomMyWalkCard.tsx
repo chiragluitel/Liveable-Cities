@@ -35,7 +35,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
     return (
         <Pressable
             onPress={() => onPress(walk)}
-            className="flex-row bg-background-100 dark:bg-dark-background-100 rounded-2xl p-4 shadow-sm border border-text-100 dark:border-dark-text-50 active:opacity-80"
+            className="flex-row bg-background-100 dark:bg-dark-background-200 rounded-2xl p-4 shadow-sm border border-text-100 dark:border-dark-text-50 active:opacity-80"
             style={{ width }}
             accessibilityRole="button"
             accessibilityLabel={`View details for ${walk.cuswalkname}`}
@@ -54,7 +54,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
 
                 <View className="flex-row flex-wrap gap-1.5">
                     {shownTags.map(({ key, label, Icon }) => (
-                        <View key={key} className="flex-row items-center bg-primary-50 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1">
+                        <View key={key} className="flex-row items-center bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1">
                             <Icon size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} strokeWidth={2} />
                             <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
                                 {label}
@@ -62,7 +62,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                         </View>
                     ))}
                     {extraCount > 0 && (
-                        <View className="bg-primary-50 dark:bg-dark-primary-200 rounded-md px-2 py-1">
+                        <View className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1">
                             <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
                                 +{extraCount} more
                             </Text>

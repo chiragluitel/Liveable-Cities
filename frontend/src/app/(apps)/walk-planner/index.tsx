@@ -63,7 +63,7 @@ const WalkPlannerHomePage = () => {
 			</View>
 
 			<TouchableOpacity
-				className="absolute left-4 py-2 px-[14px] bg-background-300 dark:bg-dark-background-400 rounded-lg shadow"
+				className="absolute left-4 py-2 px-[14px] bg-background-200 dark:bg-dark-background-400 rounded-lg shadow"
 				style={{ top: insets.top + 12 }}
 				onPress={() => router.back()}
 			>
