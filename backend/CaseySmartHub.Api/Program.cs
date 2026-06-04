@@ -28,6 +28,9 @@ builder.Services.AddMemoryCache();
 // One service per entity — register new entities here.
 builder.Services.AddScoped<IBenchService, BenchService>();
 builder.Services.AddScoped<IDrinkingFountainService, DrinkingFountainService>();
+builder.Services.AddScoped<IPublicToiletService, PublicToiletService>();
+builder.Services.AddScoped<ILibraryService, LibraryService>();
+
 
 // Allow the Expo frontend (web build) to call the API. Tighten the origins for production.
 builder.Services.AddCors(options =>
