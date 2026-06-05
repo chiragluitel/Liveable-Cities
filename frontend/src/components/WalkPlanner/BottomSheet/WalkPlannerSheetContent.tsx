@@ -1,6 +1,6 @@
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { View, Linking } from "react-native";
-import { FITNESS_GOALS, MY_WALKS } from "@/src/database/mockData";
+import { MY_WALKS } from "@/src/database/mockData";
 import { GridButtons } from "../GridButtons";
 import { FitnessSection } from "../FitnessGoals/FitnessSection";
 import MyWalksSection from "../MyWalks/MyWalksSection";
@@ -10,8 +10,8 @@ import CustomButton from "@Components/Shared/CustomButton";
 import { useRouter } from "expo-router";
 import { useCustomWalks } from "@/src/context/CustomWalkContext";
 import { NearbyPressItem } from "@/src/components/WalkPlanner/Nearby/NearbySection";
-import useAsyncStorage from "@/src/hooks/useAsyncStorage";
 import { FitnessGoal } from "@/src/types/walkPlannerTypes";
+import { useSettings } from "@/src/context/SettingsContext";
 
 interface WalkPlannerSheetContentProps {
     onInteract: () => void;
@@ -20,28 +20,28 @@ interface WalkPlannerSheetContentProps {
     onNearbyPress?: (item: NearbyPressItem) => void;
 }
 
-const baseFitnessGoals: FitnessGoal[] = [
-  {
-    id: 'g1',
-    label: 'Weekly Distance',
-    unit: 'km',
-    current: 0,
-    target: 20
-  },
-  {
-    id: 'g2',
-    label: 'Daily Steps',
-    unit: 'steps',
-    current: 0,
-    target: 10000
-  },
-]
-
 export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkCardPress, onNearbyPress }: WalkPlannerSheetContentProps) => {
     const router = useRouter();
     const { walks } = useCustomWalks();
 
-    const [fitnessGoals] = useAsyncStorage("fitnessGoals", baseFitnessGoals);
+    const { distGoal, stepGoal } = useSettings();
+
+    const fitnessGoals: FitnessGoal[] = [
+        {
+            id: 'g1',
+            label: 'Weekly Distance',
+            unit: 'km',
+            current: 0,
+            target: Number(distGoal)
+        },
+        {
+            id: 'g2',
+            label: 'Daily Steps',
+            unit: 'steps',
+            current: 0,
+            target: Number(stepGoal)
+        },
+    ]
 
     return (
         <BottomSheetScrollView

@@ -22,23 +22,42 @@ interface SettingsContextValue {
   setWalkingSpeed: (speed: WalkingSpeed) => void;
   reducedMotion: boolean;
   setReducedMotion: (value: boolean) => void;
+  distGoal: string;
+  setDistGoal: (value: string) => void;
+  stepGoal: string;
+  setStepGoal: (value: string) => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue>({
   walkingSpeed: 'Average',
   setWalkingSpeed: () => {},
   reducedMotion: false,
-  setReducedMotion: () => {}
+  setReducedMotion: () => {},
+  distGoal: "5",
+  setDistGoal: () => {},
+  stepGoal: "5000",
+  setStepGoal: () => {}
 });
 
 export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [reducedMotion, setReducedMotion] = useAsyncStorage("reduceMotion", false);
-  const [walkingSpeed, setWalkingSpeed] = useAsyncStorage('WalkingSpeed', 'Average');
+  const [walkingSpeed, setWalkingSpeed] = useAsyncStorage('walkSpeed', 'Average');
+  const [distGoal, setDistGoal] = useAsyncStorage("distGoal", "5");
+  const [stepGoal, setStepGoal] = useAsyncStorage("stepGoal", "5000");
 
   return (
-    <SettingsContext.Provider value={{ walkingSpeed: walkingSpeed as WalkingSpeed, setWalkingSpeed, reducedMotion, setReducedMotion }}>
+    <SettingsContext.Provider value={{ 
+        walkingSpeed: walkingSpeed as WalkingSpeed, 
+        setWalkingSpeed, 
+        reducedMotion, 
+        setReducedMotion, 
+        distGoal, 
+        setDistGoal, 
+        stepGoal, 
+        setStepGoal 
+      }}>
       {children}
     </SettingsContext.Provider>
   );
