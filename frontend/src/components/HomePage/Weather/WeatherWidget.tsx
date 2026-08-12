@@ -13,7 +13,7 @@ export default function WeatherWidget(){
 
     if (loading) {
         return (
-            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
+            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5 mb-8 mx-5">
                 {/* loading spinner animation */}
                 {
                     reducedMotion 

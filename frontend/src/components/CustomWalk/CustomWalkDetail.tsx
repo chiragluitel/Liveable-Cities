@@ -34,7 +34,11 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
 
-    const { reducedMotion } = useSettings();
+    const { reducedMotion, weeklyWalks, setWeeklyWalks } = useSettings();
+
+    function addToWeekly() {
+        setWeeklyWalks(String(Number(weeklyWalks) + 1));
+    }
 
     return (
         <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
@@ -85,22 +89,30 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
             </Modal>
 
             <View className="flex-row mb-5">
-                <Pressable
+                <TouchableOpacity
+                    className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+                    onPress={() => addToWeekly()}
+                >
+                    <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                    <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
                     className="flex-1 bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
                     onPress={() => onEdit(walk.id)}
                 >
                     <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-                    <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">Edit Walk</Text>
-                </Pressable>
+                    <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2 text-wrap text-center px-1">Edit Walk</Text>
+                </TouchableOpacity>
 
-                <Pressable
+                <TouchableOpacity
                     className="flex-1 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
                     style={{ backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
                     onPress={() => setDeleteModalVisible(true)}
                 >
                     <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[500] : colours.dark.warning[600]} />
-                    <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2">Delete Walk</Text>
-                </Pressable>
+                    <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
+                </TouchableOpacity>
             </View>
         </BottomSheetScrollView>
     );
