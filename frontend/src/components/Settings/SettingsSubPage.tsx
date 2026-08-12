@@ -24,7 +24,7 @@ export default function SettingsSubPage({title, navigateFunc, hideSeperator = fa
       >
         <View className="flex-row justify-between bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
           <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">{title}</Text>
-          <Ionicons name="chevron-forward" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[300]} />
+          <Ionicons name="chevron-forward" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[600]} />
         </View>
       </TouchableHighlight>
     </View>

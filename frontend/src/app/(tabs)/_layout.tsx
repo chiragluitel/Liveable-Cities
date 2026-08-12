@@ -21,10 +21,10 @@ export default function TabLayout() {
           {
             headerShown: false,
             animation: reducedMotion ? "none" : "shift",
-            tabBarActiveTintColor: isLight ? colours.accent[700] : colours.dark.accent[400],
-            tabBarInactiveTintColor: isLight ? colours.accent[400] : colours.dark.accent[200],
-            tabBarActiveBackgroundColor: isLight ? colours.primary[200] : colours.dark.primary[100],
-            tabBarInactiveBackgroundColor: isLight ? colours.primary[100] : colours.dark.primary[50],
+            tabBarActiveTintColor: isLight ? colours.accent[700] : colours.dark.primary[800],
+            tabBarInactiveTintColor: isLight ? colours.accent[400] : colours.dark.secondary[500],
+            tabBarActiveBackgroundColor: isLight ? colours.primary[200] : colours.dark.background[100],
+            tabBarInactiveBackgroundColor: isLight ? colours.primary[100] : colours.dark.background.DEFAULT,
             tabBarStyle: {
               borderTopWidth: 0,
             },
