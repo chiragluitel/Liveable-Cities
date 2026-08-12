@@ -6,7 +6,7 @@ interface ProfileHeaderProps {
 
 const ProfileHeader = ({name}: ProfileHeaderProps) => {
   return (
-    <View className="mt-8 mb-6">
+    <View className="mt-8 mb-6 px-5 pt-12">
       <Text className="text-3xl font-bold text-text dark:text-dark-text">
         Your Profile
       </Text>
