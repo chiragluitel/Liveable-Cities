@@ -38,6 +38,7 @@ export default function ProfilePage() {
   return (
     <View className="flex-1 w-full bg-background-50 dark:bg-dark-background-50 pt-12">
       <ProfileHeader name={user.name} />
+      <ScrollView contentContainerStyle={{alignItems: "center"}}>
 
       <WeatherWidget />
 
@@ -48,7 +49,6 @@ export default function ProfilePage() {
 
       <FitnessSection goals={fitnessGoals} />
 
-      <ScrollView contentContainerStyle={{alignItems: "center"}}>
       <SettingsGroup title="Fitness Goals">
         <Dropdown title="Weekly Walk Goal" valueKey="walkGoal" initialSelected="5" actionFunc={setWalkGoal}  hideSeperator={true}>
             <DropdownItem title="5 walks" value="5" />
@@ -60,8 +60,8 @@ export default function ProfilePage() {
             <DropdownItem title="35 walks" value="30" />
             <DropdownItem title="40 walks" value="40" hideSeperator={true} />
         </Dropdown>
-        <Button title="Clear Weekly Walks" />
       </SettingsGroup>
+        <Button title="Clear Weekly Walks" onPress={() => {console.log("button")}} />
 
       <SettingsGroup title="Preferences">
         <Dropdown title="Walking Speed" valueKey="walkSpeed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>

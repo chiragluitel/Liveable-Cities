@@ -17,7 +17,7 @@ export const FitnessSection = ({ goals, onHeaderPress, onGoalPress }: FitnessSec
   if (!goals || goals.length === 0) return (<View><Text>No Fitness Goals</Text></View>)
 
   return (
-    <View className="mt-6 mb-4 ">
+    <View className="mt-6 mb-4 w-[90%]">
       <GoalCard goal={goals[0]} width={CARD_WIDTH} onPress={()=>console.log('Fitness Goal Clicked')} />
     </View>
   );

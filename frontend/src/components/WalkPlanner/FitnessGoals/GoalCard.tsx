@@ -18,7 +18,7 @@ export const GoalCard = ({ goal, width, onPress }: GoalCardProps) => {
   const targetFormatted = goal.target.toLocaleString();
 
   return (
-    <View className="px-4 py-2">
+    <View className="px-4 py-2 w-full">
       <Text className="text-xl font-medium text-text dark:text-dark-text mb-3 ml-1">
         {goal.label}
       </Text>
