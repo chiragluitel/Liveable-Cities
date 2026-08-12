@@ -53,11 +53,11 @@ export default function ProfilePage() {
         <Dropdown title="Weekly Walk Goal" valueKey="walkGoal" initialSelected="5" actionFunc={setWalkGoal}  hideSeperator={true}>
             <DropdownItem title="5 walks" value="5" />
             <DropdownItem title="10 walks" value="10" />
-            <DropdownItem title="15 walks" value="10" />
+            <DropdownItem title="15 walks" value="15" />
             <DropdownItem title="20 walks" value="20" />
-            <DropdownItem title="25 walks" value="20" />
+            <DropdownItem title="25 walks" value="25" />
             <DropdownItem title="30 walks" value="30" />
-            <DropdownItem title="35 walks" value="30" />
+            <DropdownItem title="35 walks" value="35" />
             <DropdownItem title="40 walks" value="40" hideSeperator={true} />
         </Dropdown>
       </SettingsGroup>
