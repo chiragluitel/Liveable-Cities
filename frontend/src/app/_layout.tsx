@@ -13,7 +13,7 @@ export default function RootLayout() {
 
   const isLight = colorScheme === "light";
 
-  const [theme, setTheme, isThemeLoading] = useAsyncStorage("Theme", "Auto")
+  const [theme, setTheme, isThemeLoading] = useAsyncStorage("theme", "Auto")
 
   useEffect(() => {
     if (isThemeLoading) {

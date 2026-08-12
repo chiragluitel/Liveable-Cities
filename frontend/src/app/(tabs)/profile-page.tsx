@@ -16,7 +16,6 @@ export default function ProfilePage() {
 
   const { 
     walkingSpeed, setWalkingSpeed, 
-    reducedMotion, setReducedMotion,
   } = useSettings();
 
   const { setDistGoal, setStepGoal } = useSettings();

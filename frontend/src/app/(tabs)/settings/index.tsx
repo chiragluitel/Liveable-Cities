@@ -5,21 +5,18 @@ import SettingsSubPage from "@Components/Settings/SettingsSubPage";
 import ToggleSetting from "@Components/Settings/ToggleSetting";
 import { useRouter, Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
-import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
+import { useSettings } from "@/src/context/SettingsContext";
 import { ScrollView, View, Text } from "react-native";
-import { useState } from "react";
+
+import useAsyncStorage from "@Hooks/useAsyncStorage";
 
 export default function Settings() {
   const router = useRouter();
 
   const { setColorScheme } = useColorScheme();
   const { 
-    walkingSpeed, setWalkingSpeed, 
     reducedMotion, setReducedMotion,
   } = useSettings();
-
-  const [streetLights, setStreetLights] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
 
   function setTheme(value: string) {
     switch (value) {
