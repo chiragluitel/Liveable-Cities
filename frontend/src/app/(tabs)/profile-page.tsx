@@ -1,7 +1,6 @@
 import {Button, ScrollView, View} from "react-native";
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
-import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import SettingsGroup from "@/src/components/Settings/SettingsGroup";
 import Dropdown from "@/src/components/Dropdown/Dropdown";
@@ -18,12 +17,8 @@ export default function ProfilePage() {
   };
 
   const { 
-    walkingSpeed, setWalkingSpeed, 
+    walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks
   } = useSettings();
-
-  const { setWalkGoal } = useSettings();
-
-  const { walkGoal, weeklyWalks } = useSettings();
   
   const fitnessGoals: FitnessGoal[] = [
       {

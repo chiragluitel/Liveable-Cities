@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import useAsyncStorage from '@Hooks/useAsyncStorage';
 
 export type WalkingSpeed = 'Slow' | 'Average' | 'Fast';
@@ -45,7 +45,28 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   const [reducedMotion, setReducedMotion] = useAsyncStorage("reduceMotion", false);
   const [walkingSpeed, setWalkingSpeed] = useAsyncStorage('walkSpeed', 'Average');
   const [walkGoal, setWalkGoal] = useAsyncStorage("walkGoal", "5");
-  const [weeklyWalks, setWeeklyWalks] = useAsyncStorage("weeklyWalks", "0");
+  const [weeklyWalks, setWeeklyWalks, isWeeklyWalksLoading] = useAsyncStorage("weeklyWalks", "0");
+
+  const [weekStart, setWeekStart, isWeekStartLoading] = useAsyncStorage("weekStart", "");
+
+  useEffect(() => {
+    if (isWeekStartLoading) return;
+
+    const today = new Date();
+    
+    const monday = new Date(today);
+    const day = today.getDay();
+  
+    const daysSinceMon = day === 0 ? 6 : day -1;
+  
+    monday.setDate(today.getDate() - daysSinceMon);
+    const mondayString = monday.toISOString().split("T")[0];
+    
+    if (weekStart !== mondayString) {
+      setWeekStart(mondayString); 
+      setWeeklyWalks("0");
+    }
+  }, [isWeekStartLoading, isWeeklyWalksLoading, weekStart]);
 
   return (
     <SettingsContext.Provider value={{ 
