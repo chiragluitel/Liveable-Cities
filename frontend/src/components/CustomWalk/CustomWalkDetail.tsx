@@ -131,18 +131,20 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </Pressable>
             </View>
 
-            <Pressable
-                className="rounded-[18px] py-[16px] justify-center items-center mb-5 bg-accent-200 dark:bg-dark-accent-200"
-                onPress={() => setShareModalVisible(true)}
-                disabled={shared}
-            >
-                <View className="flex-row items-center">
-                    <Ionicons name={shared ? "checkmark-circle" : "share-social-outline"} size={20} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-                    <Text className="text-text dark:text-dark-text font-bold text-[15px] ml-2">
-                        {shared ? 'Shared to Community' : 'Share to Community'}
-                    </Text>
-                </View>
-            </Pressable>
+            {!walk.fromCommunity && (
+                <Pressable
+                    className="rounded-[18px] py-[16px] justify-center items-center mb-5 bg-accent-200 dark:bg-dark-accent-200"
+                    onPress={() => setShareModalVisible(true)}
+                    disabled={shared}
+                >
+                    <View className="flex-row items-center">
+                        <Ionicons name={shared ? "checkmark-circle" : "share-social-outline"} size={20} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                        <Text className="text-text dark:text-dark-text font-bold text-[15px] ml-2">
+                            {shared ? 'Shared to Community' : 'Share to Community'}
+                        </Text>
+                    </View>
+                </Pressable>
+            )}
         </BottomSheetScrollView>
     );
 }

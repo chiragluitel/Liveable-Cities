@@ -46,7 +46,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     const [selectedCommunityWalkId, setSelectedCommunityWalkId] = useState<string | null>(null);
     const [selectedAmenity, setSelectedAmenity] = useState<Amenity | null>(null);
     const { deleteWalk, saveWalk, walks } = useCustomWalks();
-    const { communityWalks, incrementDownloads } = useCommunityWalks();
+    const { communityWalks, incrementDownloads, isWalkDownloaded, unmarkDownloaded } = useCommunityWalks();
     const router = useRouter();
 
     const killSearchFocus = useCallback(() => {
@@ -93,8 +93,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
 
     const handleImportWalk = useCallback((walkId: string) => {
         const walk = communityWalks.find((w: any) => w.id === walkId);
-        if (walk) {
-            saveWalk({ cuswalkname: walk.title, distance: walk.distanceKm });
+        if (walk && !isWalkDownloaded(walkId)) {
+            saveWalk({ cuswalkname: walk.title, distance: walk.distanceKm, fromCommunity: true, communityWalkId: walkId });
             incrementDownloads(walkId);
         }
         setSelectedWalk(null);
@@ -134,10 +134,12 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     }, [router]);
 
     const handleDeleteWalk = useCallback((walkId: string) => {
+        const walk = walks.find((w: any) => w.id === walkId);
+        if (walk?.communityWalkId) unmarkDownloaded(walk.communityWalkId);
         deleteWalk(walkId);
         setSelectedCustomWalk(null);
         snapToPartial();
-    }, [deleteWalk, snapToPartial]);
+    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial]);
 
     const handleNearbyPress = useCallback((item: NearbyPressItem) => {
         setSelectedAmenity({
@@ -204,6 +206,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         onEdit={selectedCustomWalk ? () => handleEditWalk(selectedCustomWalk.id) : undefined}
                         onDelete={selectedCustomWalk ? () => handleDeleteWalk(selectedCustomWalk.id) : undefined}
                         onImport={selectedCommunityWalkId ? () => handleImportWalk(selectedCommunityWalkId) : undefined}
+                        alreadyDownloaded={selectedCommunityWalkId ? isWalkDownloaded(selectedCommunityWalkId) : false}
                     />
                 ) : selectedCustomWalk ? (
                     <CustomWalkDetail

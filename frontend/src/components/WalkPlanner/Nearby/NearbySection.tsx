@@ -86,6 +86,11 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   return (
     <View className="mt-6 mb-4">
       <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">Nearby</Text>
+      {items.length === 0 ? (
+        <Text className="text-sm text-text-600 dark:text-dark-text-600 px-4">
+          There isn't anything nearby.
+        </Text>
+      ) : (
       <HorizontalCarousel<NearbyPressItem>
         data={items}
         keyExtractor={(item) => `${item.name}-${item.lat}-${item.lng}`}
@@ -114,6 +119,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
           </Pressable>
         )}
       />
+      )}
     </View>
   );
 }

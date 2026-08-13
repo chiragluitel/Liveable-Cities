@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Footprints, Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb } from 'lucide-react-native';
+import { Footprints, Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb, Download } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
@@ -45,9 +45,14 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
             </View>
 
             <View className="flex-1 ml-3">
-                <Text className="text-base font-bold text-text dark:text-dark-text mb-1" numberOfLines={1}>
-                    {walk.cuswalkname || 'Custom Walk'}
-                </Text>
+                <View className="flex-row items-center gap-1 mb-1">
+                    <Text className="text-base font-bold text-text dark:text-dark-text" numberOfLines={1}>
+                        {walk.cuswalkname || 'Custom Walk'}
+                    </Text>
+                    {walk.fromCommunity && (
+                        <Download size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                    )}
+                </View>
                 <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
                     {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
