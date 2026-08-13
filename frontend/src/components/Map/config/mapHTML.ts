@@ -55,6 +55,7 @@ function buildMapHTML(): string {
 
     var userMarker = null;
     var userLocation = null;
+    var hasCentredOnUser = false; // only centre on the first fix
 
     // All icon markers are managed through the cluster group
     var clusterGroup = L.markerClusterGroup({ maxClusterRadius: 60 });
@@ -65,15 +66,16 @@ function buildMapHTML(): string {
     var hiddenTypes = {}; // iconType → true when hidden
 
     var routeStore = {}; // id → [casing, line, startDot, endDot]
+    var routeRequestId = 0; // ignore stale requests
 
     function drawRoute(id, points) {
-      if (routeStore[id]) routeStore[id].forEach(function(l) { map.removeLayer(l); });
+      // only one route on screen at a time
+      clearRoutes();
+      var thisRequestId = ++routeRequestId;
       var latlngs     = points.map(function(p) { return [p.lat, p.lng]; });
       var coords      = points.map(function(p) { return p.lng+','+p.lat; }).join(';');
       var casingStyle = { color: '#FFFFFF', weight: 12, opacity: 1,   lineCap: 'round', lineJoin: 'round' };
       var lineStyle   = { color: '#2563EB', weight: 7,  opacity: 1,   lineCap: 'round', lineJoin: 'round' };
-      var fbCasing    = { color: '#FFFFFF', weight: 12, opacity: 0.6, lineCap: 'round', lineJoin: 'round', dashArray: '10 8' };
-      var fbLine      = { color: '#2563EB', weight: 7,  opacity: 0.5, lineCap: 'round', lineJoin: 'round', dashArray: '10 8' };
       var startDot    = { radius: 8, color: '#FFFFFF', weight: 3, fillColor: '#2563EB', fillOpacity: 1 };
       var endDot      = { radius: 8, color: '#2563EB', weight: 3, fillColor: '#FFFFFF', fillOpacity: 1 };
       function addLayers(path, cs, ls) {
@@ -88,17 +90,32 @@ function buildMapHTML(): string {
         map.fitBounds(line.getBounds(), { padding: [40, 40] });
         routeStore[id] = [casing, line, start].concat(end ? [end] : []);
       }
-      fetch('https://routing.openstreetmap.de/routed-foot/route/v1/foot/'+coords+'?overview=full&geometries=geojson')
+      var controller = new AbortController();
+      var timedOut = false;
+      var timeoutId = setTimeout(function() {
+        timedOut = true;
+        controller.abort();
+      }, 20000);
+      fetch('https://routing.openstreetmap.de/routed-foot/route/v1/foot/'+coords+'?overview=full&geometries=geojson', { signal: controller.signal })
         .then(function(r){return r.json();})
         .then(function(data){
+          clearTimeout(timeoutId);
+          if (thisRequestId !== routeRequestId) return; // a newer request already won
           var route = data.routes[0];
           var distKm = (route.distance / 1000).toFixed(1) + ' km';
           sendToRN({ type: 'ROUTE_INFO', id: id, distance: distKm });
           addLayers(route.geometry.coordinates.map(function(c){return [c[1],c[0]];}), casingStyle, lineStyle);
         })
         .catch(function(){
-          sendToRN({ type: 'ROUTE_FALLBACK', id: id });
-          addLayers(latlngs, fbCasing, fbLine);
+          clearTimeout(timeoutId);
+          if (thisRequestId !== routeRequestId) return; // a newer request already won
+          sendToRN({
+            type: 'ROUTE_ERROR',
+            id: id,
+            message: timedOut
+              ? "Couldn't communicate after 20 seconds"
+              : "Couldn't get directions. Please check your connection."
+          });
         });
     }
 
@@ -172,9 +189,13 @@ function buildMapHTML(): string {
           userMarker = L.circleMarker([cmd.lat, cmd.lng], {
             radius: 8, color: '#FFFFFF', weight: 2, fillColor: '#2563EB', fillOpacity: 1
           }).addTo(map);
+          if (!hasCentredOnUser) {
+            hasCentredOnUser = true;
+            map.setView([cmd.lat, cmd.lng], ${DEFAULT_ZOOM});
+          }
           break;
         case 'RECENTRE':
-          if (userLocation) map.flyTo([userLocation.lat, userLocation.lng], 15);
+          if (userLocation) map.flyTo([userLocation.lat, userLocation.lng], ${DEFAULT_ZOOM});
           break;
         case 'ZOOM_IN':
           map.zoomIn();
