@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import type { SharedValue } from 'react-native-reanimated';
 import * as Location from 'expo-location';
@@ -9,7 +9,8 @@ import RecentreButton from './components/RecentreButton';
 import FilterButton from './components/FilterButton';
 import { MAP_HTML } from './config/mapHTML';
 import { watchLocation } from './config/useMapLocation';
-import { MAP_ICONS, ICON_DEFINITIONS, IconName, MapIconEntry } from './config/mapIcons';
+import { ICON_DEFINITIONS, IconName, MapIconEntry } from './config/mapIcons';
+import { fetchAllAmenityIcons } from '../../api/amenities';
 import { MapRoute } from './config/mapRouting';
 import { DEFAULT_VISIBLE_ICONS } from './config/mapConfig';
 
@@ -50,7 +51,8 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   function sendIcon(entry: MapIconEntry) {
     const def = ICON_DEFINITIONS[entry.name];
     const id = `${entry.name}-${entry.lat}-${entry.lng}`;
-    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconClass: def.iconClass, color: def.color, label: def.label, iconType: entry.name });
+    const label = entry.placeName || def.label;
+    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconClass: def.iconClass, color: def.color, label, iconType: entry.name });
   }
 
   function onMessage(e: WebViewMessageEvent) {
@@ -69,7 +71,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
           }
         });
 
-        MAP_ICONS.forEach(sendIcon);
+        fetchAllAmenityIcons().then(icons => icons.forEach(sendIcon));
 
         // Start continuous location tracking
         watchLocation(loc => {
@@ -83,6 +85,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     if (msg.type === 'ROUTE_INFO') onRouteInfo?.(msg.id, msg.distance);
     if (msg.type === 'ROUTE_TAPPED') onRouteTap?.(msg.id);
     if (msg.type === 'ICON_TAPPED') onIconTap?.(msg.label);
+    if (msg.type === 'ROUTE_ERROR') Alert.alert('Route unavailable', msg.message);
   }
 
   function handleFilterToggle(iconType: IconName, visible: boolean) {

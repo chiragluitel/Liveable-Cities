@@ -17,7 +17,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
   const timeText = formatTime(amenity.distanceM, SPEED_KMH[walkingSpeed]);
   const distanceText = amenity.distanceM >= 1000
     ? `${(amenity.distanceM / 1000).toFixed(1)} km`
-    : `${amenity.distanceM}m`;
+    : `${Math.round(amenity.distanceM)}m`;
 
   return (
     <BottomSheetScrollView

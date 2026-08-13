@@ -9,9 +9,11 @@ import { useSettings } from "@/src/context/SettingsContext";
 type SelectedWalkActionRowProps = {
   onEdit?: () => void;
   onDelete?: () => void;
+  onImport?: () => void;
+  alreadyDownloaded?: boolean;
 };
 
-export default function SelectedWalkActionRow({ onEdit, onDelete }: SelectedWalkActionRowProps) {
+export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alreadyDownloaded }: SelectedWalkActionRowProps) {
   const { colorScheme } = useColorScheme();
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -63,6 +65,24 @@ export default function SelectedWalkActionRow({ onEdit, onDelete }: SelectedWalk
           </TouchableOpacity>
         </Modal>
       </>
+    );
+  }
+
+  if (onImport) {
+    return (
+      <View className="flex-row mb-5">
+        <Pressable
+          className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+          onPress={onImport}
+          disabled={alreadyDownloaded}
+          style={alreadyDownloaded ? { opacity: 0.5 } : undefined}
+        >
+          <Ionicons name="download-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">
+            {alreadyDownloaded ? 'Downloaded' : 'Add to My Walks'}
+          </Text>
+        </Pressable>
+      </View>
     );
   }
 

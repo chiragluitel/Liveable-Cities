@@ -1,4 +1,5 @@
 import { Walk } from "@/src/types/walkPlannerTypes";
+import { Download } from "lucide-react-native";
 import { Text, View } from "react-native";
 
 interface CommunityWalkDetailsProps {
@@ -33,14 +34,11 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
         ))}
       </View>
 
-        {/* Rating Section */}
+        {/* Downloads Section */}
       <View className="flex-row items-center mt-2">
-        <Text className="text-yellow-500 text-xs mr-1">★</Text>
-        <Text className="text-xs font-medium text-text-600 dark:text-dark-text-600">
-          {walk.rating}
-        </Text>
-        <Text className="text-xs text-text-400 dark:text-dark-text-500 ml-1">
-          ({walk.reviewCount})
+        <Download size={12} color="#9ca3af" />
+        <Text className="text-xs font-medium text-text-600 dark:text-dark-text-600 ml-1">
+          {walk.downloads ?? 0} downloads
         </Text>
       </View>
 
