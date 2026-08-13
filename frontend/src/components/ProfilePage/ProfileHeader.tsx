@@ -7,7 +7,7 @@ interface ProfileHeaderProps {
 
 const ProfileHeader = ({name}: ProfileHeaderProps) => {
   return (
-    <View className="flex-row justify-between items-start mb-2 px-2 pt-8">
+    <View className="flex-row justify-between items-start mb-4 px-2 pt-8">
       <GreetComponent username = "Test User" />
     </View>
   );

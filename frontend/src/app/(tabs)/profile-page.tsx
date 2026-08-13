@@ -1,4 +1,4 @@
-import {Button, ScrollView, View} from "react-native";
+import {ScrollView, View} from "react-native";
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
@@ -56,7 +56,6 @@ export default function ProfilePage() {
             <DropdownItem title="40 walks" value="40" hideSeperator={true} />
         </Dropdown>
       </SettingsGroup>
-        <Button title="Clear Weekly Walks" onPress={() => {console.log("button")}} />
 
       <SettingsGroup title="Preferences">
         <Dropdown title="Walking Speed" valueKey="walkSpeed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
