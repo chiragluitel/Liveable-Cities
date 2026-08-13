@@ -7,6 +7,7 @@ import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
 import { useSettings, SPEED_KMH, formatWalkTime } from '@/src/context/SettingsContext';
+import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
 
 const FILTER_DEFS = [
     { key: 'hasWaterFountain',  label: 'Fountain',   Icon: Droplets },
@@ -29,7 +30,10 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const { colorScheme } = useColorScheme();
     const isLight = colorScheme === 'light';
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [shareModalVisible, setShareModalVisible] = useState(false);
+    const [shared, setShared] = useState(false);
     const { walkingSpeed } = useSettings();
+    const { shareWalk } = useCommunityWalks();
     const timeText = formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
@@ -84,6 +88,30 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </TouchableOpacity>
             </Modal>
 
+            <Modal
+                animationType={reducedMotion ? "none" : "fade"}
+                backdropColor="#00000000"
+                visible={shareModalVisible}
+                onRequestClose={() => setShareModalVisible(false)}
+            >
+                <TouchableOpacity
+                    className="flex-1 items-center justify-center"
+                    activeOpacity={1}
+                    onPressOut={() => setShareModalVisible(false)}
+                >
+                    <AlertBox
+                        title="Share to Community?"
+                        message="Other users will be able to see and import this walk."
+                        cancelFunc={() => setShareModalVisible(false)}
+                        confirmFunc={() => {
+                            setShareModalVisible(false);
+                            shareWalk(walk);
+                            setShared(true);
+                        }}
+                    />
+                </TouchableOpacity>
+            </Modal>
+
             <View className="flex-row mb-5">
                 <Pressable
                     className="flex-1 bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
@@ -102,6 +130,19 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                     <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2">Delete Walk</Text>
                 </Pressable>
             </View>
+
+            <Pressable
+                className="rounded-[18px] py-[16px] justify-center items-center mb-5 bg-accent-200 dark:bg-dark-accent-200"
+                onPress={() => setShareModalVisible(true)}
+                disabled={shared}
+            >
+                <View className="flex-row items-center">
+                    <Ionicons name={shared ? "checkmark-circle" : "share-social-outline"} size={20} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                    <Text className="text-text dark:text-dark-text font-bold text-[15px] ml-2">
+                        {shared ? 'Shared to Community' : 'Share to Community'}
+                    </Text>
+                </View>
+            </Pressable>
         </BottomSheetScrollView>
     );
 }

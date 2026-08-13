@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Flame, BookOpen, Armchair, PersonStanding } from 'lucide-react-native';
+import { Flame, BookOpen, Armchair, PersonStanding, Droplets } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
-import { DEFAULT_VISIBLE_ICONS } from '../config/mapConfig';
 import { ICON_DEFINITIONS, IconName } from '../config/mapIcons';
 import { colours } from '@Theme/colours';
 import SlideToggle from '@Components/SlideToggle';
+import { useMapFilter } from '@/src/context/MapFilterContext';
 
-const FILTER_ICON_COMPONENTS: Record<IconName, React.ReactElement> = {
-  bbq:     <Flame          size={18} color="#fff" />,
-  library: <BookOpen       size={18} color="#fff" />,
-  bench:   <Armchair       size={18} color="#fff" />,
-  toilet:  <PersonStanding size={18} color="#fff" />,
+type LucideIconProps = { size?: number; color?: string };
+
+const FILTER_ICON_COMPONENTS: Record<IconName, React.ReactElement<LucideIconProps>> = {
+  bbq:     <Flame          size={15} color="#fff" />,
+  library: <BookOpen       size={15} color="#fff" />,
+  bench:   <Armchair       size={15} color="#fff" />,
+  toilet:  <PersonStanding size={15} color="#fff" />,
+  fountain: <Droplets      size={15} color="#fff" />,
 };
 
 function FilterIcon({ name }: { name: IconName }) {
   const { color } = ICON_DEFINITIONS[name];
   return (
-    <View className="w-8 h-8 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
+    <View className="w-7 h-7 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
       {FILTER_ICON_COMPONENTS[name]}
     </View>
   );
@@ -34,21 +37,17 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
   const isLight = colorScheme === 'light';
 
   const [open, setOpen] = useState(false);
-  const [visibility, setVisibility] = useState<Record<IconName, boolean>>(() => {
-    const initial = {} as Record<IconName, boolean>;
-    (Object.keys(ICON_DEFINITIONS) as IconName[]).forEach(name => {
-      initial[name] = DEFAULT_VISIBLE_ICONS.includes(name);
-    });
-    return initial;
-  });
+  const { visibleIcons: visibility, setIconVisible } = useMapFilter();
 
   function toggle(name: IconName) {
     const next = !visibility[name];
-    setVisibility(prev => ({ ...prev, [name]: next }));
+    setIconVisible(name, next);
     onToggle(name, next);
   }
 
-  const iconNames = Object.keys(ICON_DEFINITIONS) as IconName[];
+  const iconNames = (Object.keys(ICON_DEFINITIONS) as IconName[]).sort((a, b) =>
+    ICON_DEFINITIONS[a].label.localeCompare(ICON_DEFINITIONS[b].label)
+  );
 
   return (
     <View className="absolute right-4 items-end" style={{ top: insets.top + 12 }}>
@@ -74,12 +73,17 @@ export default function FilterButton({ onToggle }: FilterButtonProps) {
               underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
             >
               <View
-                className={`flex-row items-center justify-between px-[14px] py-[13px] bg-background-100 dark:bg-dark-background-200
+                className={`flex-row items-center justify-between px-[12px] py-[10px] bg-background-100 dark:bg-dark-background-200
                   ${index < iconNames.length - 1 ? 'border-b border-b-text-200 dark:border-b-dark-text-400' : ''}`}
               >
-                <View className="flex-row items-center gap-[10px]">
+                <View className="flex-1 flex-row items-center gap-[8px] pr-[8px]">
                   <FilterIcon name={name} />
-                  <Text className="text-[17px] text-text dark:text-dark-text">
+                  <Text
+                    className="flex-1 text-[13px] text-text dark:text-dark-text"
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.85}
+                  >
                     {ICON_DEFINITIONS[name].label}
                   </Text>
                 </View>

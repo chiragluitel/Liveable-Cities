@@ -14,12 +14,14 @@ import { SearchResultsContent } from './SearchResultContent';
 import { getSelectedWalkData } from '@/src/database/walkDetailData';
 import { SelectedWalkData } from '@/src/types/walkDetailTypes';
 import SelectedWalkContent from '@/src/components/SelectedWalk/SelectedWalkContent';
-import { MY_WALKS } from '@/src/database/mockData';
+import AmenityDetailContent from '@/src/components/SelectedWalk/AmenityDetailContent';
 import { MAP_ROUTES, MapRoute } from '@/src/components/Map/config/mapRouting';
 import CustomWalkDetail from '@/src/components/CustomWalk/CustomWalkDetail';
 import { useCustomWalks } from '@/src/context/CustomWalkContext';
+import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
 import { useRouter } from 'expo-router';
 import { NearbyPressItem } from '@/src/components/WalkPlanner/Nearby/NearbySection';
+import { Amenity } from '@/src/types/walkPlannerTypes';
 
 interface WalkPlannerSheetProps {
     searchState: SearchLogicReturnObject;
@@ -41,7 +43,10 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     const { colorScheme } = useColorScheme();
     const [selectedWalk, setSelectedWalk] = useState<SelectedWalkData | null>(null);
     const [selectedCustomWalk, setSelectedCustomWalk] = useState<any | null>(null);
-    const { deleteWalk, walks } = useCustomWalks();
+    const [selectedCommunityWalkId, setSelectedCommunityWalkId] = useState<string | null>(null);
+    const [selectedAmenity, setSelectedAmenity] = useState<Amenity | null>(null);
+    const { deleteWalk, saveWalk, walks } = useCustomWalks();
+    const { communityWalks, incrementDownloads } = useCommunityWalks();
     const router = useRouter();
 
     const killSearchFocus = useCallback(() => {
@@ -76,18 +81,33 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     }, [killSearchFocus]);
 
     const handleWalkPress = useCallback((walkId: string) => {
-        const walk = MY_WALKS.find(w => w.id === walkId);
+        const walk = communityWalks.find((w: any) => w.id === walkId);
         setSelectedWalk(getSelectedWalkData('default', walk?.title));
+        setSelectedCommunityWalkId(walkId);
         snapToPartial();
         if (walk?.routeId) {
             const route = MAP_ROUTES.find(r => r.id === walk.routeId);
             if (route) onWalkSelect?.(route);
         }
-    }, [snapToPartial, onWalkSelect]);
+    }, [communityWalks, snapToPartial, onWalkSelect]);
+
+    const handleImportWalk = useCallback((walkId: string) => {
+        const walk = communityWalks.find((w: any) => w.id === walkId);
+        if (walk) {
+            saveWalk({ cuswalkname: walk.title, distance: walk.distanceKm });
+            incrementDownloads(walkId);
+        }
+        setSelectedWalk(null);
+        setSelectedCommunityWalkId(null);
+        snapToPartial();
+        onWalkSelect?.(null);
+    }, [communityWalks, saveWalk, incrementDownloads, snapToPartial, onWalkSelect]);
 
     const handleBack = useCallback(() => {
         setSelectedWalk(null);
         setSelectedCustomWalk(null);
+        setSelectedCommunityWalkId(null);
+        setSelectedAmenity(null);
         snapToPartial();
         onWalkSelect?.(null);
     }, [snapToPartial, onWalkSelect]);
@@ -120,10 +140,13 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     }, [deleteWalk, snapToPartial]);
 
     const handleNearbyPress = useCallback((item: NearbyPressItem) => {
-        setSelectedWalk({
-            ...getSelectedWalkData('default', item.def.label),
-            distanceText: 'Calculating',
-            durationText: 'please wait',
+        setSelectedAmenity({
+            id: `${item.name}-${item.lat}-${item.lng}`,
+            name: item.placeName || item.def.label,
+            type: 'Scenic Amenities',
+            distanceM: item.distanceM ?? 0,
+            lat: item.lat,
+            lng: item.lng,
         });
         snapToPartial();
         onNearbySelect?.(item);
@@ -152,10 +175,10 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         >
             <View className="flex-1">
                 <View className="z-10 bg-background-50 dark:bg-dark-background-100 pb-2 pt-1">
-                    {selectedWalk || selectedCustomWalk ? (
+                    {selectedWalk || selectedCustomWalk || selectedAmenity ? (
                         <View className="flex-row justify-end px-4" style={{ marginTop: 4 }}>
                             <TouchableOpacity
-                                onPress={selectedWalk ? handleBack : handleCustomWalkClose}
+                                onPress={selectedCustomWalk ? handleCustomWalkClose : handleBack}
                                 className='w-[28] h-[28] rounded-[14] items-center justify-center bg-background-50 dark:bg-dark-background-200'
                             >
                                 <X size={14} color={colorScheme === "light" ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
@@ -180,6 +203,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         walk={selectedWalk}
                         onEdit={selectedCustomWalk ? () => handleEditWalk(selectedCustomWalk.id) : undefined}
                         onDelete={selectedCustomWalk ? () => handleDeleteWalk(selectedCustomWalk.id) : undefined}
+                        onImport={selectedCommunityWalkId ? () => handleImportWalk(selectedCommunityWalkId) : undefined}
                     />
                 ) : selectedCustomWalk ? (
                     <CustomWalkDetail
@@ -187,6 +211,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         onEdit={handleEditWalk}
                         onDelete={handleDeleteWalk}
                     />
+                ) : selectedAmenity ? (
+                    <AmenityDetailContent amenity={selectedAmenity} />
                 ) : (
                     <WalkPlannerSheetContent
                         onInteract={killSearchFocus}

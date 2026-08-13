@@ -15,7 +15,7 @@ export default function SelectedWalkScreen({
   variant,
   titleOverride,
 }: SelectedWalkScreenProps) {
-  const { sheetRef, snapPoints } = useSelectedWalkSheet();
+  const { sheetRef, snapPoints, animatedPosition } = useSelectedWalkSheet();
 
   const selectedWalkData = useMemo(() => {
     return getSelectedWalkData(variant, titleOverride);
@@ -23,12 +23,13 @@ export default function SelectedWalkScreen({
 
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-50">
-      <CaseyMap />
+      <CaseyMap animatedSheetPosition={animatedPosition} />
 
       <SelectedWalkSheet
         sheetRef={sheetRef}
         snapPoints={snapPoints}
         selectedWalkData={selectedWalkData}
+        animatedPosition={animatedPosition}
       />
     </View>
   );

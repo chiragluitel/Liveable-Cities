@@ -19,6 +19,7 @@ export interface Walk {
   thumbnailColor: string;
   rating?: number;
   reviewCount?: number;
+  downloads?: number;
   isFavorited?: boolean;
   isCompleted?: boolean;
   routeId?: string;

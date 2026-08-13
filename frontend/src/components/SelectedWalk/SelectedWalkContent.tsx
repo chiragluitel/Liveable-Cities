@@ -7,9 +7,10 @@ type SelectedWalkContentProps = {
   walk: SelectedWalkData;
   onEdit?: () => void;
   onDelete?: () => void;
+  onImport?: () => void;
 };
 
-export default function SelectedWalkContent({ walk, onEdit, onDelete }: SelectedWalkContentProps) {
+export default function SelectedWalkContent({ walk, onEdit, onDelete, onImport }: SelectedWalkContentProps) {
   return (
     <BottomSheetScrollView
       contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }}
@@ -20,7 +21,7 @@ export default function SelectedWalkContent({ walk, onEdit, onDelete }: Selected
         distanceText={walk.distanceText}
         durationText={walk.durationText}
       />
-      <SelectedWalkActionRow onEdit={onEdit} onDelete={onDelete} />
+      <SelectedWalkActionRow onEdit={onEdit} onDelete={onDelete} onImport={onImport} />
     </BottomSheetScrollView>
   );
 }
