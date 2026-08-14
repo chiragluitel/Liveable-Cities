@@ -11,6 +11,9 @@ const string FrontendCorsPolicy = "frontend";
 builder.Services.Configure<CaseyOpenDataOptions>(
     builder.Configuration.GetSection(CaseyOpenDataOptions.SectionName));
 
+builder.Services.Configure<OpenRouteServiceOptions>(
+    builder.Configuration.GetSection(OpenRouteServiceOptions.SectionName));
+
 // Single typed HttpClient shared by every entity service.
 builder.Services.AddHttpClient<CaseyOpenDataClient>((serviceProvider, http) =>
 {
@@ -31,6 +34,12 @@ builder.Services.AddScoped<IDrinkingFountainService, DrinkingFountainService>();
 builder.Services.AddScoped<IPublicToiletService, PublicToiletService>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IBbqService, BbqService>();
+
+builder.Services.AddHttpClient<ICustomWalkRouteService, CustomWalkRouteService>((serviceProvider, http) =>
+{
+    var options = serviceProvider.GetRequiredService<IOptions<OpenRouteServiceOptions>>().Value;
+    http.BaseAddress = new Uri(options.BaseUrl);
+});
 
 
 // Allow the Expo frontend (web build) to call the API. Tighten the origins for production.
