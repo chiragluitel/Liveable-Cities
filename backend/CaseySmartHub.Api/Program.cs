@@ -1,11 +1,20 @@
 using CaseySmartHub.Api.Clients;
 using CaseySmartHub.Api.Configuration;
+using CaseySmartHub.Api.Data;
 using CaseySmartHub.Api.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 const string FrontendCorsPolicy = "frontend";
+
+// PostgreSQL persistence. UseNetTopologySuite maps PostGIS geometry columns
+// onto NetTopologySuite types for spatial querying.
+builder.Services.AddDbContext<CaseyDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsql => npgsql.UseNetTopologySuite()));
 
 // Bind external API settings (base URL + optional api key).
 builder.Services.Configure<CaseyOpenDataOptions>(
