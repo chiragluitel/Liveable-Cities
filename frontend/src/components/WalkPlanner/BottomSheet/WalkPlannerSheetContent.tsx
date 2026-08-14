@@ -25,22 +25,15 @@ export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkC
     const { walks } = useCustomWalks();
     const { communityWalks } = useCommunityWalks();
 
-    const { distGoal, stepGoal } = useSettings();
+    const { walkGoal, weeklyWalks } = useSettings();
 
     const fitnessGoals: FitnessGoal[] = [
         {
             id: 'g1',
-            label: 'Weekly Distance',
-            unit: 'km',
-            current: 0,
-            target: Number(distGoal)
-        },
-        {
-            id: 'g2',
-            label: 'Daily Steps',
-            unit: 'steps',
-            current: 0,
-            target: Number(stepGoal)
+            label: 'Weekly Walks',
+            unit: 'walks',
+            current: Number(weeklyWalks),
+            target: Number(walkGoal)
         },
     ]
 
@@ -59,7 +52,6 @@ export const WalkPlannerSheetContent = ({ onInteract, onWalkPress, onCustomWalkC
             </View>
             <NearbySection onNearbyPress={onNearbyPress} />
             <CommunityWalkSection walks={communityWalks} onHeaderPress={() => {}} onWalkPress={onWalkPress ?? (() => router.navigate("/custom-walk-selected"))} />
-            <FitnessSection goals={fitnessGoals} />
             <GridButtons
                 button={[
                     { label: 'Report Problem', onPress: () => Linking.openURL('https://github.com/chiragluitel/Liveable-Cities/issues') }

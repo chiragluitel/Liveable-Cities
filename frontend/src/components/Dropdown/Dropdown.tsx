@@ -141,10 +141,10 @@ export default function Dropdown({
         >
           <Text className="text-text dark:text-dark-text text-[17px]">{title}</Text>
           <View className="flex-row items-center">
-            <Text className="text-accent-600 dark:text-dark-accent-700 text-[17px]">
+            <Text className="text-accent-600 dark:text-dark-primary-700 text-[17px]">
               {selectedValue}
             </Text>
-            <Ionicons name="chevron-expand" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[300]} />
+            <Ionicons name="chevron-expand" size={17} color={isLight ? colours.primary[700] : colours.dark.primary[600]} />
           </View>
         </View>
       </TouchableHighlight>

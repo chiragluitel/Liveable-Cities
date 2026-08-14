@@ -15,8 +15,9 @@ export default function RootLayout() {
 
   const isLight = colorScheme === "light";
 
-  const [theme, setTheme, isThemeLoading] = useAsyncStorage("Theme", "Auto")
+  const [theme, setTheme, isThemeLoading] = useAsyncStorage("theme", "Auto")
 
+  
   useEffect(() => {
     if (isThemeLoading) {
       return;
@@ -34,6 +35,7 @@ export default function RootLayout() {
         setColorScheme("system");
     }
   }, [theme, isThemeLoading]);
+  
 
   return (
     <GestureHandlerRootView style={{flex:1}}>

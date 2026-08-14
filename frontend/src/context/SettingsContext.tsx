@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import useAsyncStorage from '@Hooks/useAsyncStorage';
 
 export type WalkingSpeed = 'Slow' | 'Average' | 'Fast';
@@ -22,10 +22,10 @@ interface SettingsContextValue {
   setWalkingSpeed: (speed: WalkingSpeed) => void;
   reducedMotion: boolean;
   setReducedMotion: (value: boolean) => void;
-  distGoal: string;
-  setDistGoal: (value: string) => void;
-  stepGoal: string;
-  setStepGoal: (value: string) => void;
+  walkGoal: string;
+  setWalkGoal: (value: string) => void;
+  weeklyWalks: string;
+  setWeeklyWalks: (value: string) => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue>({
@@ -33,10 +33,10 @@ const SettingsContext = createContext<SettingsContextValue>({
   setWalkingSpeed: () => {},
   reducedMotion: false,
   setReducedMotion: () => {},
-  distGoal: "5",
-  setDistGoal: () => {},
-  stepGoal: "5000",
-  setStepGoal: () => {}
+  walkGoal: "5",
+  setWalkGoal: () => {},
+  weeklyWalks: "0",
+  setWeeklyWalks: () => {}
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -44,8 +44,29 @@ export const useSettings = () => useContext(SettingsContext);
 export const SettingsProvider = ({ children }: { children: React.ReactNode }) => {
   const [reducedMotion, setReducedMotion] = useAsyncStorage("reduceMotion", false);
   const [walkingSpeed, setWalkingSpeed] = useAsyncStorage('walkSpeed', 'Average');
-  const [distGoal, setDistGoal] = useAsyncStorage("distGoal", "5");
-  const [stepGoal, setStepGoal] = useAsyncStorage("stepGoal", "5000");
+  const [walkGoal, setWalkGoal] = useAsyncStorage("walkGoal", "5");
+  const [weeklyWalks, setWeeklyWalks, isWeeklyWalksLoading] = useAsyncStorage("weeklyWalks", "0");
+
+  const [weekStart, setWeekStart, isWeekStartLoading] = useAsyncStorage("weekStart", "");
+
+  useEffect(() => {
+    if (isWeekStartLoading) return;
+
+    const today = new Date();
+    
+    const monday = new Date(today);
+    const day = today.getDay();
+  
+    const daysSinceMon = day === 0 ? 6 : day -1;
+  
+    monday.setDate(today.getDate() - daysSinceMon);
+    const mondayString = monday.toISOString().split("T")[0];
+    
+    if (weekStart !== mondayString) {
+      setWeekStart(mondayString); 
+      setWeeklyWalks("0");
+    }
+  }, [isWeekStartLoading, isWeeklyWalksLoading, weekStart]);
 
   return (
     <SettingsContext.Provider value={{ 
@@ -53,10 +74,10 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
         setWalkingSpeed, 
         reducedMotion, 
         setReducedMotion, 
-        distGoal, 
-        setDistGoal, 
-        stepGoal, 
-        setStepGoal 
+        walkGoal, 
+        setWalkGoal, 
+        weeklyWalks,
+        setWeeklyWalks
       }}>
       {children}
     </SettingsContext.Provider>

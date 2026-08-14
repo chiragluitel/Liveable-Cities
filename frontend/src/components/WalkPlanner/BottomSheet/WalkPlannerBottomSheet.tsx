@@ -181,7 +181,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         <View className="flex-row justify-end px-4" style={{ marginTop: 4 }}>
                             <TouchableOpacity
                                 onPress={selectedCustomWalk ? handleCustomWalkClose : handleBack}
-                                className='w-[28] h-[28] rounded-[14] items-center justify-center bg-background-50 dark:bg-dark-background-200'
+                                className='w-[28] h-[28] rounded-[14] items-center justify-center bg-background-100 dark:bg-dark-background-200'
                             >
                                 <X size={14} color={colorScheme === "light" ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                             </TouchableOpacity>
