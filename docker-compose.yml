@@ -30,7 +30,9 @@ services:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
 
   db:
-    image: postgis/postgis:17-3.5-alpine
+    image: postgis/postgis:17-3.5
+    #only for mac below:
+    platform: linux/amd64
     container_name: casey-db
     ports:
       - "5432:5432"
