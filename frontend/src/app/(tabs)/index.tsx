@@ -1,47 +1,83 @@
-import {useRouter} from "expo-router";
-import { StatusBar } from "expo-status-bar"
-import { Text, View, ScrollView } from "react-native";
-import FeatureCard from "@Components/HomePage/FeatureCard";
-import HomeHeader from "@Components/HomePage/HomeHeader";
-import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
+import { View, TouchableOpacity, Text, Dimensions } from "react-native";
+import { useRef, useCallback } from "react";
+import { useSharedValue } from "react-native-reanimated";
+import { useRouter, Stack } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useSearchLogic from "@/src/hooks/useSearchLogic";
+import { WalkPlannerBottomSheet, WalkPlannerSheetRef } from "@/src/components/WalkPlanner/BottomSheet/WalkPlannerBottomSheet";
+import CaseyMap, { CaseyMapHandle } from "@/src/components/Map/CaseyMap";
+import { MapRoute } from "@/src/components/Map/config/mapRouting";
+import { useSettings, SPEED_KMH } from "@/src/context/SettingsContext";
+import { NearbyPressItem } from "@/src/components/WalkPlanner/Nearby/NearbySection";
+import LocationPermissionBanner from "@/src/components/Map/components/LocationPermissionBanner";
 
-export default function HomePage() {
-  const router = useRouter();
 
-  return (
-    <View className="flex-1 bg-background-50 dark:bg-dark-background-50 px-5 pt-12">
-      {/* header */}
-      <HomeHeader />
+const WalkPlannerHomePage = () => {
+	const searchState = useSearchLogic();
+	const bottomSheetRef = useRef<WalkPlannerSheetRef>(null);
+	const mapRef = useRef<CaseyMapHandle>(null);
+	const router = useRouter();
+	const insets = useSafeAreaInsets();
+	const sheetPosition = useSharedValue(Dimensions.get('window').height);
+	const { walkingSpeed } = useSettings();
 
-      <ScrollView>
-      {/* content */}
+	const handleMapInteraction = () => {
+		bottomSheetRef.current?.collapseToSearch();
+	};
 
-        {/* weather widget */}
-        <WeatherWidget />
+	const handleWalkSelect = useCallback((route: MapRoute | null) => {
+		if (route) {
+			mapRef.current?.drawRoute(route);
+		} else {
+			mapRef.current?.clearRoutes();
+		}
+	}, []);
 
-        <View className="gap-y-4 pb-[20]">
-          {/* walk planner app */}
-          <FeatureCard
-            title="Smart Walk Planner"
-            description="Plan your walks tailored to your needs"
-            buttonText="Plan a Walk"
-            onPress={() => router.navigate('/walk-planner' as any)}
-          />
-          
-          {/* Coming Soon Box */}
-          <View className="mt-6 border border-dashed border-gray-400 rounded-2xl p-8 items-center">
-            <Text className="text-text-500 dark:text-dark-text-500 font-semibold">
-              More features coming soon
-            </Text>
+	const handleIconTap = useCallback((label: string) => {
+		bottomSheetRef.current?.showNavWalk(label);
+	}, []);
 
-            <Text className="text-text-400 dark:text-dark-text-400 text-sm mt-1">
-              Stay tuned
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
+	const handleNearbySelect = useCallback((item: NearbyPressItem) => {
+		mapRef.current?.routeTo(item.lat, item.lng);
+	}, []);
 
-      <StatusBar style="auto" />
-    </View>
-  );
+	const handleRouteInfo = useCallback((id: string, distance: string) => {
+		if (id === 'nav-route') {
+			const km = parseFloat(distance);
+			const speedKmh = SPEED_KMH[walkingSpeed];
+			const totalMin = Math.round((km / speedKmh) * 60);
+			const timeText = totalMin < 60
+				? `~${totalMin} min walk`
+				: `~${Math.floor(totalMin / 60)} hr ${totalMin % 60 > 0 ? totalMin % 60 + ' min ' : ''}walk`;
+			bottomSheetRef.current?.updateNavInfo(distance, timeText);
+		}
+	}, [walkingSpeed]);
+
+
+	return (
+		<View className="flex-1 bg-background-50 dark:bg-dark-background-50">
+			<Stack.Screen options={{headerShown: false}} />
+
+			<View className="absolute inset-0" onTouchStart={handleMapInteraction}>
+				<CaseyMap ref={mapRef} animatedSheetPosition={sheetPosition} onIconTap={handleIconTap} onRouteInfo={handleRouteInfo} />
+			</View>
+
+			{/*
+			<TouchableOpacity
+				className="absolute left-4 py-2 px-[14px] bg-background-200 dark:bg-dark-background-400 rounded-lg shadow"
+				style={{ top: insets.top + 12 }}
+				onPress={() => router.back()}
+			>
+				<Text className="text-base font-semibold text-dark-text-200 dark:text-dark-text">Home</Text>
+			</TouchableOpacity>
+			*/}
+
+			<LocationPermissionBanner />
+
+			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} onNearbySelect={handleNearbySelect} />
+		</View>
+	);
 }
+
+
+export default WalkPlannerHomePage;
