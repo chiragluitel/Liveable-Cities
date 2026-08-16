@@ -34,7 +34,8 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const [shared, setShared] = useState(false);
     const { walkingSpeed } = useSettings();
     const { shareWalk } = useCommunityWalks();
-    const timeText = formatWalkTime(walk.distance, walkingSpeed);
+    const distanceText = walk.routeDistanceText || `${walk.distance} km`;
+    const timeText = walk.routeDurationText || formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
 
@@ -48,7 +49,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </Text>
                 <Text className="text-[17px] mb-3">
                     <Text className="text-accent dark:text-dark-accent-700">
-                        {walk.distance} km, {timeText}
+                        {distanceText}, {timeText}
                     </Text>
                 </Text>
                 {activeTags.length > 0 && (

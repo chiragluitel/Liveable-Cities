@@ -30,6 +30,31 @@ interface WalkPlannerSheetProps {
     onNearbySelect?: (item: NearbyPressItem) => void;
 }
 
+function getCustomWalkMapRoute(walk: any): MapRoute | null {
+    const coordinates = walk?.routeGeoJson?.features?.[0]?.geometry?.coordinates;
+
+    if (!Array.isArray(coordinates)) {
+        return null;
+    }
+
+    const points = coordinates
+        .filter((coordinate: any) => Array.isArray(coordinate) && coordinate.length >= 2)
+        .map((coordinate: any) => ({
+            lng: Number(coordinate[0]),
+            lat: Number(coordinate[1]),
+        }))
+        .filter((point: any) => Number.isFinite(point.lat) && Number.isFinite(point.lng));
+
+    if (points.length < 2) {
+        return null;
+    }
+
+    return {
+        id: `custom-walk-${walk.id}`,
+        points,
+    };
+}
+
 export interface WalkPlannerSheetRef {
     collapseToSearch: () => void;
     showNavWalk: (label: string) => void;
@@ -120,14 +145,18 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     }, [walks]);
 
     const handleCustomWalkCardPress = useCallback((walk: any) => {
-        setSelectedCustomWalk(walk);
-        snapToPartial();
-    }, [snapToPartial]);
+    setSelectedCustomWalk(walk);
+    snapToPartial();
+
+    const route = getCustomWalkMapRoute(walk);
+    onWalkSelect?.(route);
+    }, [snapToPartial, onWalkSelect]);
 
     const handleCustomWalkClose = useCallback(() => {
-        setSelectedCustomWalk(null);
-        snapToPartial();
-    }, [snapToPartial]);
+    setSelectedCustomWalk(null);
+    snapToPartial();
+    onWalkSelect?.(null);
+    }, [snapToPartial, onWalkSelect]);
 
     const handleEditWalk = useCallback((walkId: string) => {
         router.push(`/custom-walk?id=${walkId}` as any);
@@ -139,7 +168,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         deleteWalk(walkId);
         setSelectedCustomWalk(null);
         snapToPartial();
-    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial]);
+        onWalkSelect?.(null);
+    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial, onWalkSelect]);
 
     const handleNearbyPress = useCallback((item: NearbyPressItem) => {
         setSelectedAmenity({

@@ -54,7 +54,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                     )}
                 </View>
                 <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
-                    {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
+                    {walk.routeDistanceText || `${walk.distance} km`} • {walk.routeDurationText || formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
 
                 <View className="flex-row flex-wrap gap-1.5">

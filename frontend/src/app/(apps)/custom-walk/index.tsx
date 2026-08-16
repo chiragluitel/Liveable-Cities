@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -11,6 +11,13 @@ import DistanceSlider from '@/src/components/CustomWalk/DistanceSlider';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColorScheme } from 'nativewind';
 import { colours } from '@/src/theme/colours';
+
+const CUSTOM_WALK_API_URL = 'http://10.0.2.2:5050/api/custom-walk-route';
+
+const DEFAULT_START_LOCATION = {
+  lat: -38.0267,
+  lng: 145.2940,
+};
 
 export default function WalkPlannerScreen() {
   const insets = useSafeAreaInsets();
@@ -46,7 +53,47 @@ export default function WalkPlannerScreen() {
     }
   }, [params.id, walks]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+  const selectedFilters = [
+    hasWaterFountain ? 'Water Fountain' : null,
+    hasDisabledToilets ? 'Disabled Toilets' : null,
+    hasPark ? 'Park' : null,
+    hasPlayground ? 'Playground' : null,
+    hasRubbishBin ? 'Rubbish Bins' : null,
+    hasOffLeash ? 'Off Leash Zones' : null,
+    hasWellLitStreets ? 'Well Lit Streets' : null,
+  ].filter((filter): filter is string => Boolean(filter));
+
+  try {
+    const response = await fetch(CUSTOM_WALK_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: cuswalkname || 'Custom Walk',
+        targetDistanceKm: distance,
+        selectedFilters,
+        start: DEFAULT_START_LOCATION,
+        waypoints: [],
+      }),
+    });
+
+    const responseText = await response.text();
+
+    if (!response.ok) {
+      throw new Error(responseText || 'Could not create custom walk route.');
+    }
+
+    const routeResult = JSON.parse(responseText);
+
+    console.log('Custom walk route created:', {
+      distanceText: routeResult.distanceText,
+      durationText: routeResult.durationText,
+      attemptsUsed: routeResult.attemptsUsed,
+      usedNativeRoundTrip: routeResult.usedNativeRoundTrip,
+    });
+
     const walkData = {
       id: params.id,
       cuswalkname,
@@ -58,11 +105,27 @@ export default function WalkPlannerScreen() {
       hasWellLitStreets,
       hasRubbishBin,
       hasOffLeash,
+      selectedFilters,
+      routeDistanceMeters: routeResult.distanceMeters,
+      routeDurationSeconds: routeResult.durationSeconds,
+      routeDistanceText: routeResult.distanceText,
+      routeDurationText: routeResult.durationText,
+      attemptsUsed: routeResult.attemptsUsed,
+      usedNativeRoundTrip: routeResult.usedNativeRoundTrip,
+      routeGeoJson: routeResult.routeGeoJson,
     };
 
     saveWalk(walkData);
     router.back();
-  };
+  } catch (error) {
+    console.error('Failed to create custom walk route:', error);
+
+    Alert.alert(
+      'Route Error',
+      'The app could not create the custom walk route. Please check that the backend is running and try again.'
+    );
+  }
+};
 
   const { colorScheme } = useColorScheme();
   return (
