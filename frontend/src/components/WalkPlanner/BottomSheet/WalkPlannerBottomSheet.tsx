@@ -129,14 +129,15 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         snapToPartial();
     }, [snapToPartial]);
 
-    const handleEditWalk = useCallback((walkId: string) => {
+    const handleEditWalk = useCallback((walkId: number | string) => {
         router.push(`/custom-walk?id=${walkId}` as any);
     }, [router]);
 
-    const handleDeleteWalk = useCallback((walkId: string) => {
-        const walk = walks.find((w: any) => w.id === walkId);
+    const handleDeleteWalk = useCallback((walkId: number | string) => {
+        const numId = Number(walkId);
+        const walk = walks.find((w: any) => w.id === numId);
         if (walk?.communityWalkId) unmarkDownloaded(walk.communityWalkId);
-        deleteWalk(walkId);
+        deleteWalk(numId);
         setSelectedCustomWalk(null);
         snapToPartial();
     }, [walks, deleteWalk, unmarkDownloaded, snapToPartial]);
