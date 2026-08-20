@@ -31,7 +31,7 @@ export default function WalkPlannerScreen() {
 
   useEffect(() => {
     if (params.id) {
-      const existingWalk = walks.find((w: any) => w.id === params.id);
+      const existingWalk = walks.find((w: any) => String(w.id) === String(params.id));
       if (existingWalk) {
         setcuswalk(existingWalk.cuswalkname);
         setDistance(Number(existingWalk.distance) || 1);
