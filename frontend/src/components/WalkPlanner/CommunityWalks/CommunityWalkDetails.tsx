@@ -12,11 +12,11 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
       <Text className="text-base font-bold text-text dark:text-dark-text" numberOfLines={1}>
         {walk.title}
       </Text>
-      <Text className="text-sm text-text-600 dark:text-dark-text-600 mb-1" numberOfLines={1}>
+      <Text className="text-sm text-text-700 dark:text-dark-text-600 mb-1" numberOfLines={1}>
         {walk.subtitle}
       </Text>
 
-      <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
+      <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium mb-2">
         {walk.distanceKm} km • {walk.durationMin} min
       </Text>
       
@@ -27,7 +27,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
             key={tag} 
             className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1"
           >
-            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-700 uppercase">
               {tag}
             </Text>
           </View>
@@ -37,7 +37,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
         {/* Downloads Section */}
       <View className="flex-row items-center mt-2">
         <Download size={12} color="#9ca3af" />
-        <Text className="text-xs font-medium text-text-600 dark:text-dark-text-600 ml-1">
+        <Text className="text-xs font-medium text-text-700 dark:text-dark-text-600 ml-1">
           {walk.downloads ?? 0} downloads
         </Text>
       </View>

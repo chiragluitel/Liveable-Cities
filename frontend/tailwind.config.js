@@ -9,8 +9,8 @@ module.exports = {
     "./src/types/**/*.{js,jsx,ts,tsx}"         
   ],
   presets: [require("nativewind/preset")],
+  darkMode: 'class',
   theme: {
-    darkMode: 'class',
     extend: {
       colors: colours,
     }
