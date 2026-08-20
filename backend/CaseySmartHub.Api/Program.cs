@@ -55,6 +55,14 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// Apply pending migrations on startup for docker ONLY
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    await scope.ServiceProvider.GetRequiredService<CaseyDbContext>()
+        .Database.MigrateAsync();
+}
+
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
