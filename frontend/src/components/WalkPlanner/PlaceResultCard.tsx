@@ -29,7 +29,7 @@ export const PlaceResultCard = ({ place, onPress, isLast }: PlaceResultCardProps
                 <Text className="text-[17px] font-semibold text-text dark:text-dark-text mb-0.5">
                     {place.title}
                 </Text>
-                <Text className="text-[14px] text-text-500 dark:text-dark-text-600" numberOfLines={1}>
+                <Text className="text-[14px] text-text-600 dark:text-dark-text-600" numberOfLines={1}>
                     {formattedAddress}
                 </Text>
             </View>

@@ -112,7 +112,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
               <Text className="text-sm font-bold text-text dark:text-dark-text leading-[18px]" numberOfLines={1}>
                 {item.placeName || item.def.label}
               </Text>
-              <Text className="text-xs text-text-600 dark:text-dark-text-600 font-medium leading-[14px]">
+              <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium leading-[14px]">
                 {formatDist(item.distanceM!)} • {formatWalkTime(item.distanceM! / 1000, walkingSpeed)}
               </Text>
             </View>

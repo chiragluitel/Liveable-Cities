@@ -53,7 +53,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                         <Download size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} />
                     )}
                 </View>
-                <Text className="text-xs text-text-600 dark:text-dark-text-700 font-medium mb-2">
+                <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
                     {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
 

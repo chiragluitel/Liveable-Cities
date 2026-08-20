@@ -17,7 +17,7 @@ export default function WeatherDisplay({
 }: Props) {
 
   return(
-    <View className="bg-primary-400 dark:bg-primary-800 rounded-xl px-5 py-2 mb-8 mt-4 flex-row items-center justify-between w-[90%]">
+    <View className="bg-primary-500 dark:bg-primary-800 rounded-xl px-5 py-2 mb-8 mt-4 flex-row items-center justify-between w-[90%]">
 
       <View>
         <Text className="text-dark-text dark:text-dark-text text-xl font-semibold">

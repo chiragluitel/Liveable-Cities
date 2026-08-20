@@ -29,7 +29,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
           {amenity.name}
         </Text>
         <Text className="text-[17px]">
-          <Text className="text-accent dark:text-dark-accent-700">
+          <Text className="text-accent-600 dark:text-dark-accent-700">
             {distanceText} • {timeText} walk
           </Text>
         </Text>
