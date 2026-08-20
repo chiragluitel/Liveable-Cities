@@ -16,7 +16,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
         {walk.subtitle}
       </Text>
 
-      <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
+      <Text className="text-xs text-text-600 dark:text-dark-text-600 font-medium mb-2">
         {walk.distanceKm} km • {walk.durationMin} min
       </Text>
       
@@ -27,7 +27,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
             key={tag} 
             className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1"
           >
-            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-700 uppercase">
               {tag}
             </Text>
           </View>

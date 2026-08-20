@@ -138,8 +138,8 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                     style={{ backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
                     onPress={() => setDeleteModalVisible(true)}
                 >
-                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[500] : colours.dark.warning[600]} />
-                    <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
+                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[500] : colours.dark.warning[700]} />
+                    <Text className="text-warning-500 dark:text-dark-warning-700 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
                 </TouchableOpacity>
             </View>
 

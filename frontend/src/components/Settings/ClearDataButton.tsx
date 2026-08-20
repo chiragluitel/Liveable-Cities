@@ -68,7 +68,7 @@ export default function ClearDataButton() {
         underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
         <View className="bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
-          <Text style={{fontSize: 17}} className="text-warning-400 dark:text-warning-500">Clear All Data</Text>
+          <Text style={{fontSize: 17}} className="text-warning-400 dark:text-dark-warning-600">Clear All Data</Text>
         </View>
       </TouchableHighlight>
     </View>
