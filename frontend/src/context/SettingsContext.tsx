@@ -73,10 +73,17 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [isWeekStartLoading, isWeeklyWalksLoading, weekStart]);
 
   const [walksUpdateVisible, setWalksUpdateVisible] = useState(false);
+  const [walkNotifType, setWalkNotifType] = useState("default");
 
   function addToWeeklyWalks() {
+    if (Number(weeklyWalks) + 1 == Number(walkGoal)) {
+      setWalkNotifType("goalMet");
+    } else {
+      setWalkNotifType("default");
+    }
     setWeeklyWalks(String(Number(weeklyWalks) + 1));
     setWalksUpdateVisible(true);
+    console.log(walkNotifType)
   }
 
   return (
@@ -94,7 +101,7 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
       {children}
 
       { walksUpdateVisible && 
-        <WeeklyWalksNotif notifType='' currentValue={weeklyWalks} goalValue={walkGoal} onFinish={() => {setWalksUpdateVisible(false)}} />
+        <WeeklyWalksNotif notifType={walkNotifType} currentValue={weeklyWalks} goalValue={walkGoal} onFinish={() => {setWalksUpdateVisible(false)}} />
       }
     </SettingsContext.Provider>
   );
