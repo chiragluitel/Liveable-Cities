@@ -38,11 +38,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
 
-    const { reducedMotion, weeklyWalks, setWeeklyWalks } = useSettings();
-
-    function addToWeekly() {
-        setWeeklyWalks(String(Number(weeklyWalks) + 1));
-    }
+    const { reducedMotion, addToWeeklyWalks } = useSettings();
 
     return (
         <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
@@ -119,7 +115,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
             <View className="flex-1 mb-5">
                 <TouchableOpacity
                     className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-                    onPress={() => addToWeekly()}
+                    onPress={() => addToWeeklyWalks()}
                 >
                     <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                     <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>

@@ -25,11 +25,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
   const { colorScheme } = useColorScheme();
   const isLight = colorScheme === 'light';
 
-  const { weeklyWalks, setWeeklyWalks } = useSettings();
-
-  function addToWeekly() {
-      setWeeklyWalks(String(Number(weeklyWalks) + 1));
-  }
+  const { addToWeeklyWalks } = useSettings();
 
   return (
     <BottomSheetScrollView
@@ -47,7 +43,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
         </Text>
         <TouchableOpacity
           className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] mt-3 justify-center items-center mr-[10px]"
-          onPress={() => addToWeekly()}
+          onPress={() => addToWeeklyWalks()}
         >
           <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
           <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
