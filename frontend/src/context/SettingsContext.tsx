@@ -83,7 +83,6 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     }
     setWeeklyWalks(String(Number(weeklyWalks) + 1));
     setWalksUpdateVisible(true);
-    console.log(walkNotifType)
   }
 
   return (
