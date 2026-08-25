@@ -10,6 +10,8 @@ import { MapRoute } from "@/src/components/Map/config/mapRouting";
 import { useSettings, SPEED_KMH } from "@/src/context/SettingsContext";
 import { NearbyPressItem } from "@/src/components/WalkPlanner/Nearby/NearbySection";
 import LocationPermissionBanner from "@/src/components/Map/components/LocationPermissionBanner";
+import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "nativewind";
 
 
 const WalkPlannerHomePage = () => {
@@ -20,6 +22,8 @@ const WalkPlannerHomePage = () => {
 	const insets = useSafeAreaInsets();
 	const sheetPosition = useSharedValue(Dimensions.get('window').height);
 	const { walkingSpeed } = useSettings();
+
+	const { colorScheme } = useColorScheme();
 
 	const handleMapInteraction = () => {
 		bottomSheetRef.current?.collapseToSearch();
@@ -75,6 +79,7 @@ const WalkPlannerHomePage = () => {
 			<LocationPermissionBanner />
 
 			<WalkPlannerBottomSheet ref={bottomSheetRef} searchState={searchState} animatedPosition={sheetPosition} onWalkSelect={handleWalkSelect} onNearbySelect={handleNearbySelect} />
+			<StatusBar style="auto" />
 		</View>
 	);
 }
