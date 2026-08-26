@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import useAsyncStorage from '@Hooks/useAsyncStorage';
+import { View } from 'lucide-react-native';
+import WeeklyWalksNotif from '../components/WeeklyWalksNotif';
 
 export type WalkingSpeed = 'Slow' | 'Average' | 'Fast';
 
@@ -26,6 +28,7 @@ interface SettingsContextValue {
   setWalkGoal: (value: string) => void;
   weeklyWalks: string;
   setWeeklyWalks: (value: string) => void;
+  addToWeeklyWalks: () => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue>({
@@ -36,7 +39,8 @@ const SettingsContext = createContext<SettingsContextValue>({
   walkGoal: "5",
   setWalkGoal: () => {},
   weeklyWalks: "0",
-  setWeeklyWalks: () => {}
+  setWeeklyWalks: () => {},
+  addToWeeklyWalks: () => {}
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -68,6 +72,19 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }, [isWeekStartLoading, isWeeklyWalksLoading, weekStart]);
 
+  const [walksUpdateVisible, setWalksUpdateVisible] = useState(false);
+  const [walkNotifType, setWalkNotifType] = useState("default");
+
+  function addToWeeklyWalks() {
+    if (Number(weeklyWalks) + 1 == Number(walkGoal)) {
+      setWalkNotifType("goalMet");
+    } else {
+      setWalkNotifType("default");
+    }
+    setWeeklyWalks(String(Number(weeklyWalks) + 1));
+    setWalksUpdateVisible(true);
+  }
+
   return (
     <SettingsContext.Provider value={{ 
         walkingSpeed: walkingSpeed as WalkingSpeed, 
@@ -77,9 +94,14 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
         walkGoal, 
         setWalkGoal, 
         weeklyWalks,
-        setWeeklyWalks
+        setWeeklyWalks,
+        addToWeeklyWalks
       }}>
       {children}
+
+      { walksUpdateVisible && 
+        <WeeklyWalksNotif notifType={walkNotifType} currentValue={weeklyWalks} goalValue={walkGoal} onFinish={() => {setWalksUpdateVisible(false)}} />
+      }
     </SettingsContext.Provider>
   );
 };

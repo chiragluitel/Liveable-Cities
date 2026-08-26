@@ -28,7 +28,7 @@ export default function ConfirmBox({title, message, confirmFunc}: ConfirmBoxProp
     >
       <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-text-200 dark:border-b-dark-text-400">
         <Text className="font-bold text-[17px] text-text dark:text-dark-text">{title}</Text>
-        <Text className="text-[13px] text-text dark:text-dark-text">{message}</Text>
+        <Text className="text-[13px] text-text dark:text-dark-text text-center">{message}</Text>
       </View>
       <View className="items-center w-full h-[40%]">
         <TouchableHighlight

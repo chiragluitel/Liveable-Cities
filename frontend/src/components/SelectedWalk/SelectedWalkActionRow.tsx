@@ -18,7 +18,7 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  const { reducedMotion } = useSettings();
+  const { reducedMotion, addToWeeklyWalks } = useSettings();
 
   if (onEdit && onDelete) {
     return (
@@ -82,6 +82,13 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
             {alreadyDownloaded ? 'Downloaded' : 'Add to My Walks'}
           </Text>
         </Pressable>
+        <TouchableOpacity
+          className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+          onPress={() => addToWeeklyWalks()}
+        >
+          <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -96,13 +103,13 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
         <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">Download</Text>
       </Pressable>
 
-      <Pressable
-        className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-        onPress={() => console.log('More pressed')}
-      >
-        <Ionicons name="ellipsis-horizontal" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-        <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">More</Text>
-      </Pressable>
+      <TouchableOpacity
+          className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+          onPress={() => addToWeeklyWalks()}
+        >
+          <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+        </TouchableOpacity>
     </View>
   );
 }
