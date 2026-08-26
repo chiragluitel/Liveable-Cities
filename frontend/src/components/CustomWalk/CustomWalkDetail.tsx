@@ -37,6 +37,8 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const timeText = formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
+    // 2 buttons split the row 50/50; 3 sit at a third each (a 4th would wrap below)
+    const buttonWidth = walk.fromCommunity ? '48%' : '31%';
 
     const { reducedMotion, addToWeeklyWalks } = useSettings();
 
@@ -51,6 +53,14 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                         {walk.distance} km, {timeText}
                     </Text>
                 </Text>
+                {walk.fromCommunity && (
+                    <View className="flex-row items-center self-start bg-primary-100 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1 mb-3">
+                        <Ionicons name="people-outline" size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                        <Text className="text-[11px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+                            From Community Hub
+                        </Text>
+                    </View>
+                )}
                 {activeTags.length > 0 && (
                     <View className="flex-row flex-wrap gap-1.5 mb-[22px]">
                         {activeTags.map(({ key, label, Icon }) => (
@@ -112,34 +122,36 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </TouchableOpacity>
             </Modal>
 
-            <View className="flex-1 mb-5">
+            {/* Up to 3 buttons per row, any 4th wraps onto the next row */}
+            <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
                 <TouchableOpacity
-                    className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+                    className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+                    style={{ width: buttonWidth }}
                     onPress={() => addToWeeklyWalks()}
                 >
                     <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                     <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
                 </TouchableOpacity>
 
-                <View className="flex-row mt-3">
+                {!walk.fromCommunity && (
                     <TouchableOpacity
-                        className="flex-1 bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+                        className="bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+                        style={{ width: buttonWidth }}
                         onPress={() => onEdit(walk.id)}
                     >
                         <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                         <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2 text-wrap text-center px-1">Edit Walk</Text>
                     </TouchableOpacity>
+                )}
 
-                    <TouchableOpacity
-                        className="flex-1 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-                        style={{ backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
-                        onPress={() => setDeleteModalVisible(true)}
-                    >
-                        <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[600] : colours.dark.warning[700]} />
-                        <Text className="text-warning-600 dark:text-dark-warning-700 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
-                    </TouchableOpacity>
-                </View>
-
+                <TouchableOpacity
+                    className="rounded-[18px] py-[18px] justify-center items-center"
+                    style={{ width: buttonWidth, backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
+                    onPress={() => setDeleteModalVisible(true)}
+                >
+                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[600] : colours.dark.warning[700]} />
+                    <Text className="text-warning-600 dark:text-dark-warning-700 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
+                </TouchableOpacity>
             </View>
 
             {!walk.fromCommunity && (

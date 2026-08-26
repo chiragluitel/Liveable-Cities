@@ -26,13 +26,13 @@ export default function ZoomControls({ onZoomIn, onZoomOut, animatedSheetPositio
   const zoomInStyle = useAnimatedStyle(() => {
     const base = 184;
     if (animatedSheetPosition == null) return { bottom: base };
-    return { bottom: Math.max(base, height - animatedSheetPosition.value + 68) };
+    return { bottom: Math.max(base, height - animatedSheetPosition.value + 58) };
   });
 
   const zoomOutStyle = useAnimatedStyle(() => {
     const base = 136;
     if (animatedSheetPosition == null) return { bottom: base };
-    return { bottom: Math.max(base, height - animatedSheetPosition.value + 16) };
+    return { bottom: Math.max(base, height - animatedSheetPosition.value + 6) };
   });
 
   return (

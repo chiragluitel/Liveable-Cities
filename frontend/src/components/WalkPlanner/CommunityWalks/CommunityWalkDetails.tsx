@@ -7,24 +7,22 @@ interface CommunityWalkDetailsProps {
 }
 
 export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
+  const shownTags = walk.tags.slice(0, 2);
+  const extraCount = walk.tags.length - shownTags.length;
+
   return (
     <View className="flex-1 ml-3">
       <Text className="text-base font-bold text-text dark:text-dark-text" numberOfLines={1}>
         {walk.title}
       </Text>
-      <Text className="text-sm text-text-700 dark:text-dark-text-600 mb-1" numberOfLines={1}>
-        {walk.subtitle}
-      </Text>
-
       <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium mb-2">
         {walk.distanceKm} km • {walk.durationMin} min
       </Text>
-      
-        {/* Tag Section  */}
+
       <View className="flex-row flex-wrap gap-1.5">
-        {walk.tags.map((tag) => (
-          <View 
-            key={tag} 
+        {shownTags.map((tag) => (
+          <View
+            key={tag}
             className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1"
           >
             <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-700 uppercase">
@@ -32,6 +30,13 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
             </Text>
           </View>
         ))}
+        {extraCount > 0 && (
+          <View className="bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1">
+            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-700 uppercase">
+              +{extraCount} more
+            </Text>
+          </View>
+        )}
       </View>
 
         {/* Downloads Section */}

@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, useWindowDimensions } from 'react-native';
-import { Flame, BookOpen, Armchair, PersonStanding, Droplet } from 'lucide-react-native';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { HorizontalCarousel } from '@Components/Shared/HorizontalCarousel';
-import { MAP_ICONS, ICON_DEFINITIONS, IconName, IconDefinition, MapIconEntry } from '@/src/components/Map/config/mapIcons';
+import { MAP_ICONS, ICON_DEFINITIONS, FA6_ICON_NAMES, IconName, IconDefinition, MapIconEntry } from '@/src/components/Map/config/mapIcons';
 import { getLocation, UserLocation } from '@/src/components/Map/config/useMapLocation';
 import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
 import { fetchAllAmenityIcons } from '@/src/api/amenities';
 import { useMapFilter } from '@/src/context/MapFilterContext';
 
-// Same colour used for each type's pin on the map and its row in the Filter
-// panel, so a Nearby card is visually tied to both.
+// Same colour and icon as the map pin and Filter row for this type.
 const ICON_COMPONENT: Record<IconName, React.ReactElement> = {
-  bbq:      <Flame          size={20} color="#fff" />,
-  library:  <BookOpen       size={20} color="#fff" />,
-  bench:    <Armchair       size={20} color="#fff" />,
-  toilet:   <PersonStanding size={20} color="#fff" />,
-  fountain: <Droplet        size={20} color="#fff" />,
+  bbq:      <FontAwesome6 name={FA6_ICON_NAMES.bbq} size={20} color="#fff" />,
+  library:  <FontAwesome6 name={FA6_ICON_NAMES.library} size={20} color="#fff" />,
+  bench:    <FontAwesome6 name={FA6_ICON_NAMES.bench} size={20} color="#fff" />,
+  toilet:   <FontAwesome6 name={FA6_ICON_NAMES.toilet} size={20} color="#fff" />,
+  fountain: <FontAwesome6 name={FA6_ICON_NAMES.fountain} size={20} color="#fff" />,
 };
 
 export interface NearbyPressItem {
@@ -48,10 +47,7 @@ function formatDist(m: number): string {
 
 export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
-  // Real amenity locations from the backend (all benches/toilets/libraries/
-  // bbqs in Casey), not just the 4-point MAP_ICONS demo set — needed for
-  // "closest 9" to mean something. Falls back to MAP_ICONS if the backend
-  // can't be reached so the section still shows something.
+  // Real amenity locations from the backend, falls back to MAP_ICONS if unreachable.
   const [amenities, setAmenities] = useState<MapIconEntry[]>(MAP_ICONS);
   const { walkingSpeed } = useSettings();
   const { visibleIcons } = useMapFilter();
@@ -66,11 +62,10 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   }, []);
 
   const CARD_WIDTH = windowWidth * 0.85;
+  const STACKED_CARD_WIDTH = windowWidth - 32;
   const SNAP_INTERVAL = CARD_WIDTH + 16;
 
-  // Only rank once we know where the user is — otherwise "closest" is
-  // meaningless, so show nothing rather than an arbitrary/unsorted list.
-  // Types the user has hidden in the Filter panel are excluded entirely.
+  // Only rank once we know where the user is, and hide types the Filter panel has hidden.
   const items: NearbyPressItem[] = userLocation
     ? amenities
         .filter(icon => visibleIcons[icon.name])
@@ -83,6 +78,30 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
         .slice(0, 9)
     : [];
 
+  const renderCard = (item: NearbyPressItem, width: number) => (
+    <Pressable
+      key={`${item.name}-${item.lat}-${item.lng}`}
+      onPress={() => onNearbyPress?.(item)}
+      style={{ width }}
+      className="flex-row items-center bg-background-100 dark:bg-dark-background-200 rounded-2xl px-3.5 py-3.5 border border-text-100 dark:border-dark-text-50 active:opacity-80"
+    >
+      <View
+        className="w-11 h-11 rounded-full items-center justify-center mr-3.5 shadow-sm shrink-0"
+        style={{ backgroundColor: item.def.color }}
+      >
+        {ICON_COMPONENT[item.name]}
+      </View>
+      <View className="flex-1 gap-1">
+        <Text className="text-sm font-bold text-text dark:text-dark-text leading-[18px]" numberOfLines={1}>
+          {item.placeName || item.def.label}
+        </Text>
+        <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium leading-[14px]">
+          {formatDist(item.distanceM!)} • {formatWalkTime(item.distanceM! / 1000, walkingSpeed)}
+        </Text>
+      </View>
+    </Pressable>
+  );
+
   return (
     <View className="mt-6 mb-4">
       <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">Nearby</Text>
@@ -90,35 +109,19 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
         <Text className="text-sm text-text-600 dark:text-dark-text-600 px-4">
           There isn't anything nearby.
         </Text>
+      ) : items.length <= 3 ? (
+        // Few enough to fit without scrolling, so stack full-width instead of a carousel.
+        <View className="px-4 gap-3">
+          {items.map(item => renderCard(item, STACKED_CARD_WIDTH))}
+        </View>
       ) : (
-      <HorizontalCarousel<NearbyPressItem>
-        data={items}
-        keyExtractor={(item) => `${item.name}-${item.lat}-${item.lng}`}
-        snapToInterval={SNAP_INTERVAL}
-        rows={3}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => onNearbyPress?.(item)}
-            style={{ width: CARD_WIDTH }}
-            className="flex-row items-center bg-background-100 dark:bg-dark-background-200 rounded-2xl px-3.5 py-3.5 border border-text-100 dark:border-dark-text-50 active:opacity-80"
-          >
-            <View
-              className="w-11 h-11 rounded-full items-center justify-center mr-3.5 shadow-sm shrink-0"
-              style={{ backgroundColor: item.def.color }}
-            >
-              {ICON_COMPONENT[item.name]}
-            </View>
-            <View className="flex-1 gap-1">
-              <Text className="text-sm font-bold text-text dark:text-dark-text leading-[18px]" numberOfLines={1}>
-                {item.placeName || item.def.label}
-              </Text>
-              <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium leading-[14px]">
-                {formatDist(item.distanceM!)} • {formatWalkTime(item.distanceM! / 1000, walkingSpeed)}
-              </Text>
-            </View>
-          </Pressable>
-        )}
-      />
+        <HorizontalCarousel<NearbyPressItem>
+          data={items}
+          keyExtractor={(item) => `${item.name}-${item.lat}-${item.lng}`}
+          snapToInterval={SNAP_INTERVAL}
+          rows={3}
+          renderItem={({ item }) => renderCard(item, CARD_WIDTH)}
+        />
       )}
     </View>
   );

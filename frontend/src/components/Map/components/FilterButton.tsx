@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
 import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Flame, BookOpen, Armchair, PersonStanding, Droplets } from 'lucide-react-native';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useColorScheme } from 'nativewind';
-import { ICON_DEFINITIONS, IconName } from '../config/mapIcons';
+import { ICON_DEFINITIONS, FA6_ICON_NAMES, IconName } from '../config/mapIcons';
 import { colours } from '@Theme/colours';
 import SlideToggle from '@Components/SlideToggle';
 import { useMapFilter } from '@/src/context/MapFilterContext';
 
-type LucideIconProps = { size?: number; color?: string };
-
-const FILTER_ICON_COMPONENTS: Record<IconName, React.ReactElement<LucideIconProps>> = {
-  bbq:     <Flame          size={15} color="#fff" />,
-  library: <BookOpen       size={15} color="#fff" />,
-  bench:   <Armchair       size={15} color="#fff" />,
-  toilet:  <PersonStanding size={15} color="#fff" />,
-  fountain: <Droplets      size={15} color="#fff" />,
-};
-
+// Same icon set as the map's own pins.
 function FilterIcon({ name }: { name: IconName }) {
   const { color } = ICON_DEFINITIONS[name];
   return (
     <View className="w-7 h-7 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
-      {FILTER_ICON_COMPONENTS[name]}
+      <FontAwesome6 name={FA6_ICON_NAMES[name]} size={15} color="#fff" />
     </View>
   );
 }
