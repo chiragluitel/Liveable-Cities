@@ -32,8 +32,4 @@ export type MapIconEntry = {
 };
 
 export const MAP_ICONS: MapIconEntry[] = [
-  { name: 'bbq',     lat: -37.9996380059574,   lng: 145.29520401125885  },
-  { name: 'toilet',  lat: -38.21703954555179,   lng: 145.38577168307344  },
-  { name: 'library', lat: -38.0336901148,        lng: 145.264508635       },
-  { name: 'bench',   lat: -38.02465972598545,   lng: 145.24963257794886  },
 ];
