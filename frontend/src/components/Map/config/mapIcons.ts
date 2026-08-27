@@ -14,6 +14,15 @@ export const ICON_DEFINITIONS: Record<IconName, IconDefinition> = {
   fountain: { iconClass: 'fa-solid fa-faucet-drip', color: '#06b6d4', label: 'Water Fountain' },
 };
 
+// Same glyph names as iconClass above, so other components match the map's icons.
+export const FA6_ICON_NAMES: Record<IconName, string> = {
+  bbq: 'fire',
+  library: 'book-open',
+  bench: 'chair',
+  toilet: 'restroom',
+  fountain: 'faucet-drip',
+};
+
 export type MapIconEntry = {
   name: IconName;
   lat: number;
@@ -23,8 +32,4 @@ export type MapIconEntry = {
 };
 
 export const MAP_ICONS: MapIconEntry[] = [
-  { name: 'bbq',     lat: -37.9996380059574,   lng: 145.29520401125885  },
-  { name: 'toilet',  lat: -38.21703954555179,   lng: 145.38577168307344  },
-  { name: 'library', lat: -38.0336901148,        lng: 145.264508635       },
-  { name: 'bench',   lat: -38.02465972598545,   lng: 145.24963257794886  },
 ];

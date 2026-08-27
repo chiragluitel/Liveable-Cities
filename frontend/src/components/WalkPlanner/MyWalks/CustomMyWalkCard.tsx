@@ -45,17 +45,20 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
             </View>
 
             <View className="flex-1 ml-3">
-                <View className="flex-row items-center gap-1 mb-1">
-                    <Text className="text-base font-bold text-text dark:text-dark-text" numberOfLines={1}>
-                        {walk.cuswalkname || 'Custom Walk'}
-                    </Text>
-                    {walk.fromCommunity && (
-                        <Download size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} />
-                    )}
-                </View>
+                <Text className="text-base font-bold text-text dark:text-dark-text mb-1" numberOfLines={1}>
+                    {walk.cuswalkname || 'Custom Walk'}
+                </Text>
                 <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
                     {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
+                {walk.fromCommunity && (
+                    <View className="flex-row items-center self-start bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1 mb-2">
+                        <Download size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                        <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+                            From Community Hub
+                        </Text>
+                    </View>
+                )}
 
                 <View className="flex-row flex-wrap gap-1.5">
                     {shownTags.map(({ key, label, Icon }) => (

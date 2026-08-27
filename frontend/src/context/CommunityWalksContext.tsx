@@ -8,7 +8,7 @@ const CommunityWalksContext = createContext<any>(null);
 export const useCommunityWalks = () => useContext(CommunityWalksContext);
 
 export const CommunityWalksProvider = ({ children }: { children: React.ReactNode }) => {
-  // in-memory only — seeded from mock data, resets on app restart
+  // in-memory only, seeded from mock data, resets on app restart
   const [communityWalks, setCommunityWalks] = useState<Walk[]>(COMMUNITY_WALKS);
   // tracks which community walks have already been downloaded this session
   const [downloadedWalkIds, setDownloadedWalkIds] = useState<Set<string>>(new Set());
@@ -40,6 +40,8 @@ export const CommunityWalksProvider = ({ children }: { children: React.ReactNode
     };
 
     setCommunityWalks((current) => [shared, ...current]);
+    // It's already yours, so don't let it be "downloaded" again from the hub.
+    setDownloadedWalkIds((current) => new Set(current).add(shared.id));
     return shared;
   };
 
