@@ -36,6 +36,31 @@ interface WalkPlannerSheetProps {
     onNearbySelect?: (item: NearbyPressItem) => void;
 }
 
+function getCustomWalkMapRoute(walk: any): MapRoute | null {
+    const coordinates = walk?.routeGeoJson?.features?.[0]?.geometry?.coordinates;
+
+    if (!Array.isArray(coordinates)) {
+        return null;
+    }
+
+    const points = coordinates
+        .filter((coordinate: any) => Array.isArray(coordinate) && coordinate.length >= 2)
+        .map((coordinate: any) => ({
+            lng: Number(coordinate[0]),
+            lat: Number(coordinate[1]),
+        }))
+        .filter((point: any) => Number.isFinite(point.lat) && Number.isFinite(point.lng));
+
+    if (points.length < 2) {
+        return null;
+    }
+
+    return {
+        id: `custom-walk-${walk.id}`,
+        points,
+    };
+}
+
 export interface WalkPlannerSheetRef {
     collapseToSearch: () => void;
     showNavWalk: (label: string) => void;
@@ -123,11 +148,13 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [walks]);
 
-    const handleCustomWalkCardPress = useCallback((walk: any) => {
+        const handleCustomWalkCardPress = useCallback((walk: any) => {
         setSelection({ kind: 'customWalk', data: walk });
         snapToPartial();
-        // Downloaded community walks keep their routeId, so their route draws too.
-        const route = walk?.routeId ? MAP_ROUTES.find(r => r.id === walk.routeId) ?? null : null;
+
+        const route = getCustomWalkMapRoute(walk)
+            ?? (walk?.routeId ? MAP_ROUTES.find(r => r.id === walk.routeId) ?? null : null);
+
         onWalkSelect?.(route);
     }, [snapToPartial, onWalkSelect]);
 
@@ -136,6 +163,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         snapToPartial();
         onWalkSelect?.(null);
     }, [snapToPartial, onWalkSelect]);
+
+
 
     const handleEditWalk = useCallback((walkId: string) => {
         router.push(`/custom-walk?id=${walkId}` as any);
@@ -147,7 +176,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         deleteWalk(walkId);
         setSelection(null);
         snapToPartial();
-    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial]);
+        onWalkSelect?.(null);
+    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial, onWalkSelect]);
 
     const handleNearbyPress = useCallback((item: NearbyPressItem) => {
         setSelection({
