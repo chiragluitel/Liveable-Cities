@@ -1,6 +1,7 @@
 import { IconName } from './mapIcons';
 
-// Default centre and zoom for City of Casey Council building. Not used once user shares location.
+// Default centre and zoom for City of Casey Council building.
+// Once the user shares their location, their real location should be used instead.
 export const CASEY_COORDINATES = {
   latitude: -38.0267,
   longitude: 145.2940,

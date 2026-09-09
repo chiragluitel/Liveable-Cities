@@ -5,7 +5,12 @@ export type MapRoutePoint = {
 
 export type MapRoute = {
   id: string;
-  points: MapRoutePoint[];
+  title?: string;
+  points?: MapRoutePoint[];
+
+  // New custom walk fields.
+  targetDistanceKm?: number;
+  selectedFilters?: string[];
 };
 
 export const MAP_ROUTES: MapRoute[] = [

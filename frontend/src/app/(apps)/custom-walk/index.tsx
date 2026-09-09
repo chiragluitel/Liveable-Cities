@@ -38,6 +38,7 @@ export default function WalkPlannerScreen() {
   const [hasWellLitStreets, setHasWellLitStreets] = useState(false);
   const [hasRubbishBin, setHasRubbishBin] = useState(false);
   const [hasOffLeash, setHasOffLeash] = useState(false);
+  const [hasBbq, setHasBbq] = useState(false);
 
   const [confirmVisible, setConfirmVisible] = useState(false);
   const { reducedMotion } = useSettings();
@@ -56,6 +57,7 @@ export default function WalkPlannerScreen() {
         setHasWellLitStreets(Boolean(existingWalk.hasWellLitStreets));
         setHasRubbishBin(Boolean(existingWalk.hasRubbishBin ?? existingWalk.hasRubbishbin));
         setHasOffLeash(Boolean(existingWalk.hasOffLeash));
+        setHasBbq(Boolean(existingWalk.hasBbq));
       }
     }
   }, [params.id, walks]);
@@ -76,6 +78,7 @@ export default function WalkPlannerScreen() {
       hasRubbishBin ? 'Rubbish Bins' : null,
       hasOffLeash ? 'Off Leash Zones' : null,
       hasWellLitStreets ? 'Well Lit Streets' : null,
+      hasBbq ? 'bbq' : null,
     ].filter((filter): filter is string => Boolean(filter));
 
     try {
@@ -119,6 +122,7 @@ export default function WalkPlannerScreen() {
         hasWellLitStreets,
         hasRubbishBin,
         hasOffLeash,
+        hasBbq,
         selectedFilters,
         routeDistanceMeters: routeResult.distanceMeters,
         routeDurationSeconds: routeResult.durationSeconds,
@@ -215,6 +219,11 @@ export default function WalkPlannerScreen() {
           label="Well Lit Streets"
           value={hasWellLitStreets}
           onChange={setHasWellLitStreets}
+        />
+        <FilterSwitch
+          label="BBQ Locations"
+          value={hasBbq}
+          onChange={setHasBbq}
         />
 
         <SaveButton title="Save Custom Walk" onPress={handleSave} />

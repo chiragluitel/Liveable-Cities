@@ -11,6 +11,7 @@ import { useMapFilter } from '@/src/context/MapFilterContext';
 // Same icon set as the map's own pins.
 function FilterIcon({ name }: { name: IconName }) {
   const { color } = ICON_DEFINITIONS[name];
+
   return (
     <View className="w-7 h-7 rounded-full items-center justify-center" style={{ backgroundColor: color }}>
       <FontAwesome6 name={FA6_ICON_NAMES[name]} size={15} color="#fff" />
