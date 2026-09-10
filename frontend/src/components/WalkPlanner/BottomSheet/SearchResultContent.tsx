@@ -1,63 +1,76 @@
-import { useMemo } from "react";
-import { View, Text } from "react-native";
+import { ActivityIndicator, View, Text } from "react-native";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { PLACES } from "@/src/database/mockData";
 import { Places } from "@/src/types/walkPlannerTypes";
+import { SearchLogicReturnObject } from "@/src/hooks/useSearchLogic";
 import { PlaceResultCard } from "../PlaceResultCard";
 
 interface SearchResultsContentProps {
-    query: string;
+    searchState: SearchLogicReturnObject;
     onInteract: () => void;
 }
 
-export const SearchResultsContent = ({ query, onInteract }: SearchResultsContentProps) => {
-    
-    const filteredPlaces = useMemo(() => {
-        if (!query.trim()) return []; 
-        
-        const lowerQuery = query.toLowerCase();
-        
-        return PLACES.filter(p => 
-            p.title.toLowerCase().includes(lowerQuery) ||
-            p.streetAddress.toLowerCase().includes(lowerQuery) ||
-            p.suburb.toLowerCase().includes(lowerQuery)
+export const SearchResultsContent = ({ searchState, onInteract }: SearchResultsContentProps) => {
+    const { query, results, isLoading, error } = searchState;
+
+    const renderEmptyState = () => {
+        if (isLoading) {
+            return (
+                <View className="flex-1 items-center justify-center pt-10">
+                    <ActivityIndicator />
+                </View>
+            );
+        }
+
+        if (error) {
+            return (
+                <View className="flex-1 items-center justify-center pt-10">
+                    <Text className="text-text-600 dark:text-dark-text-600 text-[16px] font-medium">
+                        {error}
+                    </Text>
+                    <Text className="text-text-500 dark:text-dark-text-500 text-[14px] mt-2">
+                        Check your connection and try again.
+                    </Text>
+                </View>
+            );
+        }
+
+        if (!query.trim()) return null;
+
+        return (
+            <View className="flex-1 items-center justify-center pt-10">
+                <Text className="text-text-600 dark:text-dark-text-600 text-[16px] font-medium">
+                    No results found for "{query}"
+                </Text>
+                <Text className="text-text-500 dark:text-dark-text-500 text-[14px] mt-2">
+                    Check the spelling or try a different suburb.
+                </Text>
+            </View>
         );
-    }, [query]);
+    };
 
     return (
         <BottomSheetFlatList<Places>
-            data={filteredPlaces}
+            data={results}
             keyExtractor={(item) => item.id}
             keyboardDismissMode="on-drag"
             keyboardShouldPersistTaps="handled"
             onScrollBeginDrag={onInteract}
-            contentContainerStyle={{ 
-                flexGrow: 1, 
-                paddingBottom: 40, 
-                paddingTop: 8 
+            contentContainerStyle={{
+                flexGrow: 1,
+                paddingBottom: 40,
+                paddingTop: 8
             }}
             renderItem={({ item, index }) => (
                 <PlaceResultCard
-                    place={item} 
-                    isLast={index === filteredPlaces.length - 1}
+                    place={item}
+                    isLast={index === results.length - 1}
                     onPress={(place) => {
                         console.log('Navigating to:', place.title);
                         onInteract();
                     }}
                 />
             )}
-            ListEmptyComponent={() => (
-                query.trim().length > 0 ? (
-                    <View className="flex-1 items-center justify-center pt-10">
-                        <Text className="text-text-600 dark:text-dark-text-600 text-[16px] font-medium">
-                            No results found for "{query}"
-                        </Text>
-                        <Text className="text-text-500 dark:text-dark-text-500 text-[14px] mt-2">
-                            Check the spelling or try a different suburb.
-                        </Text>
-                    </View>
-                ) : null
-            )}
+            ListEmptyComponent={renderEmptyState}
         />
     );
 };
