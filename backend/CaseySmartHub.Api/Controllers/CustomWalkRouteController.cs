@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc; /*Imports ASP.NET Core controller base classes, 
 namespace CaseySmartHub.Api.Controllers; // this declares the file scopeed namespace containing this api controller
 
 [ApiController] // enables automatic model validation, automatic http 400 on bad inputs, inference of binding sources 
-[Route("api/custom-walk-route")]//defines the endpoint url base
+[Route("api/custom-walk-route-experimental")]//defines the endpoint url base
 public class CustomWalkRouteController : ControllerBase //inherits from controllerbase, provider helper methods like ok() and badrequest()
 {
     private readonly IHttpClientFactory _httpClientFactory;//.net factory
