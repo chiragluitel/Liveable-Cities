@@ -15,6 +15,7 @@ const ICON_COMPONENT: Record<IconName, React.ReactElement> = {
   bench:    <FontAwesome6 name={FA6_ICON_NAMES.bench} size={20} color="#fff" />,
   toilet:   <FontAwesome6 name={FA6_ICON_NAMES.toilet} size={20} color="#fff" />,
   fountain: <FontAwesome6 name={FA6_ICON_NAMES.fountain} size={20} color="#fff" />,
+    offLeash: <FontAwesome6 name={FA6_ICON_NAMES.offLeash} size={20} color="#fff" />,
 };
 
 export interface NearbyPressItem {

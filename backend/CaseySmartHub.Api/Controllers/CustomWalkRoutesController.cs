@@ -2,6 +2,9 @@ using CaseySmartHub.Api.Models.Routing;
 using CaseySmartHub.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
+using RoutingCustomWalkRouteRequest = CaseySmartHub.Api.Models.Routing.CustomWalkRouteRequest;
+using RoutingCustomWalkRouteResponse = CaseySmartHub.Api.Models.Routing.CustomWalkRouteResponse;
+
 namespace CaseySmartHub.Api.Controllers;
 
 [ApiController]
@@ -19,12 +22,12 @@ public sealed class CustomWalkRoutesController : ControllerBase
     }
 
     [HttpPost("api/custom-walk-route")]
-    [ProducesResponseType(typeof(CustomWalkRouteResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(RoutingCustomWalkRouteResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status502BadGateway)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<CustomWalkRouteResponse>> GetCustomWalkRoute(
-        [FromBody] CustomWalkRouteRequest request,
+    public async Task<ActionResult<RoutingCustomWalkRouteResponse>> GetCustomWalkRoute(
+        [FromBody] RoutingCustomWalkRouteRequest request,
         CancellationToken cancellationToken)
     {
         try
