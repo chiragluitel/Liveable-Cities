@@ -17,6 +17,8 @@ public sealed class CaseyDbContext : DbContext
     public DbSet<Library> Libraries => Set<Library>();
     public DbSet<Bbq> Bbqs => Set<Bbq>();
 
+    public DbSet<User> Users {get; set;}
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresExtension("postgis");
