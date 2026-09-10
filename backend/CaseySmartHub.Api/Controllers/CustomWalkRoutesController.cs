@@ -21,7 +21,7 @@ public sealed class CustomWalkRoutesController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("api/custom-walk-route")]
+    [HttpPost("api/custom-walk-route-service")]
     [ProducesResponseType(typeof(RoutingCustomWalkRouteResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status502BadGateway)]
