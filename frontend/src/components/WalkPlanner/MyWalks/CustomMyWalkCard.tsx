@@ -49,8 +49,9 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                     {walk.cuswalkname || 'Custom Walk'}
                 </Text>
                 <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
-                    {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
+                    {walk.routeDistanceText || `${walk.distance} km`} • {walk.routeDurationText || formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
+                
                 {walk.fromCommunity && (
                     <View className="flex-row items-center self-start bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1 mb-2">
                         <Download size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} />

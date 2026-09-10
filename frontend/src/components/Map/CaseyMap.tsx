@@ -31,7 +31,6 @@ type CaseyMapProps = {
   animatedSheetPosition?: SharedValue<number>;
 };
 
-
 const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRouteTap, onIconTap, animatedSheetPosition }, ref) => {
   const webViewRef = useRef<WebView>(null);
   const isReady = useRef(false);
@@ -54,7 +53,14 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   }
 
   function sendRoute(route: MapRoute) {
-    send({ type: 'DRAW_ROUTE', id: route.id, points: route.points });
+    send({
+      type: 'DRAW_ROUTE',
+      id: route.id,
+      title: route.title,
+      points: route.points ?? [],
+      targetDistanceKm: route.targetDistanceKm,
+      selectedFilters: route.selectedFilters ?? [],
+    });
   }
 
   function sendIcon(entry: MapIconEntry) {
@@ -80,13 +86,21 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
         // Apply default visibility for any types hidden by default
         (Object.keys(ICON_DEFINITIONS) as IconName[]).forEach(iconType => {
           if (!DEFAULT_VISIBLE_ICONS.includes(iconType)) {
-            send({ type: 'SET_TYPE_VISIBILITY', iconType, visible: false });
+            send({
+              type: 'SET_TYPE_VISIBILITY',
+              iconType,
+              visible: false,
+            });
           }
         });
 
         // Start continuous location tracking
         watchLocation(loc => {
-          send({ type: 'SET_LOCATION', lat: loc.lat, lng: loc.lng });
+          send({
+            type: 'SET_LOCATION',
+            lat: loc.lat,
+            lng: loc.lng,
+          });
         }).then(sub => {
           locationSub.current = sub;
         });

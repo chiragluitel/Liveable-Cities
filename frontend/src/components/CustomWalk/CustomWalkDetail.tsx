@@ -6,7 +6,7 @@ import { Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb } from 'l
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
-import { useSettings, SPEED_KMH, formatWalkTime } from '@/src/context/SettingsContext';
+import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
 import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
 
 const FILTER_DEFS = [
@@ -34,7 +34,8 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const [shared, setShared] = useState(false);
     const { walkingSpeed } = useSettings();
     const { shareWalk } = useCommunityWalks();
-    const timeText = formatWalkTime(walk.distance, walkingSpeed);
+    const distanceText = walk.routeDistanceText || `${walk.distance} km`;
+    const timeText = walk.routeDurationText || formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
     // 2 buttons split the row 50/50; 3 sit at a third each (a 4th would wrap below)
@@ -47,11 +48,11 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
             <View className="mb-[6px]">
                 <Text className="text-[29px] leading-[35px] font-black text-text dark:text-dark-text mb-1">
                     {walk.cuswalkname || 'Custom Walk'}
-                </Text>
-                <Text className="text-[17px] mb-3">
+                    
                     <Text className="text-accent-600 dark:text-dark-accent-700">
-                        {walk.distance} km, {timeText}
+                        {distanceText}, {timeText}
                     </Text>
+
                 </Text>
                 {walk.fromCommunity && (
                     <View className="flex-row items-center self-start bg-primary-100 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1 mb-3">
