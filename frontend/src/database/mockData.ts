@@ -102,9 +102,8 @@ export const MY_WALKS: Walk[] = [
   },
 ];
 
-// Real Casey-area lake/wetland loops. Coordinates are approximated around
-// each lake's centre point (not surveyed footpaths) — see mapRouting.ts for
-// the matching routeId geometry drawn on the map.
+// Real Casey-area lake/wetland loops, coordinates approximated around each lake's centre point.
+// See mapRouting.ts for the matching routeId geometry drawn on the map.
 export const COMMUNITY_WALKS: Walk[] = [
   {
     id: 'cw1',

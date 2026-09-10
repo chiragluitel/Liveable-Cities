@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, View, Modal } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -11,6 +11,9 @@ import DistanceSlider from '@/src/components/CustomWalk/DistanceSlider';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColorScheme } from 'nativewind';
 import { colours } from '@/src/theme/colours';
+import { Filter } from 'bad-words';
+import { useSettings } from '@/src/context/SettingsContext';
+import ConfirmBox from '@/src/components/ConfirmBox';
 
 export default function WalkPlannerScreen() {
   const insets = useSafeAreaInsets();
@@ -28,6 +31,11 @@ export default function WalkPlannerScreen() {
   const [hasWellLitStreets, setHasWellLitStreets] = useState(false);
   const [hasRubbishBin, setHasRubbishBin] = useState(false);
   const [hasOffLeash, setHasOffLeash] = useState(false);
+
+  const [alertVisible, setAlertVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
+    
+    const { reducedMotion } = useSettings();
 
   useEffect(() => {
     if (params.id) {
@@ -47,6 +55,13 @@ export default function WalkPlannerScreen() {
   }, [params.id, walks]);
 
   const handleSave = () => {
+    const filter = new Filter();
+
+    if (filter.isProfane(cuswalkname)) {
+      setConfirmVisible(true);
+      return
+    }
+
     const walkData = {
       id: params.id,
       cuswalkname,
@@ -141,6 +156,25 @@ export default function WalkPlannerScreen() {
 
       </ScrollView>
 
+      {/*Confirm Message*/}
+      <Modal
+        animationType={reducedMotion ? "none" : "fade"}
+        backdropColor="#00000000"
+        visible={confirmVisible}
+        onRequestClose={() => setConfirmVisible(false)}
+      >
+        <TouchableOpacity 
+          className="flex-1 items-center justify-center"
+          activeOpacity={1}
+          onPressOut={() => setConfirmVisible(false)}
+        >
+          <ConfirmBox 
+            title="Inappropriate language" 
+            message="Please remove inappropriate language before submitting." 
+            confirmFunc={() => setConfirmVisible(false)}
+          />
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 }

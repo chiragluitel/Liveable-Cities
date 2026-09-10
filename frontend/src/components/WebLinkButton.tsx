@@ -28,7 +28,7 @@ export default function WebLinkButton({text, link}: WebLinkProps) {
     >
       <View className="flex-row items-center bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
         <Ionicons name="open-outline" size={17} color={isLight ? colours.accent[600] : colours.dark.accent[600]} />
-        <Text style={{fontSize: 17, paddingLeft: 5}} className="text-accent-600 dark:text-accent-600">{text}</Text>
+        <Text style={{fontSize: 17, paddingLeft: 5}} className="text-accent-600 dark:text-dark-accent-600">{text}</Text>
       </View>
     </TouchableHighlight>
   );

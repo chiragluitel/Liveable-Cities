@@ -9,6 +9,7 @@ import { useSettings } from "@/src/context/SettingsContext";
 import { ScrollView, View, Text } from "react-native";
 
 import useAsyncStorage from "@Hooks/useAsyncStorage";
+import { StatusBar } from "expo-status-bar";
 
 export default function Settings() {
   const router = useRouter();
@@ -62,6 +63,7 @@ export default function Settings() {
           <SettingsSubPage title="Other" navigateFunc={() => router.navigate("/settings/other")} hideSeperator={true} />
         </SettingsGroup>
       </ScrollView>
+      <StatusBar style="auto" />
     </View>
   );
 }

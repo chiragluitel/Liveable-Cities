@@ -17,7 +17,7 @@ export default function WeatherWidget(){
                 {/* loading spinner animation */}
                 {
                     reducedMotion 
-                    ? <Text className="text-white text-center">Loading...</Text>
+                    ? <Text className="text-text-900 dark:text-text-50 text-center">Loading...</Text>
                     : <ActivityIndicator color="white" />
                 }
             </View>

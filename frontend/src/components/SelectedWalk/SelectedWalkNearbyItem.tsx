@@ -1,6 +1,8 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { Flame, BookOpen, Armchair, PersonStanding, MapPin } from "lucide-react-native";
+import { MapPin } from "lucide-react-native";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { FA6_ICON_NAMES } from '@/src/components/Map/config/mapIcons';
 import { NearbyPlace, NearbyPlaceType } from "@Types/walkDetailTypes";
 
 type SelectedWalkNearbyItemProps = {
@@ -9,11 +11,13 @@ type SelectedWalkNearbyItemProps = {
   onNearbyPress: (place: NearbyPlace) => void;
 };
 
+// Same icons as the map's own pins, so a selected walk's nearby list matches.
 const PLACE_STYLES: Record<string, { backgroundColor: string; icon: React.ReactElement }> = {
-  bbq:     { backgroundColor: '#f4d7b5', icon: <Flame size={30} color="#f97316" /> },
-  library: { backgroundColor: '#d9e8ff', icon: <BookOpen size={30} color="#3b82f6" /> },
-  bench:   { backgroundColor: '#dfe3de', icon: <Armchair size={30} color="#22c55e" /> },
-  toilet:  { backgroundColor: '#d9d4ff', icon: <PersonStanding size={30} color="#8b5cf6" /> },
+  bbq:      { backgroundColor: '#f4d7b5', icon: <FontAwesome6 name={FA6_ICON_NAMES.bbq} size={26} color="#f97316" /> },
+  library:  { backgroundColor: '#d9e8ff', icon: <FontAwesome6 name={FA6_ICON_NAMES.library} size={26} color="#3b82f6" /> },
+  bench:    { backgroundColor: '#dfe3de', icon: <FontAwesome6 name={FA6_ICON_NAMES.bench} size={26} color="#22c55e" /> },
+  toilet:   { backgroundColor: '#d9d4ff', icon: <FontAwesome6 name={FA6_ICON_NAMES.toilet} size={26} color="#8b5cf6" /> },
+  fountain: { backgroundColor: '#d3f1f7', icon: <FontAwesome6 name={FA6_ICON_NAMES.fountain} size={26} color="#06b6d4" /> },
 };
 
 const DEFAULT_PLACE_STYLE = { backgroundColor: '#dcdedd', icon: <MapPin size={30} color="#555" /> };

@@ -1,6 +1,7 @@
 import { MapIconEntry } from '../components/Map/config/mapIcons';
 
-const BASE_URL = 'http://10.0.2.2:5156';
+const BASE_URL = 'http://10.0.2.2:5156';  // Use when running in emulator
+//const BASE_URL = 'http://192.168.0.77:5156';  // Set to IP of device running backend
 
 // Name fields vary per amenity type, so this covers all of them.
 type AmenityRecord = {

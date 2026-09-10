@@ -19,7 +19,7 @@ export default function RecentreButton({ onRecentrePress, animatedSheetPosition 
       [0, 1],
       Extrapolation.CLAMP
     );
-    return { bottom: Math.max(base, height - animatedSheetPosition.value + 16), opacity };
+    return { bottom: Math.max(base, height - animatedSheetPosition.value + 6), opacity };
   });
 
   return (

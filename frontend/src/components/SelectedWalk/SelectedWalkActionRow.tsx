@@ -18,14 +18,16 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  const { reducedMotion } = useSettings();
+  const { reducedMotion, addToWeeklyWalks } = useSettings();
 
   if (onEdit && onDelete) {
     return (
       <>
-        <View className="flex-row mb-5">
+        {/* 2 buttons split the row 50/50 */}
+        <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
           <Pressable
-            className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+            className="bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center"
+            style={{ width: '48%' }}
             onPress={onEdit}
           >
             <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
@@ -33,8 +35,8 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
           </Pressable>
 
           <Pressable
-            className="flex-1 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-            style={{ backgroundColor: colours.warning[100] }}
+            className="rounded-[18px] py-[18px] justify-center items-center"
+            style={{ width: '48%', backgroundColor: colours.warning[100] }}
             onPress={() => setDeleteModalVisible(true)}
           >
             <Ionicons name="trash-outline" size={22} color={colours.warning[500]} />
@@ -70,39 +72,49 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
 
   if (onImport) {
     return (
-      <View className="flex-row mb-5">
+      <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
         <Pressable
-          className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+          className="bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center"
+          style={[{ width: '48%' }, alreadyDownloaded ? { opacity: 0.5 } : undefined]}
           onPress={onImport}
           disabled={alreadyDownloaded}
-          style={alreadyDownloaded ? { opacity: 0.5 } : undefined}
         >
           <Ionicons name="download-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
           <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">
             {alreadyDownloaded ? 'Downloaded' : 'Add to My Walks'}
           </Text>
         </Pressable>
+        <TouchableOpacity
+          className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+          style={{ width: '48%' }}
+          onPress={() => addToWeeklyWalks()}
+        >
+          <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <View className="flex-row mb-5">
+    <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
       <Pressable
-        className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
+        className="bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center"
+        style={{ width: '48%' }}
         onPress={() => console.log('Download pressed')}
       >
         <Ionicons name="download-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
         <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">Download</Text>
       </Pressable>
 
-      <Pressable
-        className="flex-1 bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-        onPress={() => console.log('More pressed')}
-      >
-        <Ionicons name="ellipsis-horizontal" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-        <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">More</Text>
-      </Pressable>
+      <TouchableOpacity
+          className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+          style={{ width: '48%' }}
+          onPress={() => addToWeeklyWalks()}
+        >
+          <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+          <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+        </TouchableOpacity>
     </View>
   );
 }
