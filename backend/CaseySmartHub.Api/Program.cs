@@ -40,6 +40,7 @@ builder.Services.AddScoped<IDrinkingFountainService, DrinkingFountainService>();
 builder.Services.AddScoped<IPublicToiletService, PublicToiletService>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IBbqService, BbqService>();
+builder.Services.AddScoped<ICustomWalkService, CustomWalkService>();
 
 
 // Allow the Expo frontend (web build) to call the API. Tighten the origins for production.
@@ -53,6 +54,14 @@ builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// Apply pending migrations on startup for docker ONLY
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    await scope.ServiceProvider.GetRequiredService<CaseyDbContext>()
+        .Database.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
