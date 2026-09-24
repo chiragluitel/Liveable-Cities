@@ -15,6 +15,12 @@ export default function ClearDataButton() {
   const isLight = colorScheme === "light";
   
   const { reducedMotion } = useSettings();
+
+  const deleteData = () => {
+    
+    setAlertVisible(false); 
+    setConfrimVisible(true);
+  }
   
   return (
     <View>
@@ -34,10 +40,7 @@ export default function ClearDataButton() {
             title="Delete All Data?" 
             message="This action cannot be undone." 
             cancelFunc={() => setAlertVisible(false)} 
-            confirmFunc={() => {
-              setAlertVisible(false); 
-              setConfrimVisible(true);
-            }}
+            confirmFunc={deleteData}
           />
         </TouchableOpacity>
       </Modal>
