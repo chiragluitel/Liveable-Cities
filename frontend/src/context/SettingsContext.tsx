@@ -29,6 +29,8 @@ interface SettingsContextValue {
   weeklyWalks: string;
   setWeeklyWalks: (value: string) => void;
   addToWeeklyWalks: () => void;
+  backendURL: string;
+  setBackendURL: (value: string) => void;
 }
 
 const SettingsContext = createContext<SettingsContextValue>({
@@ -40,7 +42,9 @@ const SettingsContext = createContext<SettingsContextValue>({
   setWalkGoal: () => {},
   weeklyWalks: "0",
   setWeeklyWalks: () => {},
-  addToWeeklyWalks: () => {}
+  addToWeeklyWalks: () => {},
+  backendURL: "http://10.0.2.2:5156",
+  setBackendURL: () => {},
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -52,6 +56,8 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   const [weeklyWalks, setWeeklyWalks, isWeeklyWalksLoading] = useAsyncStorage("weeklyWalks", "0");
 
   const [weekStart, setWeekStart, isWeekStartLoading] = useAsyncStorage("weekStart", "");
+
+  const [backendURL, setBackendURL] = useAsyncStorage("backendURL", "http://10.0.2.2:5156");
 
   useEffect(() => {
     if (isWeekStartLoading) return;
@@ -95,7 +101,9 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
         setWalkGoal, 
         weeklyWalks,
         setWeeklyWalks,
-        addToWeeklyWalks
+        addToWeeklyWalks,
+        backendURL,
+        setBackendURL,
       }}>
       {children}
 
