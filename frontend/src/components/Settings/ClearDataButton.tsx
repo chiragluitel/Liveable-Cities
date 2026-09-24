@@ -2,9 +2,11 @@ import AlertBox from "@Components/AlertBox";
 import ConfirmBox from "@Components/ConfirmBox";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
-import { Modal, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Linking, Modal, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { colours } from "@Theme/colours";
 import { useSettings } from "@/src/context/SettingsContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import RNRestart from "react-native-restart";
 
 export default function ClearDataButton() {
   const [alertVisible, setAlertVisible] = useState(false);
@@ -16,10 +18,16 @@ export default function ClearDataButton() {
   
   const { reducedMotion } = useSettings();
 
-  const deleteData = () => {
-    
-    setAlertVisible(false); 
-    setConfrimVisible(true);
+  const deleteData = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch (e) {
+      console.warn("Unable to clear all data automatically:", e)
+      Linking.openSettings();
+    } finally {
+      setAlertVisible(false); 
+      setConfrimVisible(true);
+    }
   }
   
   return (
@@ -60,7 +68,7 @@ export default function ClearDataButton() {
           <ConfirmBox 
             title="All Data Deleted" 
             message="All data has been deleted." 
-            confirmFunc={() => setConfrimVisible(false)}
+            confirmFunc={() => {setConfrimVisible(false); RNRestart.restart();}}
           />
         </TouchableOpacity>
       </Modal>
