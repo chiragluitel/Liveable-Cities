@@ -6,14 +6,14 @@ import { useColorScheme } from "nativewind";
 import { colours } from "@Theme/colours";
 
 type Walk = {
-  id: string;
+  id: number;
   cuswalkname?: string;
-  distance?: string;
+  distance?: number;
 };
 
 type CustomWalkCardProps = {
   walk: Walk;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
   onPress?: () => void;
 };
 
