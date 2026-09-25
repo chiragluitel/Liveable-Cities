@@ -206,7 +206,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
 
                 {isSearchActive ? (
                     <SearchResultsContent
-                        query={searchState.query}
+                        searchState={searchState}
                         onInteract={killSearchFocus}
                     />
                 ) : selectedWalk ? (
