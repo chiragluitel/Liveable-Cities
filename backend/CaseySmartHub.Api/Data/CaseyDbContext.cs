@@ -16,6 +16,9 @@ public sealed class CaseyDbContext : DbContext
     public DbSet<PublicToilet> PublicToilets => Set<PublicToilet>();
     public DbSet<Library> Libraries => Set<Library>();
     public DbSet<Bbq> Bbqs => Set<Bbq>();
+    public DbSet<CustomWalk> CustomWalks => Set<CustomWalk>();
+
+    public DbSet<User> Users {get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
