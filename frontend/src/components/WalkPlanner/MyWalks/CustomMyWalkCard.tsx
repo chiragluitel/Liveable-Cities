@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Footprints, Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb } from 'lucide-react-native';
+import { Footprints, Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb, Download } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
@@ -48,9 +48,17 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                 <Text className="text-base font-bold text-text dark:text-dark-text mb-1" numberOfLines={1}>
                     {walk.cuswalkname || 'Custom Walk'}
                 </Text>
-                <Text className="text-xs text-text-600 dark:text-dark-text-400 font-medium mb-2">
+                <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
                     {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
+                {walk.fromCommunity && (
+                    <View className="flex-row items-center self-start bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1 mb-2">
+                        <Download size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                        <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+                            From Community Hub
+                        </Text>
+                    </View>
+                )}
 
                 <View className="flex-row flex-wrap gap-1.5">
                     {shownTags.map(({ key, label, Icon }) => (

@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { View } from 'react-native';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Alert, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import type { SharedValue } from 'react-native-reanimated';
 import * as Location from 'expo-location';
@@ -9,9 +9,11 @@ import RecentreButton from './components/RecentreButton';
 import FilterButton from './components/FilterButton';
 import { MAP_HTML } from './config/mapHTML';
 import { watchLocation } from './config/useMapLocation';
-import { MAP_ICONS, ICON_DEFINITIONS, IconName, MapIconEntry } from './config/mapIcons';
+import { ICON_DEFINITIONS, IconName, MapIconEntry } from './config/mapIcons';
+import { fetchAllAmenityIcons } from '../../api/amenities';
 import { MapRoute } from './config/mapRouting';
 import { DEFAULT_VISIBLE_ICONS } from './config/mapConfig';
+import ConnectionBanner from './components/ConnectionBanner';
 
 export type CaseyMapHandle = {
   recentre: () => void;
@@ -33,13 +35,21 @@ type CaseyMapProps = {
 const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRouteTap, onIconTap, animatedSheetPosition }, ref) => {
   const webViewRef = useRef<WebView>(null);
   const isReady = useRef(false);
+  // Queue commands sent before the WebView is ready instead of dropping them.
+  const pendingCommands = useRef<object[]>([]);
   const locationSub = useRef<Location.LocationSubscription | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { colorScheme } = useColorScheme();
   const colorSchemeRef = useRef(colorScheme);
   colorSchemeRef.current = colorScheme;
+  const [backendOk, setBackendOk] = useState(true);
+  const checkBackend = () => fetchAllAmenityIcons().then(icons => { icons.forEach(sendIcon); setBackendOk(true); }).catch(() => setBackendOk(false));
 
   function send(cmd: object) {
-    if (!isReady.current) return;
+    if (!isReady.current) {
+      pendingCommands.current.push(cmd);
+      return;
+    }
     webViewRef.current?.injectJavaScript(`handleCommand(${JSON.stringify(cmd)});true;`);
   }
 
@@ -50,7 +60,8 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   function sendIcon(entry: MapIconEntry) {
     const def = ICON_DEFINITIONS[entry.name];
     const id = `${entry.name}-${entry.lat}-${entry.lng}`;
-    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconClass: def.iconClass, color: def.color, label: def.label, iconType: entry.name });
+    const label = entry.placeName || def.label;
+    send({ type: 'ADD_ICON', id, lat: entry.lat, lng: entry.lng, iconClass: def.iconClass, color: def.color, label, iconType: entry.name });
   }
 
   function onMessage(e: WebViewMessageEvent) {
@@ -60,6 +71,10 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
       isReady.current = true;
 
       setTimeout(() => {
+        const queued = pendingCommands.current;
+        pendingCommands.current = [];
+        queued.forEach(cmd => send(cmd));
+
         send({ type: 'SET_THEME', isDark: colorSchemeRef.current === 'dark' });
 
         // Apply default visibility for any types hidden by default
@@ -69,8 +84,6 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
           }
         });
 
-        MAP_ICONS.forEach(sendIcon);
-
         // Start continuous location tracking
         watchLocation(loc => {
           send({ type: 'SET_LOCATION', lat: loc.lat, lng: loc.lng });
@@ -78,11 +91,15 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
           locationSub.current = sub;
         });
       }, 0);
+
+      checkBackend();
+      pollRef.current = setInterval(checkBackend, 20000); // also catches a connection dropping later
     }
 
     if (msg.type === 'ROUTE_INFO') onRouteInfo?.(msg.id, msg.distance);
     if (msg.type === 'ROUTE_TAPPED') onRouteTap?.(msg.id);
     if (msg.type === 'ICON_TAPPED') onIconTap?.(msg.label);
+    if (msg.type === 'ROUTE_ERROR') Alert.alert('Route unavailable', msg.message);
   }
 
   function handleFilterToggle(iconType: IconName, visible: boolean) {
@@ -95,9 +112,12 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     }
   }, [colorScheme]);
 
-  // Stop tracking location when the map unmounts
+  // Stop tracking location and polling when the map unmounts
   useEffect(() => {
-    return () => { locationSub.current?.remove(); };
+    return () => {
+      locationSub.current?.remove();
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -120,6 +140,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
         onMessage={onMessage}
       />
 
+      <ConnectionBanner ok={backendOk} />
       <FilterButton onToggle={handleFilterToggle} />
 
       <RecentreButton

@@ -6,7 +6,8 @@ export const CASEY_COORDINATES = {
   longitude: 145.2940,
 };
 
-export const DEFAULT_ZOOM = 13;
+// Fallback zoom, and the zoom used once the map centres on the user's location.
+export const DEFAULT_ZOOM = 15.4;
 
 // Icon types shown on load. Remove a type from this list to hide it by default.
-export const DEFAULT_VISIBLE_ICONS: IconName[] = ['bbq', 'library', 'bench', 'toilet'];
+export const DEFAULT_VISIBLE_ICONS: IconName[] = ['bbq', 'library', 'toilet', 'fountain'];

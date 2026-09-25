@@ -38,7 +38,7 @@ export default function Information() {
             </Text>
           </View>
           <WebLinkButton text="Project Source Code" link="https://github.com/chiragluitel/Liveable-Cities" />
-        </SettingsGroup>\
+        </SettingsGroup>
 
         <SettingsGroup title="Open Data Information">
           <View className="w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15] border-b-text-200 dark:border-b-dark-text-400 border-b-hairline">

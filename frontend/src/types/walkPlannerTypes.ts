@@ -19,6 +19,7 @@ export interface Walk {
   thumbnailColor: string;
   rating?: number;
   reviewCount?: number;
+  downloads?: number;
   isFavorited?: boolean;
   isCompleted?: boolean;
   routeId?: string;
@@ -52,9 +53,12 @@ export interface FilterOption {
 
 export interface Places {
   id: string,
-  title: string, 
-  streetAddress: string, 
+  title: string,
+  streetAddress: string,
   suburb: string,
   state: string,
-  country: string
+  country: string,
+  latitude?: number,
+  longitude?: number,
+  type?: string
 }

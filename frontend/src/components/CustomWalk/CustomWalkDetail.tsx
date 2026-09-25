@@ -7,6 +7,7 @@ import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
 import { useSettings, SPEED_KMH, formatWalkTime } from '@/src/context/SettingsContext';
+import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
 
 const FILTER_DEFS = [
     { key: 'hasWaterFountain',  label: 'Fountain',   Icon: Droplets },
@@ -29,12 +30,17 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const { colorScheme } = useColorScheme();
     const isLight = colorScheme === 'light';
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [shareModalVisible, setShareModalVisible] = useState(false);
+    const [shared, setShared] = useState(false);
     const { walkingSpeed } = useSettings();
+    const { shareWalk } = useCommunityWalks();
     const timeText = formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
+    // 2 buttons split the row 50/50; 3 sit at a third each (a 4th would wrap below)
+    const buttonWidth = walk.fromCommunity ? '48%' : '31%';
 
-    const { reducedMotion } = useSettings();
+    const { reducedMotion, addToWeeklyWalks } = useSettings();
 
     return (
         <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
@@ -43,10 +49,18 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                     {walk.cuswalkname || 'Custom Walk'}
                 </Text>
                 <Text className="text-[17px] mb-3">
-                    <Text className="text-accent dark:text-dark-accent-700">
+                    <Text className="text-accent-600 dark:text-dark-accent-700">
                         {walk.distance} km, {timeText}
                     </Text>
                 </Text>
+                {walk.fromCommunity && (
+                    <View className="flex-row items-center self-start bg-primary-100 dark:bg-dark-primary-200 rounded-md px-2 py-1 gap-1 mb-3">
+                        <Ionicons name="people-outline" size={12} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                        <Text className="text-[11px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+                            From Community Hub
+                        </Text>
+                    </View>
+                )}
                 {activeTags.length > 0 && (
                     <View className="flex-row flex-wrap gap-1.5 mb-[22px]">
                         {activeTags.map(({ key, label, Icon }) => (
@@ -84,24 +98,76 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </TouchableOpacity>
             </Modal>
 
-            <View className="flex-row mb-5">
-                <Pressable
-                    className="flex-1 bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-                    onPress={() => onEdit(walk.id)}
+            <Modal
+                animationType={reducedMotion ? "none" : "fade"}
+                backdropColor="#00000000"
+                visible={shareModalVisible}
+                onRequestClose={() => setShareModalVisible(false)}
+            >
+                <TouchableOpacity
+                    className="flex-1 items-center justify-center"
+                    activeOpacity={1}
+                    onPressOut={() => setShareModalVisible(false)}
                 >
-                    <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-                    <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">Edit Walk</Text>
-                </Pressable>
+                    <AlertBox
+                        title="Share to Community?"
+                        message="Other users will be able to see and import this walk."
+                        cancelFunc={() => setShareModalVisible(false)}
+                        confirmFunc={() => {
+                            setShareModalVisible(false);
+                            shareWalk(walk);
+                            setShared(true);
+                        }}
+                    />
+                </TouchableOpacity>
+            </Modal>
 
-                <Pressable
-                    className="flex-1 rounded-[18px] py-[18px] justify-center items-center mr-[10px]"
-                    style={{ backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
+            {/* Up to 3 buttons per row, any 4th wraps onto the next row */}
+            <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
+                <TouchableOpacity
+                    className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+                    style={{ width: buttonWidth }}
+                    onPress={() => addToWeeklyWalks()}
+                >
+                    <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                    <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
+                </TouchableOpacity>
+
+                {!walk.fromCommunity && (
+                    <TouchableOpacity
+                        className="bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
+                        style={{ width: buttonWidth }}
+                        onPress={() => onEdit(walk.id)}
+                    >
+                        <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                        <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2 text-wrap text-center px-1">Edit Walk</Text>
+                    </TouchableOpacity>
+                )}
+
+                <TouchableOpacity
+                    className="rounded-[18px] py-[18px] justify-center items-center"
+                    style={{ width: buttonWidth, backgroundColor: isLight ? colours.warning[100] : colours.dark.warning[200] }}
                     onPress={() => setDeleteModalVisible(true)}
                 >
-                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[500] : colours.dark.warning[600]} />
-                    <Text style={{ color: isLight ? colours.warning[500] : colours.dark.warning[600] }} className="text-warning-500 font-bold text-[15px] mt-2">Delete Walk</Text>
-                </Pressable>
+                    <Ionicons name="trash-outline" size={22} color={isLight ? colours.warning[600] : colours.dark.warning[700]} />
+                    <Text className="text-warning-600 dark:text-dark-warning-700 font-bold text-[15px] mt-2 text-wrap text-center px-1">Delete Walk</Text>
+                </TouchableOpacity>
             </View>
+
+            {!walk.fromCommunity && (
+                <Pressable
+                    className="rounded-[18px] py-[16px] justify-center items-center mb-5 bg-accent-200 dark:bg-dark-accent-200"
+                    onPress={() => setShareModalVisible(true)}
+                    disabled={shared}
+                >
+                    <View className="flex-row items-center">
+                        <Ionicons name={shared ? "checkmark-circle" : "share-social-outline"} size={20} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
+                        <Text className="text-text dark:text-dark-text font-bold text-[15px] ml-2">
+                            {shared ? 'Shared to Community' : 'Share to Community'}
+                        </Text>
+                    </View>
+                </Pressable>
+            )}
         </BottomSheetScrollView>
     );
 }

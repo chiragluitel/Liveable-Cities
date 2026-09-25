@@ -14,7 +14,7 @@ export default function SaveButton({ onPress, title }: SaveButtonProps) {
   const isLight = colorScheme === "light";
 
   return (
-    <TouchableOpacity className="flex-row bg-accent-400 dark:bg-dark-accent-400 p-4 rounded-xl items-center justify-center mt-5 mb-10" onPress={onPress}>
+    <TouchableOpacity className="flex-row bg-primary-600 dark:bg-dark-accent-400 p-4 rounded-xl items-center justify-center mt-5 mb-10" onPress={onPress}>
       <Ionicons name="save" size={24} color={isLight ? colours.text[50] : colours.dark.text.DEFAULT} />
       <Text className="text-text-50 dark:text-dark-text text-lg font-semibold ml-2">{title}</Text>
     </TouchableOpacity>

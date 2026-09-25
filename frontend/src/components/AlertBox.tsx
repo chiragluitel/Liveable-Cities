@@ -29,7 +29,7 @@ export default function AlertBox({title, message, cancelFunc, confirmFunc}: Aler
     >
       <View className="justify-center w-full h-[60%] items-center border-b-hairline border-b-[#C7C7CC]">
         <Text className="font-bold text-[17px] text-text dark:text-dark-text">{title}</Text>
-        <Text className="text-[13px] text-text dark:text-dark-text">{message}</Text>
+        <Text className="text-[13px] text-text dark:text-dark-text px-2">{message}</Text>
       </View>
       <View className="items-center w-full h-[40%] flex-row justify-evenly">
         <TouchableHighlight

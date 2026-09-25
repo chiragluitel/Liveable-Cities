@@ -13,11 +13,11 @@ export default function WeatherWidget(){
 
     if (loading) {
         return (
-            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
+            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5 mb-8 w-[90%]">
                 {/* loading spinner animation */}
                 {
                     reducedMotion 
-                    ? <Text className="text-white text-center">Loading...</Text>
+                    ? <Text className="text-text-900 dark:text-text-50 text-center">Loading...</Text>
                     : <ActivityIndicator color="white" />
                 }
             </View>
@@ -26,11 +26,15 @@ export default function WeatherWidget(){
 
     if (!weather) {
         return (
-            <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
-                <Text className="text-text-50 dark:text-dark-text">
-                    Unable to load weather!
-                </Text>
-            </View>
+            <>
+                {/*
+                    <View className="bg-primary-400 dark:bg-primary-800 p-5 rounded-2xl mt-5">
+                        <Text className="text-text-50 dark:text-dark-text">
+                            Unable to load weather!
+                        </Text>
+                    </View>
+                */}
+            </>
         );
     }
 

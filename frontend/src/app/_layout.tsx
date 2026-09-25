@@ -2,6 +2,8 @@ import { Stack } from "expo-router";
 import '@/global.css'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CustomWalkProvider } from '@/src/context/CustomWalkContext';
+import { CommunityWalksProvider } from '@/src/context/CommunityWalksContext';
+import { MapFilterProvider } from '@/src/context/MapFilterContext';
 import { SettingsProvider } from '@/src/context/SettingsContext';
 import { colours } from "@Theme/colours";
 import { useColorScheme } from "nativewind";
@@ -13,8 +15,9 @@ export default function RootLayout() {
 
   const isLight = colorScheme === "light";
 
-  const [theme, setTheme, isThemeLoading] = useAsyncStorage("Theme", "Auto")
+  const [theme, setTheme, isThemeLoading] = useAsyncStorage("theme", "Auto")
 
+  
   useEffect(() => {
     if (isThemeLoading) {
       return;
@@ -32,11 +35,14 @@ export default function RootLayout() {
         setColorScheme("system");
     }
   }, [theme, isThemeLoading]);
+  
 
   return (
     <GestureHandlerRootView style={{flex:1}}>
       <SettingsProvider>
       <CustomWalkProvider>
+      <CommunityWalksProvider>
+      <MapFilterProvider>
         <Stack
           screenOptions={
             {
@@ -51,6 +57,8 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{headerShown: false}} />
           <Stack.Screen name="(apps)" options={{headerShown: false}} />
         </Stack>
+      </MapFilterProvider>
+      </CommunityWalksProvider>
       </CustomWalkProvider>
       </SettingsProvider>
     </GestureHandlerRootView>

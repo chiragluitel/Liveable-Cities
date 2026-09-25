@@ -18,7 +18,7 @@ const MyWalksSection = ({ walks, onWalkPress }: MyWalksSectionProps) => {
         return (
             <View className="px-4 mt-6 mb-4">
                 <Text className="text-xl font-bold text-text dark:text-dark-text mb-3">My Walks</Text>
-                <Text className="text-[15px] text-text-600 dark:text-dark-text-400 text-center py-6">No custom walks created.</Text>
+                <Text className="text-[15px] text-text-600 dark:text-dark-text-700 text-center py-6">No custom walks created.</Text>
             </View>
         );
     }

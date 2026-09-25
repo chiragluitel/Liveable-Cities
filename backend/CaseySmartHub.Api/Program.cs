@@ -41,6 +41,7 @@ builder.Services.AddScoped<IPublicToiletService, PublicToiletService>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IBbqService, BbqService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 
 // Allow the Expo frontend (web build) to call the API. Tighten the origins for production.

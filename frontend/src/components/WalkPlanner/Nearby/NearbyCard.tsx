@@ -54,7 +54,7 @@ export const NearbyCard = ({ amenity, width, onPress }: NearbyCardProps) => {
         <Text className="text-xs text-text-600 dark:text-dark-text-600 font-medium mt-0.5">
           {amenity.distanceM >= 1000
             ? `${(amenity.distanceM / 1000).toFixed(1)} km`
-            : `${amenity.distanceM}m`} • {timeText}
+            : `${Math.round(amenity.distanceM)}m`} • {timeText}
         </Text>
       </View>
     </Pressable>
