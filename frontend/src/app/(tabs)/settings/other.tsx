@@ -3,12 +3,28 @@ import ClearDataButton from "@Components/Settings/ClearDataButton";
 import SettingsGroup from "@Components/Settings/SettingsGroup";
 import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
+import { useSettings } from "@/src/context/SettingsContext";
+import { useState } from "react";
+import RNRestart from 'react-native-restart';
 
 export default function Information() {
   const { colorScheme } = useColorScheme();
+  const {backendURL, setBackendURL} = useSettings();
   
   const isLight = colorScheme === "light";
+
+  const [tempBackendURL, setTempBackendURL] = useState("");
+
+  const updateBackendURL = () => {
+    if (/^https?:\/\/(?:[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+|(?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?(?:\/[^\s]*)?$/.test(tempBackendURL.toLowerCase())) {
+      setBackendURL(tempBackendURL.toLowerCase());
+      RNRestart.restart();
+    }
+    else {
+      setTempBackendURL("");
+    }
+  }
 
   return (
     <View className="flex-1 w-full  bg-background-50 dark:bg-dark-background-50">
@@ -42,6 +58,18 @@ export default function Information() {
             <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">
               Version 0.0.1
             </Text>
+          </View>
+        </SettingsGroup>
+
+        <SettingsGroup title="Backend">
+          <View className="w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[10]">
+            <TextInput 
+              className="text-text dark:text-dark-text"
+              value={tempBackendURL}
+              placeholder={backendURL}
+              onChangeText={setTempBackendURL}
+              onSubmitEditing={() => {updateBackendURL()}}
+            />
           </View>
         </SettingsGroup>
 

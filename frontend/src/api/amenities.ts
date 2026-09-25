@@ -1,7 +1,7 @@
 import { MapIconEntry } from '../components/Map/config/mapIcons';
+import { useSettings } from '../context/SettingsContext';
 
-const BASE_URL = 'http://10.0.2.2:5156';  // Use when running in emulator
-//const BASE_URL = 'http://192.168.0.77:5156';  // Set to IP of device running backend
+//const BASE_URL = 'http://10.0.2.2:5156';
 
 // Name fields vary per amenity type, so this covers all of them.
 type AmenityRecord = {
@@ -30,8 +30,8 @@ function placeNameFor(name: MapIconEntry['name'], r: AmenityRecord): string | un
   }
 }
 
-async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Promise<MapIconEntry[]> {
-  const res = await fetch(`${BASE_URL}${endpoint}`);
+async function fetchIconsFor(base_url: string, endpoint: string, name: MapIconEntry['name']): Promise<MapIconEntry[]> {
+  const res = await fetch(`${base_url}${endpoint}`);
   const data: AmenityResponse = await res.json();
   return data.results.map(r => ({
     name,
@@ -41,13 +41,13 @@ async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Prom
   }));
 }
 
-export async function fetchAllAmenityIcons(): Promise<MapIconEntry[]> {
+export async function fetchAllAmenityIcons(base_url: string): Promise<MapIconEntry[]> {
   const results = await Promise.all([
-    fetchIconsFor('/api/GetBenches', 'bench'),
-    fetchIconsFor('/api/GetPublicToilets', 'toilet'),
-    fetchIconsFor('/api/GetLibraries', 'library'),
-    fetchIconsFor('/api/GetBbqs', 'bbq'),
-    fetchIconsFor('/api/GetDrinkingFountains', 'fountain'),
+    fetchIconsFor(base_url, '/api/GetBenches', 'bench'),
+    fetchIconsFor(base_url, '/api/GetPublicToilets', 'toilet'),
+    fetchIconsFor(base_url, '/api/GetLibraries', 'library'),
+    fetchIconsFor(base_url, '/api/GetBbqs', 'bbq'),
+    fetchIconsFor(base_url, '/api/GetDrinkingFountains', 'fountain'),
   ]);
   return results.flat();
 }

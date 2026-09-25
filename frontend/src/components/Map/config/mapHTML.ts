@@ -35,7 +35,7 @@ function buildMapHTML(): string {
 
     function setTheme(isDark) {
       map.removeLayer(currentTileLayer);
-      if (isDark) {
+      /*if (isDark) {
         currentTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© OpenStreetMap, © CARTO',
@@ -44,13 +44,14 @@ function buildMapHTML(): string {
         map.getPanes().tilePane.style.filter = 'brightness(1.6) contrast(0.9)';
         document.body.style.background = '#1a1a2e';
       } else {
+      */
         currentTileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© OpenStreetMap'
         }).addTo(map);
         map.getPanes().tilePane.style.filter = '';
         document.body.style.background = '#f0f0f0';
-      }
+      //}
     }
 
     var userMarker = null;

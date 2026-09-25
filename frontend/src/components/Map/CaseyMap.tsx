@@ -10,10 +10,11 @@ import FilterButton from './components/FilterButton';
 import { MAP_HTML } from './config/mapHTML';
 import { watchLocation } from './config/useMapLocation';
 import { ICON_DEFINITIONS, IconName, MapIconEntry } from './config/mapIcons';
-import { fetchAllAmenityIcons } from '../../api/amenities';
 import { MapRoute } from './config/mapRouting';
 import { DEFAULT_VISIBLE_ICONS } from './config/mapConfig';
 import ConnectionBanner from './components/ConnectionBanner';
+import { fetchAllAmenityIcons } from '@/src/api/amenities';
+import { useSettings } from '@/src/context/SettingsContext';
 
 export type CaseyMapHandle = {
   recentre: () => void;
@@ -43,7 +44,8 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   const colorSchemeRef = useRef(colorScheme);
   colorSchemeRef.current = colorScheme;
   const [backendOk, setBackendOk] = useState(true);
-  const checkBackend = () => fetchAllAmenityIcons().then(icons => { icons.forEach(sendIcon); setBackendOk(true); }).catch(() => setBackendOk(false));
+  const {backendURL} = useSettings();
+  const checkBackend = () => fetchAllAmenityIcons(backendURL).then(icons => { icons.forEach(sendIcon); setBackendOk(true); }).catch(() => setBackendOk(false));
 
   function send(cmd: object) {
     if (!isReady.current) {
