@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Places } from "@Types/walkPlannerTypes";
 import { searchPlaces } from "@/src/api/search";
+import { useSettings } from "../context/SettingsContext";
 
 const DEBOUNCE_MS = 300;
 
@@ -28,6 +29,8 @@ const useSearchLogic = (initialValue: string =''): SearchLogicReturnObject => {
     const handleBlur = () => setIsFocused(false);
     const clearSearch = () => setQuery('');
 
+    const {backendURL} = useSettings();
+
     useEffect(() => {
         const term = query.trim();
 
@@ -43,7 +46,7 @@ const useSearchLogic = (initialValue: string =''): SearchLogicReturnObject => {
 
         const timer = setTimeout(async () => {
             try {
-                const places = await searchPlaces(term, controller.signal);
+                const places = await searchPlaces(backendURL, term, controller.signal);
                 setResults(places);
                 setError(null);
             } catch {

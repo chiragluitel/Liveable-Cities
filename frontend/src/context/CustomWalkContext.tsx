@@ -6,6 +6,7 @@ import {
   deleteCustomWalk,
   CustomWalk,
 } from '../api/customWalks';
+import { useSettings } from './SettingsContext';
 
 const CustomWalkContext = createContext<any>(null);
 
@@ -13,25 +14,26 @@ export const useCustomWalks = () => useContext(CustomWalkContext);
 
 export const CustomWalkProvider = ({ children }: { children: React.ReactNode }) => {
   const [walks, setWalks] = useState<CustomWalk[]>([]);
+  const {backendURL} = useSettings();
 
   useEffect(() => {
-    fetchCustomWalks().then(setWalks).catch(console.error);
+    fetchCustomWalks(backendURL).then(setWalks).catch(console.error);
   }, []);
 
   const saveWalk = async (newWalk: any) => {
     if (newWalk.id) {
       const id = typeof newWalk.id === 'string' ? Number(newWalk.id) : newWalk.id;
-      const updated = await updateCustomWalk(id, newWalk);
+      const updated = await updateCustomWalk(backendURL, id, newWalk);
       setWalks(current => current.map(w => w.id === updated.id ? updated : w));
     } else {
-      const created = await createCustomWalk(newWalk);
+      const created = await createCustomWalk(backendURL, newWalk);
       setWalks(current => [...current, created]);
     }
   };
 
   const deleteWalk = async (id: number | string) => {
     const numId = typeof id === 'string' ? Number(id) : id;
-    await deleteCustomWalk(numId);
+    await deleteCustomWalk(backendURL, numId);
     setWalks(current => current.filter(w => w.id !== numId));
   };
 
