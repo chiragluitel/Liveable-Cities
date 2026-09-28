@@ -1,17 +1,20 @@
 import { useState } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSettings } from "../context/SettingsContext";
 
 export default function LoginPage({onLogin}: {onLogin: () => void}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const {backendURL} = useSettings();
+
   const handleLogin = async () => {
     setError("");
 
     try {
-      const response = await fetch("http://10.0.2.2:5156/api/Auth/login", {
+      const response = await fetch(`${backendURL}/api/Auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,11 +46,11 @@ export default function LoginPage({onLogin}: {onLogin: () => void}) {
 
   return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-50 px-5 pt-12">
-      <Text className="text-3xl font-bold mb-8">
+      <Text className="text-text dark:text-dark-text text-3xl font-bold mb-8">
         Login
       </Text>
 
-      <Text className="mb-2">
+      <Text className="text-text dark:text-dark-text mb-2">
         Username
       </Text>
 
@@ -55,11 +58,11 @@ export default function LoginPage({onLogin}: {onLogin: () => void}) {
         value={username}
         onChangeText={setUsername}
         placeholder="Enter username"
-        className="border border-gray-300 rounded-lg px-4 py-3 mb-5"
+        className="text-text dark:text-dark-text border border-gray-300 rounded-lg px-4 py-3 mb-5"
         autoCapitalize="none"
       />
 
-      <Text className="mb-2">
+      <Text className="text-text dark:text-dark-text mb-2">
         Password
       </Text>
 
@@ -68,7 +71,7 @@ export default function LoginPage({onLogin}: {onLogin: () => void}) {
         onChangeText={setPassword}
         placeholder="Enter password"
         secureTextEntry
-        className="border border-gray-300 rounded-lg px-4 py-3 mb-5"
+        className="text-text dark:text-dark-text border border-gray-300 rounded-lg px-4 py-3 mb-5"
       />
 
       {error !== "" && (
@@ -77,14 +80,14 @@ export default function LoginPage({onLogin}: {onLogin: () => void}) {
         </Text>
       )}
 
-      <Pressable
+      <TouchableOpacity
         onPress={handleLogin}
         className="bg-primary-500 rounded-lg py-4 items-center"
       >
         <Text className="text-white font-bold">
           Login
         </Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }
