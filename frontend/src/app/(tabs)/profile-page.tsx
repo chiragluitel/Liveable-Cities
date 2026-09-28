@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 import LoginPage from "../login-page";
+import { useSettings } from "@/src/context/SettingsContext";
+import { FitnessGoal } from "@/src/types/walkPlannerTypes";
+import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
 
 
 export default function ProfilePage() {
@@ -68,7 +71,7 @@ export default function ProfilePage() {
   return (
     <View className="flex-1 w-full bg-background-50 dark:bg-dark-background-50 pt-12">
       <ProfileHeader name={user.name} />
-      <ScrollView contentContainerStyle={{alignItems: "center"}}>
+      <ScrollView contentContainerStyle={{alignItems: "center"}} />
 
       <WeatherWidget />
 
