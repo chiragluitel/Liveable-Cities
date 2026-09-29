@@ -1,13 +1,17 @@
-[![Static Badge](https://img.shields.io/badge/React_Native-0.81.5-blue?style=for-the-badge)
-](https://reactnative.dev/)
-[![Static Badge](https://img.shields.io/badge/Expo-SDK_54-blue?style=for-the-badge)](https://expo.dev/)
-[![Static Badge](https://img.shields.io/badge/TypeScript-5.9.2-blue?style=for-the-badge)](https://www.typescriptlang.org/)
-[![GitHub License](https://img.shields.io/github/license/chiragluitel/Liveable-Cities?style=for-the-badge)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/chiragluitel/Liveable-Cities?style=for-the-badge)](https://github.com/chiragluitel/Liveable-Cities/releases/latest)
-![Static Badge](https://img.shields.io/badge/lang-en-yellow?style=for-the-badge)
+<div align="center">
+<img src=".github/images/logo.png" alt="app-name logo" />
+
+[![React Native: 0.81.5](https://img.shields.io/badge/React_Native-0.81.5-blue?style=for-the-badge&logo=React)](https://reactnative.dev)
+[![Expo: SDK 54](https://img.shields.io/badge/Expo-SDK_54-blue?style=for-the-badge&logo=Expo)](https://expo.dev)
+[![TypeScript: 5.9.2](https://img.shields.io/badge/TypeScript-5.9.2-blue?style=for-the-badge&logo=TypeScript)](https://www.typescriptlang.org)
+
+[![GitHub License: MIT](https://img.shields.io/github/license/chiragluitel/Liveable-Cities?style=for-the-badge)](LICENSE)
+[![GitHub Latest Release](https://img.shields.io/github/v/release/chiragluitel/Liveable-Cities?style=for-the-badge)](https://github.com/chiragluitel/Liveable-Cities/releases/latest)
+![Language: English](https://img.shields.io/badge/lang-en-yellow?style=for-the-badge)
+
+</div>
 
 <div align="center">
-    <img src=".github/images/logo.png" alt="app-name logo" />
     <h1>City of Casey Livable Cities Audit (replace with app title)</h1>
     <h4>A simple walk planner for the City of Casey</h4>
 </div>
@@ -35,14 +39,21 @@ This app was created for a Swinburne University of Technology capstone project w
 - Account creation for publicly sharing custom walks
 
 ## Screenshots
+- main map page w/ bottom sheet at normal (light, dark)
+- main map page w/ bottom sheet at up + 2 custom walks (light, dark)
+- main map page w/ bottom sheet at up showing nearby + community walks (light, dark)
+- profile page logged in (light, dark)
 
 ## Getting Started
 ### Requirements
-- phone
-- internet access
+- Android 7+ or iOS 15.1+ smartphone
+- Constant internet access (WiFi or mobile data)
 
 ### Installing
+The app can be installed from either the Google Play Store or the Apple App Store:  
 - app store links + qr codes
+
+Additionally, the app file can downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest) and installed
 - releases page links + instructions
 
 ## Building
