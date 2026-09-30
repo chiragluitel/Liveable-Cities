@@ -4,8 +4,7 @@
 
 [![React Native: 0.81.5](https://img.shields.io/badge/React_Native-0.81.5-blue?style=for-the-badge&logo=React)](https://reactnative.dev)
 [![Expo: SDK 54](https://img.shields.io/badge/Expo-SDK_54-blue?style=for-the-badge&logo=Expo)](https://expo.dev)
-[![TypeScript: 5.9.2](https://img.shields.io/badge/TypeScript-5.9.2-blue?style=for-the-badge&logo=TypeScript)](https://www.typescriptlang.org)
-
+[![TypeScript: 5.9.2](https://img.shields.io/badge/TypeScript-5.9.2-blue?style=for-the-badge&logo=TypeScript)](https://www.typescriptlang.org)  
 [![GitHub License: MIT](https://img.shields.io/github/license/chiragluitel/Liveable-Cities?style=for-the-badge)](LICENSE)
 [![GitHub Latest Release](https://img.shields.io/github/v/release/chiragluitel/Liveable-Cities?style=for-the-badge)](https://github.com/chiragluitel/Liveable-Cities/releases/latest)
 ![Language: English](https://img.shields.io/badge/lang-en-yellow?style=for-the-badge)
