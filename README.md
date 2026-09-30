@@ -15,7 +15,7 @@
 <!-- Title and summary -->
 <div align="center">
     <h1>Casey Walks</h1>
-    <h4 style="width: 55%">A simple walk planner for the City of Casey made for the Livable Cities Audit Swinburne capstone project.</h4>
+    <h4>A simple walk planner for the City of Casey made for the Livable Cities Audit Swinburne capstone project.</h4>
 </div>
 
 <!-- Table of contents -->
