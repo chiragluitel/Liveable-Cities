@@ -1,3 +1,4 @@
+<!-- Logo and badges -->
 <div align="center">
 <img src=".github/images/logo.png" alt="Casey Walks logo" />
 
@@ -11,10 +12,36 @@
 
 </div>
 
+<!-- Title and summary -->
 <div align="center">
     <h1>Casey Walks</h1>
     <h4 style="width: 55%">A simple walk planner for the City of Casey made for the Livable Cities Audit Swinburne capstone project.</h4>
 </div>
+
+<!-- Table of contents -->
+<details>
+    <summary>Table of Contents</summary>
+    <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li>
+            <a href="#features">Features</a>
+            <ul><li><a href="#screenshots">Screenshots</a></li></ul>
+        </li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li>
+            <a href="#building">Building</a>
+            <ul>
+                <li><a href="#android">Android</a></li>
+                <li><a href="#ios">iOS</a></li>
+            </ul>
+        </li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#license">License</a></li>
+        <li><a href="#ai-usage-declaration">AI Usage</a></li>
+        <li><a href="#acknowledgements">Acknowledgements</a></li>
+    </ol>
+</details>
 
 ## Overview
 Casey Walks is a simple walk planning app for the City of Casey community to be able to plan and share walking routes in their local area. It allows people to view various public utilities, facilities, and features within the City of Casey and generate walking routes including these points of interest. The app also includes a simple walk counter and community sharing features.
@@ -38,7 +65,7 @@ This app was created for a Swinburne University of Technology capstone project w
 - Weekly walk count tracker and goal
 - Account creation for publicly sharing custom walks
 
-## Screenshots
+### Screenshots
 ```
 - main map page w/ bottom sheet at normal (light, dark)
 - main map page w/ bottom sheet at up + 2 custom walks (light, dark)
