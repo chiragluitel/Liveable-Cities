@@ -78,10 +78,12 @@ The app can be installed from the Google Play Store or the Apple App Store:
 Additionally, the application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
 ## Usage
-
+`TODO`
 
 ## Build
 > Building for iOS can only be done on macOS
+
+> Using Docker is recommended if your system is supported
 ### Prerequisites
 #### With Docker
 - Docker Desktop
@@ -91,6 +93,7 @@ Additionally, the application files for both Android and iOS can be downloaded f
 
 #### Without Docker
 - Node.js (LTS)
+- .Net 9
 - Android Studio + Android SDK for Android development
 - macOS + Xcode for iOS development
 
@@ -98,7 +101,8 @@ Additionally, the application files for both Android and iOS can be downloaded f
 1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We reccommend using the development build without EAS.
 2. Clone the repository
 3. Copy `.env.example` to `.env` and fill it with the correct values
-4. Build and install the development phone client (in the `/frontend` folder):
+4. Run `npm install` in the `/frontend` folder
+5. Build and install the development phone client (in the `/frontend` folder):
     - Android emulator or physical device: `npx expo run:android`
         > For physical Android devices, ensure they are connected via USB with USB Debugging enabled. Use `adb devices` to list connected devices
     - iOS simulator: `npx expo run:ios`
@@ -115,7 +119,8 @@ If using Docker, <u>**stop the development server**</u> and continue to the [Wit
         > If the dev server URL is `localhost`, replace it with the IP address of the device running the server, assuming the phone is on the same network
 
 #### Without Docker
-1. Open a 
+1. Open a new termnial and navigate to the `/backend/CaseySmartHub.Api` folder
+2. Run `dotnet run`
 
 ## Privacy
 This app uses your location data temporarily to calculate walking routes. Your location is discarded after route calculation.
