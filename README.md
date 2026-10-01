@@ -55,7 +55,7 @@ This app was created for a Swinburne University of Technology capstone project w
 - A list of the closest nearby amenities
 - Community shared walks
 - Local weather display
-- Weekly walk count tracker and goal
+- Weekly walks count tracker and goal
 - Account creation for publicly sharing custom walks
 
 ### Screenshots
@@ -70,7 +70,7 @@ TODO:
 ## Getting Started
 ### Requirements
 - Android 7+ or iOS 15.1+ smartphone
-- Constant internet access (WiFi or mobile data) while using the app
+- Constant internet access (Wi-Fi or mobile data) while using the app
 
 ### Installing
 The app can be installed from the Google Play Store or the Apple App Store:  
@@ -99,7 +99,7 @@ Additionally, the application files for both Android and iOS can be downloaded f
 - macOS + Xcode for iOS development
 
 ### Building
-1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We reccommend using the development build without EAS.
+1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We recommend using the development build without EAS.
 2. Clone the repository
 3. Copy `.env.example` to `.env` and fill it with the correct values
 4. Run `npm install` in the `/frontend` folder
@@ -121,7 +121,7 @@ If using Docker, <u>**stop the development server**</u> and continue to the [Wit
 
 #### Without Docker
 `UNFINISHED`
-1. Open a new termnial and navigate to the `/backend/CaseySmartHub.Api` folder
+1. Open a new terminal and navigate to the `/backend/CaseySmartHub.Api` folder
 2. Run `dotnet run`
 
 ## Privacy
@@ -140,4 +140,4 @@ Generative AI tools were used to assist with the development of this project, pr
 ## Acknowledgements
 This project was developed for a Swinburne University of Technology capstone project in collaboration with the City of Casey.
 
-We would like to thank both the City of Casey for maintaining their Open Data Portal and submitting this project as part of the Swinburne capstone program. We also thank Swinburne University of Technology for providing us the opporutinity to work on this project and gain real world software development experience.
+We would like to thank both the City of Casey for maintaining their Open Data Portal and submitting this project as part of the Swinburne capstone program. We also thank Swinburne University of Technology for providing us the opportunity to work on this project and gain real world software development experience.
