@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useAsyncStorage from '@Hooks/useAsyncStorage';
-import { View } from 'lucide-react-native';
 import WeeklyWalksNotif from '../components/WeeklyWalksNotif';
 
 export type WalkingSpeed = 'Slow' | 'Average' | 'Fast';
