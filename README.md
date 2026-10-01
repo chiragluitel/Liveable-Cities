@@ -60,6 +60,7 @@ This app was created for a Swinburne University of Technology capstone project w
 
 ### Screenshots
 ```
+TODO:
 - main map page w/ bottom sheet at normal (light, dark)
 - main map page w/ bottom sheet at up + 2 custom walks (light, dark)
 - main map page w/ bottom sheet at up showing nearby + community walks (light, dark)
@@ -119,6 +120,7 @@ If using Docker, <u>**stop the development server**</u> and continue to the [Wit
         > If the dev server URL is `localhost`, replace it with the IP address of the device running the server, assuming the phone is on the same network
 
 #### Without Docker
+`UNFINISHED`
 1. Open a new termnial and navigate to the `/backend/CaseySmartHub.Api` folder
 2. Run `dotnet run`
 
