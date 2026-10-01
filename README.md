@@ -98,7 +98,7 @@ Additionally, the application files for both Android and iOS can be downloaded f
 1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We reccommend using the development build without EAS.
 2. Clone the repository
 3. Copy `.env.example` to `.env` and fill it with the correct values
-4. Build and install the development phone client:
+4. Build and install the development phone client (in the `/frontend` folder):
     - Android emulator or physical device: `npx expo run:android`
         > For physical Android devices, ensure they are connected via USB with USB Debugging enabled. Use `adb devices` to list connected devices
     - iOS simulator: `npx expo run:ios`
@@ -115,6 +115,7 @@ If using Docker, <u>**stop the development server**</u> and continue to the [Wit
         > If the dev server URL is `localhost`, replace it with the IP address of the device running the server, assuming the phone is on the same network
 
 #### Without Docker
+1. Open a 
 
 ## Privacy
 This app uses your location data temporarily to calculate walking routes. Your location is discarded after route calculation.
