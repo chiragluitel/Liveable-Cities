@@ -14,6 +14,7 @@ const ICON_COMPONENT: Record<IconName, React.ReactElement> = {
   library:  <FontAwesome6 name={FA6_ICON_NAMES.library} size={20} color="#fff" />,
   bench:    <FontAwesome6 name={FA6_ICON_NAMES.bench} size={20} color="#fff" />,
   toilet:   <FontAwesome6 name={FA6_ICON_NAMES.toilet} size={20} color="#fff" />,
+  offLeash: <FontAwesome6 name={FA6_ICON_NAMES.offLeash} size={20} color="#fff" />,
   fountain: <FontAwesome6 name={FA6_ICON_NAMES.fountain} size={20} color="#fff" />,
 };
 
@@ -107,7 +108,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
       <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">Nearby</Text>
       {items.length === 0 ? (
         <Text className="text-sm text-text-600 dark:text-dark-text-600 px-4">
-          There isn't anything nearby.
+          There isn&apos;t anything nearby.
         </Text>
       ) : items.length <= 3 ? (
         // Few enough to fit without scrolling, so stack full-width instead of a carousel.

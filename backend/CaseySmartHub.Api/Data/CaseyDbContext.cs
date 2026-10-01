@@ -16,6 +16,7 @@ public sealed class CaseyDbContext : DbContext
     public DbSet<PublicToilet> PublicToilets => Set<PublicToilet>();
     public DbSet<Library> Libraries => Set<Library>();
     public DbSet<Bbq> Bbqs => Set<Bbq>();
+    public DbSet<CustomWalk> CustomWalks => Set<CustomWalk>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,5 +27,6 @@ public sealed class CaseyDbContext : DbContext
         modelBuilder.Entity<PublicToilet>().Property(toilet => toilet.Id).ValueGeneratedNever();
         modelBuilder.Entity<Library>().Property(library => library.Id).ValueGeneratedNever();
         modelBuilder.Entity<Bbq>().Property(bbq => bbq.Id).ValueGeneratedNever();
+        modelBuilder.Entity<CustomWalk>().HasKey(walk => walk.Id);
     }
 }

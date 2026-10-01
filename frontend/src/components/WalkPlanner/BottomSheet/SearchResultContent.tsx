@@ -50,7 +50,7 @@ export const SearchResultsContent = ({ query, onInteract }: SearchResultsContent
                 query.trim().length > 0 ? (
                     <View className="flex-1 items-center justify-center pt-10">
                         <Text className="text-text-600 dark:text-dark-text-600 text-[16px] font-medium">
-                            No results found for "{query}"
+                            No results found for &ldquo;{query}&rdquo;
                         </Text>
                         <Text className="text-text-500 dark:text-dark-text-500 text-[14px] mt-2">
                             Check the spelling or try a different suburb.

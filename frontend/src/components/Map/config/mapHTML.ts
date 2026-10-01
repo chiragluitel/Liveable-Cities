@@ -1,5 +1,3 @@
-// map HTML lives here. Leaflet needs a browser context so we use a WebView. Other options with react native support required API connection with pay per use.
-
 import { CASEY_COORDINATES, DEFAULT_ZOOM } from './mapConfig';
 
 function buildMapHTML(): string {
@@ -55,67 +53,166 @@ function buildMapHTML(): string {
 
     var userMarker = null;
     var userLocation = null;
-    var hasCentredOnUser = false; // only centre on the first fix
+    var hasCentredOnUser = false;
 
-    // All icon markers are managed through the cluster group
     var clusterGroup = L.markerClusterGroup({ maxClusterRadius: 60 });
     map.addLayer(clusterGroup);
 
-    // iconStore tracks every marker along with its type and whether it is in the cluster
-    var iconStore = {};   // id → { marker, iconType, onMap }
-    var hiddenTypes = {}; // iconType → true when hidden
+    var iconStore = {};
+    var hiddenTypes = {};
+    var routeStore = {};
+    var routeRequestId = 0;
 
-    var routeStore = {}; // id → [casing, line, startDot, endDot]
-    var routeRequestId = 0; // ignore stale requests
-
-    function drawRoute(id, points) {
-      // only one route on screen at a time
+    function drawRoute(id, routeOptions) {
       clearRoutes();
       var thisRequestId = ++routeRequestId;
-      var latlngs     = points.map(function(p) { return [p.lat, p.lng]; });
-      var coords      = points.map(function(p) { return p.lng+','+p.lat; }).join(';');
-      var casingStyle = { color: '#FFFFFF', weight: 12, opacity: 1,   lineCap: 'round', lineJoin: 'round' };
-      var lineStyle   = { color: '#2563EB', weight: 7,  opacity: 1,   lineCap: 'round', lineJoin: 'round' };
-      var startDot    = { radius: 8, color: '#FFFFFF', weight: 3, fillColor: '#2563EB', fillOpacity: 1 };
-      var endDot      = { radius: 8, color: '#2563EB', weight: 3, fillColor: '#FFFFFF', fillOpacity: 1 };
+
+      var points = Array.isArray(routeOptions) ? routeOptions : (routeOptions.points || []);
+      var targetDistanceKm = !Array.isArray(routeOptions) ? (routeOptions.targetDistanceKm || null) : null;
+      var selectedFilters = !Array.isArray(routeOptions) ? (routeOptions.selectedFilters || []) : [];
+      var routeGeoJson = !Array.isArray(routeOptions) ? routeOptions.routeGeoJson : null;
+      var distanceText = !Array.isArray(routeOptions) ? routeOptions.distanceText : null;
+      var durationText = !Array.isArray(routeOptions) ? routeOptions.durationText : null;
+
+      var latlngs = points.map(function(p) { return [p.lat, p.lng]; });
+
+      var casingStyle = { color: '#FFFFFF', weight: 12, opacity: 1, lineCap: 'round', lineJoin: 'round' };
+      var lineStyle = { color: '#2563EB', weight: 7, opacity: 1, lineCap: 'round', lineJoin: 'round' };
+      var fbCasing = { color: '#FFFFFF', weight: 12, opacity: 0.6, lineCap: 'round', lineJoin: 'round', dashArray: '10 8' };
+      var fbLine = { color: '#2563EB', weight: 7, opacity: 0.5, lineCap: 'round', lineJoin: 'round', dashArray: '10 8' };
+
+      var startDot = { radius: 8, color: '#FFFFFF', weight: 3, fillColor: '#2563EB', fillOpacity: 1 };
+      var endDot = { radius: 8, color: '#2563EB', weight: 3, fillColor: '#FFFFFF', fillOpacity: 1 };
+
       function addLayers(path, cs, ls) {
+        if (!path || path.length === 0) return;
+
         var casing = L.polyline(path, cs).addTo(map);
-        var line   = L.polyline(path, ls).addTo(map);
-        var first = latlngs[0], last = latlngs[latlngs.length-1];
-        var isLoop = first[0] === last[0] && first[1] === last[1];
-        var start = L.circleMarker(first, startDot).addTo(map).bindTooltip(isLoop ? 'Start / End' : 'Start', { permanent: true, direction: 'top', offset: [0, -10] });
-        var end   = isLoop ? null : L.circleMarker(last, endDot).addTo(map).bindTooltip('End', { permanent: true, direction: 'top', offset: [0, -10] });
+        var line = L.polyline(path, ls).addTo(map);
+
+        var first = path[0];
+        var last = path[path.length - 1];
+        var isLoop = Math.abs(first[0] - last[0]) < 0.000001 && Math.abs(first[1] - last[1]) < 0.000001;
+
+        var startMarker = L.circleMarker(first, startDot)
+          .addTo(map)
+          .bindTooltip(isLoop ? 'Start / End' : 'Start', { permanent: true, direction: 'top', offset: [0, -10] });
+
+        var endMarker = isLoop ? null : L.circleMarker(last, endDot)
+          .addTo(map)
+          .bindTooltip('End', { permanent: true, direction: 'top', offset: [0, -10] });
+
         casing.on('click', function() { sendToRN({ type: 'ROUTE_TAPPED', id: id }); });
         line.on('click', function() { sendToRN({ type: 'ROUTE_TAPPED', id: id }); });
+
         map.fitBounds(line.getBounds(), { padding: [40, 40] });
-        routeStore[id] = [casing, line, start].concat(end ? [end] : []);
+        routeStore[id] = [casing, line, startMarker].concat(endMarker ? [endMarker] : []);
       }
-      var controller = new AbortController();
-      var timedOut = false;
-      var timeoutId = setTimeout(function() {
-        timedOut = true;
-        controller.abort();
-      }, 20000);
-      fetch('https://routing.openstreetmap.de/routed-foot/route/v1/foot/'+coords+'?overview=full&geometries=geojson', { signal: controller.signal })
-        .then(function(r){return r.json();})
-        .then(function(data){
-          clearTimeout(timeoutId);
-          if (thisRequestId !== routeRequestId) return; // a newer request already won
-          var route = data.routes[0];
-          var distKm = (route.distance / 1000).toFixed(1) + ' km';
-          sendToRN({ type: 'ROUTE_INFO', id: id, distance: distKm });
-          addLayers(route.geometry.coordinates.map(function(c){return [c[1],c[0]];}), casingStyle, lineStyle);
+
+      // 1. If pre-computed GeoJSON is provided (e.g. from a custom walk), render it immediately
+      if (routeGeoJson) {
+        var parsedGeo = routeGeoJson;
+        if (typeof parsedGeo === 'string') {
+          try { parsedGeo = JSON.parse(parsedGeo); } catch(_) {}
+        }
+        var feature = parsedGeo && parsedGeo.features && parsedGeo.features[0];
+        if (feature && feature.geometry && feature.geometry.coordinates && feature.geometry.coordinates.length > 1) {
+          var geoCoords = feature.geometry.coordinates.map(function(c) { return [c[1], c[0]]; });
+          addLayers(geoCoords, casingStyle, lineStyle);
+
+          var summary = feature.properties && feature.properties.summary;
+          var dist = distanceText || (summary ? (summary.distance / 1000).toFixed(1) + ' km' : '');
+          var dur = durationText || (summary ? Math.round(summary.duration / 60) + ' mins' : '');
+          if (dist) {
+            sendToRN({ type: 'ROUTE_INFO', id: id, distance: dist, duration: dur });
+          }
+          return;
+        }
+      }
+
+      // 2. If already have a full polyline path (more than 2 coordinates and no generation parameters), render directly
+      if (latlngs.length > 2 && !targetDistanceKm && selectedFilters.length === 0) {
+        addLayers(latlngs, casingStyle, lineStyle);
+        if (distanceText) {
+          sendToRN({ type: 'ROUTE_INFO', id: id, distance: distanceText, duration: durationText || '' });
+        }
+        return;
+      }
+
+      var start = points[0] || userLocation;
+      var end = points.length > 1 ? points[points.length - 1] : null;
+
+      if (!start) {
+        sendToRN({
+          type: 'ROUTE_ERROR',
+          id: id,
+          message: 'User location is not available yet.'
+        });
+        return;
+      }
+
+      var requestBody = {
+        title: id,
+        start: {
+          lat: start.lat,
+          lng: start.lng
+        }
+      };
+
+      if (end) {
+        requestBody.end = {
+          lat: end.lat,
+          lng: end.lng
+        };
+      }
+
+      if (targetDistanceKm) {
+        requestBody.targetDistanceKm = targetDistanceKm;
+      }
+
+      if (selectedFilters.length > 0) {
+        requestBody.selectedFilters = selectedFilters;
+      }
+
+      if (latlngs.length === 0) latlngs = [[start.lat, start.lng]];
+
+      function fetchRoute(url) {
+        return fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody)
+        }).then(function(r) {
+          if (!r.ok) throw new Error('Route request failed: ' + r.status);
+          return r.json();
+        });
+      }
+
+      fetchRoute('http://localhost:5156/api/custom-walk-route')
+        .catch(function() {
+          return fetchRoute('http://10.0.2.2:5156/api/custom-walk-route');
         })
-        .catch(function(){
-          clearTimeout(timeoutId);
-          if (thisRequestId !== routeRequestId) return; // a newer request already won
+        .then(function(data) {
+          if (thisRequestId !== routeRequestId) return;
+          var routeGeoJson = data.routeGeoJson;
+          var feature = routeGeoJson.features[0];
+
           sendToRN({
-            type: 'ROUTE_ERROR',
+            type: 'ROUTE_INFO',
             id: id,
-            message: timedOut
-              ? "Couldn't communicate after 20 seconds"
-              : "Couldn't get directions. Please check your connection."
+            distance: data.distanceText,
+            duration: data.durationText
           });
+
+          addLayers(
+            feature.geometry.coordinates.map(function(c) { return [c[1], c[0]]; }),
+            casingStyle,
+            lineStyle
+          );
+        })
+        .catch(function(error) {
+          if (thisRequestId !== routeRequestId) return;
+          sendToRN({ type: 'ROUTE_FALLBACK', id: id, message: String(error) });
+          if (points.length >= 2) addLayers(latlngs, fbCasing, fbLine);
         });
     }
 
@@ -144,7 +241,8 @@ function buildMapHTML(): string {
       marker.on('click', function() {
         sendToRN({ type: 'ICON_TAPPED', label: label });
         if (!userLocation) return;
-        drawRoute('nav-route', [userLocation, { lat: lat, lng: lng }]);
+        clearRoutes();
+        drawRoute('nav-route', { points: [userLocation, { lat: lat, lng: lng }] });
       });
 
       var hidden = !!hiddenTypes[iconType];
@@ -208,7 +306,7 @@ function buildMapHTML(): string {
           break;
         case 'ROUTE_TO':
           if (userLocation) {
-            drawRoute('nav-route', [userLocation, { lat: cmd.lat, lng: cmd.lng }]);
+            drawRoute('nav-route', { points: [userLocation, { lat: cmd.lat, lng: cmd.lng }] });
           } else {
             map.flyTo([cmd.lat, cmd.lng], 16);
           }
@@ -235,7 +333,14 @@ function buildMapHTML(): string {
           setTheme(cmd.isDark);
           break;
         case 'DRAW_ROUTE':
-          drawRoute(cmd.id, cmd.points);
+          drawRoute(cmd.id, {
+            points: cmd.points || [],
+            targetDistanceKm: cmd.targetDistanceKm,
+            selectedFilters: cmd.selectedFilters || [],
+            routeGeoJson: cmd.routeGeoJson,
+            distanceText: cmd.distanceText,
+            durationText: cmd.durationText
+          });
           break;
         case 'CLEAR_ROUTES':
           clearRoutes();

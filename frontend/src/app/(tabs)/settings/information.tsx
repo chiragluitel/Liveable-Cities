@@ -32,7 +32,7 @@ export default function Information() {
         <SettingsGroup title="Project Information">
           <View className="w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
             <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">
-              This app was developed by a team of Swinburne University of Technology students as part of a capstone project. The project involved operationalising the City of Casey's Open Data Exchange, leading to the development of this community walk planning app. 
+              This app was developed by a team of Swinburne University of Technology students as part of a capstone project. The project involved operationalising the City of Casey&apos;s Open Data Exchange, leading to the development of this community walk planning app. 
               {"\n\n"}
               The data points shown on the map are sourced from publicly available open data portals, primarily provided by the City of Casey. This app intends to help City of Casey residents to find new walking routes with useful features and utilities and encourage other developers to also create projects with the open data.
             </Text>

@@ -54,7 +54,17 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   }
 
   function sendRoute(route: MapRoute) {
-    send({ type: 'DRAW_ROUTE', id: route.id, points: route.points });
+    send({
+      type: 'DRAW_ROUTE',
+      id: route.id,
+      title: route.title,
+      points: route.points ?? [],
+      targetDistanceKm: route.targetDistanceKm,
+      selectedFilters: route.selectedFilters ?? [],
+      routeGeoJson: route.routeGeoJson,
+      distanceText: route.distanceText,
+      durationText: route.durationText,
+    });
   }
 
   function sendIcon(entry: MapIconEntry) {
@@ -156,5 +166,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     </View>
   );
 });
+
+CaseyMap.displayName = 'CaseyMap';
 
 export default CaseyMap;

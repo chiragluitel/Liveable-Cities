@@ -1,7 +1,5 @@
 import { MapIconEntry } from '../components/Map/config/mapIcons';
-
-const BASE_URL = 'http://10.0.2.2:5156';  // Use when running in emulator
-//const BASE_URL = 'http://192.168.0.77:5156';  // Set to IP of device running backend
+import { API_BASE_URL } from './apiConfig';
 
 // Name fields vary per amenity type, so this covers all of them.
 type AmenityRecord = {
@@ -31,7 +29,7 @@ function placeNameFor(name: MapIconEntry['name'], r: AmenityRecord): string | un
 }
 
 async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Promise<MapIconEntry[]> {
-  const res = await fetch(`${BASE_URL}${endpoint}`);
+  const res = await fetch(`${API_BASE_URL}${endpoint}`);
   const data: AmenityResponse = await res.json();
   return data.results.map(r => ({
     name,
@@ -41,6 +39,22 @@ async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Prom
   }));
 }
 
+async function fetchOffLeashIcons(): Promise<MapIconEntry[]> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/casey-open-data/places?filters=offLeash&limit=100`);
+    if (!res.ok) return [];
+    const places = await res.json();
+    return places.map((p: any) => ({
+      name: 'offLeash' as const,
+      lat: p.lat,
+      lng: p.lng,
+      placeName: p.name,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchAllAmenityIcons(): Promise<MapIconEntry[]> {
   const results = await Promise.all([
     fetchIconsFor('/api/GetBenches', 'bench'),
@@ -48,6 +62,7 @@ export async function fetchAllAmenityIcons(): Promise<MapIconEntry[]> {
     fetchIconsFor('/api/GetLibraries', 'library'),
     fetchIconsFor('/api/GetBbqs', 'bbq'),
     fetchIconsFor('/api/GetDrinkingFountains', 'fountain'),
+    fetchOffLeashIcons(),
   ]);
   return results.flat();
 }
