@@ -100,8 +100,8 @@ Additionally, the application files for both Android and iOS can be downloaded f
 - PostgreSQL 17
 
 ### Building
-1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We recommend using the development build without EAS.
-2. Clone the repository
+1. Clone the repository
+2. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We recommend using the development build without EAS.
 3. Copy `.env.example` to `.env` and fill it with the correct values
 4. Run `npm install` in the `/frontend` folder
 5. Build and install the development phone client (in the `/frontend` folder):
