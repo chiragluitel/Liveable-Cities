@@ -29,7 +29,7 @@
         <li><a href="#getting-started">Getting Started</a></li>
         <li><a href="#usage">Usage</a></li>
         <li>
-            <a href="#building">Building</a>
+            <a href="#build">Build</a>
             <ul>
                 <li><a href="#android">Android</a></li>
                 <li><a href="#ios">iOS</a></li>
@@ -86,25 +86,41 @@ Additionally, the application files for both Android and iOS can be downloaded f
 ## Usage
 
 
-## Building
+## Build
+> Building for iOS can only be done on macOS
 ### Prerequisites
-```
-- react native
-- android studio
-- macos stuff
-```
+#### With Docker
+- Docker Desktop
+  - [macOS install requirements](https://docs.docker.com/desktop/setup/install/mac-install/#system-requirements)
+  - [Windows install requirements](https://docs.docker.com/desktop/setup/install/windows-install/#system-requirements)
+  - [Linux install requirements](https://docs.docker.com/desktop/setup/install/linux/)
 
-### Android
-```
-- setup dev env
-- run things
-```
+#### Without Docker
+- Node.js (LTS)
+- Android Studio + Android SDK for Android development
+- macOS + Xcode for iOS development
 
-### iOS
-```
-- setup dev env
-- run things
-```
+### Building
+1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We reccommend using the development build without EAS.
+2. Clone the repository
+3. Copy `.env.example` to `.env` and fill it with the correct values
+4. Build and install the development phone client:
+    - Android emulator or physical device: `npx expo run:android`
+        > For physical Android devices, ensure they are connected via USB with USB Debugging enabled. Use `adb devices` to list connected devices
+    - iOS simulator: `npx expo run:ios`
+    - Physical iOS device: `npx expo run:ios --device`
+        > For physical iOS devices, make sure your device is connected and configured for development in Xcode
+
+If using Docker, <u>**stop the development server**</u> and continue to the [With Docker](#with-docker-1) section. If you aren't using docker, <u>**leave the development server running**</u> and continue to the [Without Docker](#without-docker-1)
+
+#### With Docker
+1. Install and setup [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+2. Inside the project root folder, run `docker compose up --build`
+3. Open the Expo development phone client and connect to the development server
+    - If the client doesn't connect automatically, either enter the URL of the development server or scan the QR code
+        > If the dev server URL is `localhost`, replace it with the IP address of the device running the server, assuming the phone is on the same network
+
+#### Without Docker
 
 ## Privacy
 This app uses your location data temporarily to calculate walking routes. Your location is discarded after route calculation.
