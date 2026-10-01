@@ -28,13 +28,7 @@
         </li>
         <li><a href="#getting-started">Getting Started</a></li>
         <li><a href="#usage">Usage</a></li>
-        <li>
-            <a href="#build">Build</a>
-            <ul>
-                <li><a href="#android">Android</a></li>
-                <li><a href="#ios">iOS</a></li>
-            </ul>
-        </li>
+        <li><a href="#build">Build</a></li>
         <li><a href="#privacy">Privacy</a></li>
         <li><a href="#license">License</a></li>
         <li><a href="#ai-usage-declaration">AI Usage</a></li>
