@@ -93,10 +93,10 @@ Additionally, the application files for both Android and iOS can be downloaded f
   - [Linux install requirements](https://docs.docker.com/desktop/setup/install/linux/)
 
 #### Without Docker
-- Node.js (LTS)
-- .Net 9
 - Android Studio + Android SDK for Android development
 - macOS + Xcode for iOS development
+- Node.js (LTS)
+- .Net 9
 - PostgreSQL 17
 
 ### Building
@@ -111,7 +111,7 @@ Additionally, the application files for both Android and iOS can be downloaded f
     - Physical iOS device: `npx expo run:ios --device`
         > For physical iOS devices, make sure your device is connected and configured for development in Xcode
 
-If using Docker, <u>**stop the development server**</u> and continue to the [With Docker](#with-docker-1) section. If you aren't using docker, <u>**leave the development server running**</u> and continue to the [Without Docker](#without-docker-1)
+If using Docker, <ins>**stop the development server**</ins> and continue to the [With Docker](#with-docker-1) section. If you aren't using docker, <ins>**leave the development server running**</ins> and continue to the [Without Docker](#without-docker-1)
 
 #### With Docker
 1. Install and setup [Docker Desktop](https://www.docker.com/products/docker-desktop/)
