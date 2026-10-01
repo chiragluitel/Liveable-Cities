@@ -97,6 +97,7 @@ Additionally, the application files for both Android and iOS can be downloaded f
 - .Net 9
 - Android Studio + Android SDK for Android development
 - macOS + Xcode for iOS development
+- PostgreSQL 17
 
 ### Building
 1. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We recommend using the development build without EAS.
@@ -120,9 +121,14 @@ If using Docker, <u>**stop the development server**</u> and continue to the [Wit
         > If the dev server URL is `localhost`, replace it with the IP address of the device running the server, assuming the phone is on the same network
 
 #### Without Docker
-`UNFINISHED`
-1. Open a new terminal and navigate to the `/backend/CaseySmartHub.Api` folder
-2. Run `dotnet run`
+1. Install PostgeSQL 17 with `winget PostgeSQL.PostgreSQL.17`
+2. Install PostGIS 3.5 with the PostgreSQL Application Stack Builder (`Spacial Extensions -> PostGIS 3.5`)
+3. Create a new database in the PostgreSQL server
+4. Create a new Login/Group role
+5. Update the new database to allow the new login to have full permissions
+6. Update `DefaultConnection` in `/backend/CaseySmartHub.Api/appsettings.json` to reflect the new database and user values
+7. Open a new terminal and navigate to the `/backend/CaseySmartHub.Api` folder
+8. Run `dotnet run` to start the backend
 
 ## Privacy
 This app uses your location data temporarily to calculate walking routes. Your location is discarded after route calculation.
