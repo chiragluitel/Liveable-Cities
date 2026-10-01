@@ -52,13 +52,14 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   const { walkingSpeed } = useSettings();
   const { visibleIcons } = useMapFilter();
   const { width: windowWidth } = useWindowDimensions();
-
+  const {backendURL} = useSettings();
+  
   useEffect(() => {
     getLocation().then(loc => setUserLocation(loc)).catch(() => {});
   }, []);
 
   useEffect(() => {
-    fetchAllAmenityIcons().then(setAmenities).catch(() => {});
+    fetchAllAmenityIcons(backendURL).then(setAmenities).catch(() => {});
   }, []);
 
   const CARD_WIDTH = windowWidth * 0.85;
