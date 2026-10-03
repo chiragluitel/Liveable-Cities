@@ -42,6 +42,7 @@ const SettingsContext = createContext<SettingsContextValue>({
   setWeeklyWalks: () => {},
   addToWeeklyWalks: () => {},
   backendURL: "http://10.0.0.0:5156",
+  //backendURL: "http://192.168.0.31:5156",
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -55,6 +56,7 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
   const [weekStart, setWeekStart, isWeekStartLoading] = useAsyncStorage("weekStart", "");
 
   const backendURL = "http://10.0.0.0:5156";
+  //const backendURL = "http://192.168.0.31:5156";
 
   useEffect(() => {
     if (isWeekStartLoading) return;
