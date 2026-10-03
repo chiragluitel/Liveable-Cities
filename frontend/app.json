@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "Casey Smart Hub",
-    "slug": "caseysmarthub",
-    "version": "1.0.0",
+    "name": "Casey Walks",
+    "slug": "caseywalks",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "scheme": "caseysmarthub",
+    "scheme": "caseywalks",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.caseysmarthubcl.app",
+      "bundleIdentifier": "com.caseywalkscl.app",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Allow Casey Smart Hub to use your location to show you on the map.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Casey Smart Hub to use your location to show you on the map."
+        "NSLocationWhenInUseUsageDescription": "Allow Casey Walks to use your location to show you on the map.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow Casey Walks to use your location to show you on the map."
       }
     },
     "android": {
@@ -23,7 +23,7 @@
         "monochromeImage": "./src/assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.caseysmarthubcl.app"
+      "package": "com.caseywalkscl.app"
     },
     "web": {
       "output": "static",
@@ -34,7 +34,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow Casey Smart Hub to use your location."
+          "locationAlwaysAndWhenInUsePermission": "Allow Casey Walks to use your location."
         }
       ],
       [
@@ -48,8 +48,7 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      "expo-secure-store"
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

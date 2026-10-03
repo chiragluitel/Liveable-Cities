@@ -1,4 +1,6 @@
-const BASE_URL = 'http://10.0.2.2:5156';
+import { Beaker } from "lucide-react-native";
+
+//const BASE_URL = 'http://10.0.2.2:5156';
 const GABRIEL_USER_ID = 'gabriel-savannah';
 
 type CustomWalkPayload = {
@@ -59,14 +61,14 @@ function toPayload(walk: Omit<CustomWalk, 'id'>): CustomWalkPayload {
   };
 }
 
-export async function fetchCustomWalks(): Promise<CustomWalk[]> {
-  const res = await fetch(`${BASE_URL}/api/CustomWalks?userId=${GABRIEL_USER_ID}`);
+export async function fetchCustomWalks(base_url: string): Promise<CustomWalk[]> {
+  const res = await fetch(`${base_url}/api/CustomWalks?userId=${GABRIEL_USER_ID}`);
   const data: CustomWalkResponse[] = await res.json();
   return data.map(toCustomWalk);
 }
 
-export async function createCustomWalk(walk: Omit<CustomWalk, 'id'>): Promise<CustomWalk> {
-  const res = await fetch(`${BASE_URL}/api/CustomWalks`, {
+export async function createCustomWalk(base_url: string, walk: Omit<CustomWalk, 'id'>): Promise<CustomWalk> {
+  const res = await fetch(`${base_url}/api/CustomWalks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(toPayload(walk)),
@@ -75,8 +77,8 @@ export async function createCustomWalk(walk: Omit<CustomWalk, 'id'>): Promise<Cu
   return toCustomWalk(data);
 }
 
-export async function updateCustomWalk(id: number, walk: Omit<CustomWalk, 'id'>): Promise<CustomWalk> {
-  const res = await fetch(`${BASE_URL}/api/CustomWalks/${id}`, {
+export async function updateCustomWalk(base_url: string, id: number, walk: Omit<CustomWalk, 'id'>): Promise<CustomWalk> {
+  const res = await fetch(`${base_url}/api/CustomWalks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(toPayload(walk)),
@@ -85,6 +87,6 @@ export async function updateCustomWalk(id: number, walk: Omit<CustomWalk, 'id'>)
   return toCustomWalk(data);
 }
 
-export async function deleteCustomWalk(id: number): Promise<void> {
-  await fetch(`${BASE_URL}/api/CustomWalks/${id}`, { method: 'DELETE' });
+export async function deleteCustomWalk(base_url: string, id: number): Promise<void> {
+  await fetch(`${base_url}/api/CustomWalks/${id}`, { method: 'DELETE' });
 }
