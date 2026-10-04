@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
+import { View, Text, Pressable, ScrollView, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
@@ -7,15 +7,20 @@ import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 import LoginPage from "../login-page";
 import { useCustomWalks } from "@/src/context/CustomWalkContext";
-import { useSettings } from "@/src/context/SettingsContext";
-import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
+import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import { FitnessGoal } from "@/src/types/walkPlannerTypes";
+import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
+import { FitnessSection } from "@/src/components/WalkPlanner/FitnessGoals/FitnessSection";
+import SettingsGroup from "@/src/components/Settings/SettingsGroup";
+import Dropdown from "@/src/components/Dropdown/Dropdown";
+import DropdownItem from "@/src/components/Dropdown/DropdownItem";
 
 
 export default function ProfilePage() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [username, setUsername] = useState("");
   const { refreshWalks } = useCustomWalks();
+  const { walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks } = useSettings();
 
   useEffect(() => {
     checkLogin();
@@ -58,10 +63,6 @@ export default function ProfilePage() {
     email: "",
   };
 
-  const { 
-    walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks
-  } = useSettings();
-  
   const fitnessGoals: FitnessGoal[] = [
       {
           id: 'g1',
@@ -77,24 +78,44 @@ export default function ProfilePage() {
       <ProfileHeader name={user.name} />
       <ScrollView contentContainerStyle={{alignItems: "center"}}>
 
-      <WeatherWidget />
+        <WeatherWidget />
 
-      <ProfileInfo
-        name={user.name}
-        email={user.email}
-      />
+        <ProfileInfo
+          name={user.name}
+          email={user.email}
+        />
 
-      <ProfileFitnessGoal />
+        <FitnessSection goals={fitnessGoals} />
 
-      <Pressable
-        onPress={handleLogout}
-        className="mt-6 bg-gray-500 rounded-lg py-4 items-center"
-      >
-        <Text className="text-white font-bold">
-          Log out
-        </Text>
-      </Pressable>
+        <SettingsGroup title="Fitness Goals">
+          <Dropdown title="Weekly Walk Goal" valueKey="walkGoal" initialSelected="5" actionFunc={setWalkGoal}  hideSeperator={true}>
+              <DropdownItem title="5 walks" value="5" />
+              <DropdownItem title="10 walks" value="10" />
+              <DropdownItem title="15 walks" value="15" />
+              <DropdownItem title="20 walks" value="20" />
+              <DropdownItem title="25 walks" value="25" />
+              <DropdownItem title="30 walks" value="30" />
+              <DropdownItem title="35 walks" value="35" />
+              <DropdownItem title="40 walks" value="40" hideSeperator={true} />
+          </Dropdown>
+        </SettingsGroup>
 
+        <SettingsGroup title="Preferences">
+          <Dropdown title="Walking Speed" valueKey="walkSpeed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
+            <DropdownItem title="Slow (2km/h)" value="Slow" />
+            <DropdownItem title="Average (4km/h)" value="Average" />
+            <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
+          </Dropdown>
+        </SettingsGroup>
+
+        <TouchableOpacity
+          onPress={handleLogout}
+          className="w-[90%] mt-6 mb-5 bg-gray-500 rounded-lg py-4 items-center"
+        >
+          <Text className="text-white font-bold">
+            Log out
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

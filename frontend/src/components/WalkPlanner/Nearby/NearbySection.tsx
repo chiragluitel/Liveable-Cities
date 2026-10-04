@@ -53,7 +53,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   const { walkingSpeed, backendURL } = useSettings();
   const { visibleIcons } = useMapFilter();
   const { width: windowWidth } = useWindowDimensions();
-
+  
   useEffect(() => {
     getLocation().then(loc => setUserLocation(loc)).catch(() => {});
   }, []);
