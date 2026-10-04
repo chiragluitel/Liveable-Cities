@@ -12,13 +12,12 @@ interface CommunityWalkSectionProps {
 }
 
 const  CommunityWalkSection = ({walks, onHeaderPress, onWalkPress}: CommunityWalkSectionProps) => {
-    const {width: windowWidth} = useWindowDimensions();
-
-    if (!walks || walks.length === 0){
+    if (!walks || walks.length ==0){
         return (
             <View> No Community Walks! </View>
         )
     }
+    const {width: windowWidth} = useWindowDimensions();
     const CARD_WIDTH = windowWidth * 0.85;
     const STACKED_CARD_WIDTH = windowWidth - 32;
     const GAP = 16;

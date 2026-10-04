@@ -23,8 +23,9 @@ import { useRouter } from 'expo-router';
 import { NearbyPressItem } from '@/src/components/WalkPlanner/Nearby/NearbySection';
 import { Amenity } from '@/src/types/walkPlannerTypes';
 
+// One tagged selection instead of separate booleans, so only one can ever be set.
 type Selection =
-    | { kind: 'walk'; data: SelectedWalkData; communityWalkId?: string }
+    | { kind: 'walk'; data: SelectedWalkData; communityWalkId?: string; navRoute?: any; navDownloaded?: boolean }
     | { kind: 'customWalk'; data: any }
     | { kind: 'amenity'; data: Amenity };
 
@@ -35,39 +36,10 @@ interface WalkPlannerSheetProps {
     onNearbySelect?: (item: NearbyPressItem) => void;
 }
 
-function getCustomWalkMapRoute(walk: any): MapRoute | null {
-    const coordinates = walk?.routeGeoJson?.features?.[0]?.geometry?.coordinates;
-
-    if (!Array.isArray(coordinates)) {
-        return null;
-    }
-
-    const points = coordinates
-        .filter((coordinate: any) => Array.isArray(coordinate) && coordinate.length >= 2)
-        .map((coordinate: any) => ({
-            lng: Number(coordinate[0]),
-            lat: Number(coordinate[1]),
-        }))
-        .filter((point: any) => Number.isFinite(point.lat) && Number.isFinite(point.lng));
-
-    if (points.length < 2) {
-        return null;
-    }
-
-    return {
-        id: `custom-walk-${walk.id}`,
-        title: walk.cuswalkname,
-        points,
-        routeGeoJson: walk.routeGeoJson,
-        distanceText: walk.routeDistanceText,
-        durationText: walk.routeDurationText,
-    };
-}
-
 export interface WalkPlannerSheetRef {
     collapseToSearch: () => void;
     showNavWalk: (label: string) => void;
-    updateNavInfo: (distance: string, time: string) => void;
+    updateNavInfo: (distance: string, time: string, routeGeoJson?: any) => void;
 }
 
 export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlannerSheetProps>(({ searchState, animatedPosition, onWalkSelect, onNearbySelect }, ref) => {
@@ -84,6 +56,11 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
     const { communityWalks, incrementDownloads, isWalkDownloaded, unmarkDownloaded } = useCommunityWalks();
     const router = useRouter();
 
+    // Saved walks remember which community walk they came from, so this survives app restarts.
+    const isDownloaded = useCallback((walkId: string) =>
+        isWalkDownloaded(walkId) || walks.some((w: any) => w.communityWalkId === walkId),
+    [isWalkDownloaded, walks]);
+
     const killSearchFocus = useCallback(() => {
         Keyboard.dismiss();
         searchInputRef.current?.blur();
@@ -99,9 +76,9 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             setSelection({ kind: 'walk', data: { ...walkData, distanceText: 'Calculating', durationText: 'please wait' } });
             snapToPartial();
         },
-        updateNavInfo: (distance: string, time: string) => {
+        updateNavInfo: (distance: string, time: string, routeGeoJson?: any) => {
             setSelection(prev => prev?.kind === 'walk'
-                ? { ...prev, data: { ...prev.data, distanceText: distance, durationText: time } }
+                ? { ...prev, data: { ...prev.data, distanceText: distance, durationText: time }, navRoute: routeGeoJson }
                 : prev);
         },
     }));
@@ -121,20 +98,28 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         const walk = communityWalks.find((w: any) => w.id === walkId);
         setSelection({ kind: 'walk', data: getSelectedWalkData('default', walk?.title), communityWalkId: walkId });
         snapToPartial();
+        // Always pass a route or null so a routeless walk clears any old route.
         const route = walk?.routeId ? MAP_ROUTES.find(r => r.id === walk.routeId) ?? null : null;
         onWalkSelect?.(route);
     }, [communityWalks, snapToPartial, onWalkSelect]);
 
     const handleImportWalk = useCallback((walkId: string) => {
         const walk = communityWalks.find((w: any) => w.id === walkId);
-        if (walk && !isWalkDownloaded(walkId)) {
+        if (walk && !isDownloaded(walkId)) {
             saveWalk({ cuswalkname: walk.title, distance: walk.distanceKm, fromCommunity: true, communityWalkId: walkId, routeId: walk.routeId });
             incrementDownloads(walkId);
         }
         setSelection(null);
         snapToPartial();
         onWalkSelect?.(null);
-    }, [communityWalks, saveWalk, incrementDownloads, snapToPartial, onWalkSelect]);
+    }, [communityWalks, isDownloaded, saveWalk, incrementDownloads, snapToPartial, onWalkSelect]);
+
+    // Saves the route to a tapped amenity into My Walks.
+    const handleDownloadNavWalk = useCallback(() => {
+        if (selection?.kind !== 'walk' || !selection.navRoute) return;
+        saveWalk({ cuswalkname: selection.data.title, distance: parseFloat(selection.data.distanceText), routeGeoJson: selection.navRoute, routeDistanceText: selection.data.distanceText });
+        setSelection({ ...selection, navDownloaded: true });
+    }, [selection, saveWalk]);
 
     const handleBack = useCallback(() => {
         setSelection(null);
@@ -147,15 +132,17 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             const updated = walks.find((w: any) => w.id === selection.data.id);
             if (updated) setSelection({ kind: 'customWalk', data: updated });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [walks]);
 
     const handleCustomWalkCardPress = useCallback((walk: any) => {
         setSelection({ kind: 'customWalk', data: walk });
         snapToPartial();
-
-        const route = getCustomWalkMapRoute(walk)
-            ?? (walk?.routeId ? MAP_ROUTES.find(r => r.id === walk.routeId) ?? null : null);
-
+        // Downloaded community walks keep their routeId, so their route draws too.
+        // Built custom walks carry their own generated route instead.
+        const route = walk?.routeGeoJson
+            ? { id: `custom-walk-${walk.id}`, points: [], routeGeoJson: walk.routeGeoJson, distanceText: walk.routeDistanceText }
+            : walk?.routeId ? MAP_ROUTES.find(r => r.id === walk.routeId) ?? null : null;
         onWalkSelect?.(route);
     }, [snapToPartial, onWalkSelect]);
 
@@ -176,8 +163,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
         deleteWalk(walkId);
         setSelection(null);
         snapToPartial();
-        onWalkSelect?.(null);
-    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial, onWalkSelect]);
+    }, [walks, deleteWalk, unmarkDownloaded, snapToPartial]);
 
     const handleNearbyPress = useCallback((item: NearbyPressItem) => {
         setSelection({
@@ -192,6 +178,7 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
             },
         });
         snapToPartial();
+        // An amenity isn't a walk route, so clear whatever route was showing.
         onWalkSelect?.(null);
         onNearbySelect?.(item);
     }, [snapToPartial, onWalkSelect, onNearbySelect]);
@@ -242,8 +229,8 @@ export const WalkPlannerBottomSheet = forwardRef<WalkPlannerSheetRef, WalkPlanne
                         walk={selectedWalk}
                         onEdit={selectedCustomWalk ? () => handleEditWalk(selectedCustomWalk.id) : undefined}
                         onDelete={selectedCustomWalk ? () => handleDeleteWalk(selectedCustomWalk.id) : undefined}
-                        onImport={selectedCommunityWalkId ? () => handleImportWalk(selectedCommunityWalkId) : undefined}
-                        alreadyDownloaded={selectedCommunityWalkId ? isWalkDownloaded(selectedCommunityWalkId) : false}
+                        onImport={selectedCommunityWalkId ? () => handleImportWalk(selectedCommunityWalkId) : handleDownloadNavWalk}
+                        alreadyDownloaded={selectedCommunityWalkId ? isDownloaded(selectedCommunityWalkId) : Boolean(selection?.kind === 'walk' && selection.navDownloaded)}
                     />
                 ) : selectedCustomWalk ? (
                     <CustomWalkDetail

@@ -1,5 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const BASE_URL = 'http://10.0.2.2:5156';
-const GABRIEL_USER_ID = 'gabriel-savannah';
+
+// Walks belong to the logged-in user; walks made while logged out are kept under "guest".
+const getUserId = async () => (await AsyncStorage.getItem('username')) || 'guest';
 
 type CustomWalkPayload = {
   userId: string;
@@ -19,6 +23,9 @@ type CustomWalkPayload = {
   routeDistanceText?: string;
   routeDurationText?: string;
   routeGeoJson: string | null;
+  fromCommunity: boolean;
+  communityWalkId?: string;
+  routeId?: string;
 };
 
 type CustomWalkResponse = CustomWalkPayload & { id: number };
@@ -41,6 +48,9 @@ export type CustomWalk = {
   routeDistanceText?: string;
   routeDurationText?: string;
   routeGeoJson?: any;
+  fromCommunity?: boolean;
+  communityWalkId?: string;
+  routeId?: string;
 };
 
 function toCustomWalk(r: CustomWalkResponse): CustomWalk {
@@ -62,12 +72,15 @@ function toCustomWalk(r: CustomWalkResponse): CustomWalk {
     routeDistanceText: r.routeDistanceText,
     routeDurationText: r.routeDurationText,
     routeGeoJson: r.routeGeoJson ? JSON.parse(r.routeGeoJson) : undefined,
+    fromCommunity: r.fromCommunity,
+    communityWalkId: r.communityWalkId ?? undefined,
+    routeId: r.routeId ?? undefined,
   };
 }
 
-function toPayload(walk: Omit<CustomWalk, 'id'>): CustomWalkPayload {
+function toPayload(walk: Omit<CustomWalk, 'id'>, userId: string): CustomWalkPayload {
   return {
-    userId: GABRIEL_USER_ID,
+    userId,
     name: walk.cuswalkname,
     distance: walk.distance,
     hasWaterFountain: walk.hasWaterFountain,
@@ -86,11 +99,14 @@ function toPayload(walk: Omit<CustomWalk, 'id'>): CustomWalkPayload {
     routeGeoJson: walk.routeGeoJson
       ? (typeof walk.routeGeoJson === 'string' ? walk.routeGeoJson : JSON.stringify(walk.routeGeoJson))
       : null,
+    fromCommunity: Boolean(walk.fromCommunity),
+    communityWalkId: walk.communityWalkId,
+    routeId: walk.routeId,
   };
 }
 
 export async function fetchCustomWalks(): Promise<CustomWalk[]> {
-  const res = await fetch(`${BASE_URL}/api/CustomWalks?userId=${GABRIEL_USER_ID}`);
+  const res = await fetch(`${BASE_URL}/api/CustomWalks?userId=${encodeURIComponent(await getUserId())}`);
   const data: CustomWalkResponse[] = await res.json();
   return data.map(toCustomWalk);
 }
@@ -99,7 +115,7 @@ export async function createCustomWalk(walk: Omit<CustomWalk, 'id'>): Promise<Cu
   const res = await fetch(`${BASE_URL}/api/CustomWalks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(toPayload(walk)),
+    body: JSON.stringify(toPayload(walk, await getUserId())),
   });
   const data: CustomWalkResponse = await res.json();
   return toCustomWalk(data);
@@ -109,7 +125,7 @@ export async function updateCustomWalk(id: number, walk: Omit<CustomWalk, 'id'>)
   const res = await fetch(`${BASE_URL}/api/CustomWalks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(toPayload(walk)),
+    body: JSON.stringify(toPayload(walk, await getUserId())),
   });
   const data: CustomWalkResponse = await res.json();
   return toCustomWalk(data);

@@ -62,15 +62,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var db = scope.ServiceProvider.GetRequiredService<CaseyDbContext>();
-    if (DatabaseAvailability.CanConnect(db.Database.GetDbConnection().ConnectionString))
-    {
-        await db.Database.MigrateAsync();
-    }
-    else
-    {
-        app.Logger.LogWarning("Database not reachable; skipping migrations on startup.");
-    }
+    await scope.ServiceProvider.GetRequiredService<CaseyDbContext>()
+        .Database.EnsureCreatedAsync();
 }
 
 // Configure the HTTP request pipeline.

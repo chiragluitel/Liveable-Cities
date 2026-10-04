@@ -29,6 +29,5 @@ public sealed class CaseyDbContext : DbContext
         modelBuilder.Entity<PublicToilet>().Property(toilet => toilet.Id).ValueGeneratedNever();
         modelBuilder.Entity<Library>().Property(library => library.Id).ValueGeneratedNever();
         modelBuilder.Entity<Bbq>().Property(bbq => bbq.Id).ValueGeneratedNever();
-        modelBuilder.Entity<CustomWalk>().HasKey(walk => walk.Id);
     }
 }

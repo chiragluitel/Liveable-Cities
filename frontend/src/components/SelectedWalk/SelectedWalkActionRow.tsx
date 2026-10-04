@@ -98,15 +98,6 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
 
   return (
     <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
-      <Pressable
-        className="bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center"
-        style={{ width: '48%' }}
-        onPress={() => console.log('Download pressed')}
-      >
-        <Ionicons name="download-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-        <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2">Download</Text>
-      </Pressable>
-
       <TouchableOpacity
           className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
           style={{ width: '48%' }}

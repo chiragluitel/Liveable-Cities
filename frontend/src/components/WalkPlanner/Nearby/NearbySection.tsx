@@ -108,7 +108,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
       <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">Nearby</Text>
       {items.length === 0 ? (
         <Text className="text-sm text-text-600 dark:text-dark-text-600 px-4">
-          There isn&apos;t anything nearby.
+          There isn't anything nearby.
         </Text>
       ) : items.length <= 3 ? (
         // Few enough to fit without scrolling, so stack full-width instead of a carousel.

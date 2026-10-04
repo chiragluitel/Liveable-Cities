@@ -24,5 +24,10 @@ public sealed class CustomWalk
 
     public string? RouteGeoJson { get; set; }
 
+    // Set when the walk was downloaded from the community hub.
+    public bool FromCommunity { get; set; }
+    public string? CommunityWalkId { get; set; }
+    public string? RouteId { get; set; }
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

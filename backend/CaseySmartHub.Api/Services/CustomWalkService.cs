@@ -17,7 +17,6 @@ public sealed class CustomWalkService : ICustomWalkService
     {
         return await _db.CustomWalks
             .Where(w => w.UserId == userId)
-            .OrderByDescending(w => w.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 
@@ -49,6 +48,9 @@ public sealed class CustomWalkService : ICustomWalkService
         existing.RouteDistanceText = walk.RouteDistanceText;
         existing.RouteDurationText = walk.RouteDurationText;
         existing.RouteGeoJson = walk.RouteGeoJson;
+        existing.FromCommunity = walk.FromCommunity;
+        existing.CommunityWalkId = walk.CommunityWalkId;
+        existing.RouteId = walk.RouteId;
 
         await _db.SaveChangesAsync(cancellationToken);
         return existing;

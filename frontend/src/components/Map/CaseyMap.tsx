@@ -26,7 +26,7 @@ export type CaseyMapHandle = {
 };
 
 type CaseyMapProps = {
-  onRouteInfo?: (id: string, distance: string) => void;
+  onRouteInfo?: (id: string, distance: string, routeGeoJson?: any) => void;
   onRouteTap?: (id: string) => void;
   onIconTap?: (label: string) => void;
   animatedSheetPosition?: SharedValue<number>;
@@ -56,17 +56,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
   }
 
   function sendRoute(route: MapRoute) {
-    send({
-      type: 'DRAW_ROUTE',
-      id: route.id,
-      title: route.title,
-      points: route.points ?? [],
-      targetDistanceKm: route.targetDistanceKm,
-      selectedFilters: route.selectedFilters ?? [],
-      routeGeoJson: route.routeGeoJson,
-      distanceText: route.distanceText,
-      durationText: route.durationText,
-    });
+    send({ type: 'DRAW_ROUTE', id: route.id, points: route.points, routeGeoJson: route.routeGeoJson, distanceText: route.distanceText });
   }
 
   function sendIcon(entry: MapIconEntry) {
@@ -108,7 +98,7 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
       pollRef.current = setInterval(checkBackend, 20000); // also catches a connection dropping later
     }
 
-    if (msg.type === 'ROUTE_INFO') onRouteInfo?.(msg.id, msg.distance);
+    if (msg.type === 'ROUTE_INFO') onRouteInfo?.(msg.id, msg.distance, msg.routeGeoJson);
     if (msg.type === 'ROUTE_TAPPED') onRouteTap?.(msg.id);
     if (msg.type === 'ICON_TAPPED') onIconTap?.(msg.label);
     if (msg.type === 'ROUTE_ERROR') Alert.alert('Route unavailable', msg.message);
@@ -168,7 +158,5 @@ const CaseyMap = forwardRef<CaseyMapHandle, CaseyMapProps>(({ onRouteInfo, onRou
     </View>
   );
 });
-
-CaseyMap.displayName = 'CaseyMap';
 
 export default CaseyMap;

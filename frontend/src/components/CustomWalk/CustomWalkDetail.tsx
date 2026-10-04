@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, Pressable } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
-import { Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb, Flame } from 'lucide-react-native';
+import { Droplets, Accessibility, Heart, Flame } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
@@ -10,13 +10,9 @@ import { useSettings, SPEED_KMH, formatWalkTime } from '@/src/context/SettingsCo
 import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
 
 const FILTER_DEFS = [
-    { key: 'hasWaterFountain',  label: 'Fountain',   Icon: Droplets },
-    { key: 'hasDisabledToilets', label: 'Accessible', Icon: Accessibility },
-    { key: 'hasPark',           label: 'Park',        Icon: Leaf },
-    { key: 'hasPlayground',     label: 'Playground',  Icon: Star },
-    { key: 'hasRubbishBin',     label: 'Bins',        Icon: Trash2 },
+    { key: 'hasWaterFountain',  label: 'Water Fountain', Icon: Droplets },
+    { key: 'hasDisabledToilets', label: 'Toilets',    Icon: Accessibility },
     { key: 'hasOffLeash',       label: 'Off Leash',   Icon: Heart },
-    { key: 'hasWellLitStreets', label: 'Lit Streets', Icon: Lightbulb },
     { key: 'hasBbq',            label: 'BBQ',         Icon: Flame },
 ];
 

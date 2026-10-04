@@ -17,12 +17,9 @@ export const CommunityWalksProvider = ({ children }: { children: React.ReactNode
   const shareWalk = (localWalk: any, sharedBy?: string) => {
     const activeTags = [
       localWalk.hasWaterFountain && 'Water Fountain',
-      localWalk.hasDisabledToilets && 'Accessible',
-      localWalk.hasPark && 'Park',
-      localWalk.hasPlayground && 'Playground',
-      localWalk.hasWellLitStreets && 'Lit Streets',
-      localWalk.hasRubbishBin && 'Bins',
+      localWalk.hasDisabledToilets && 'Toilets',
       localWalk.hasOffLeash && 'Off Leash',
+      localWalk.hasBbq && 'BBQ',
     ].filter(Boolean) as string[];
 
     const distanceKm = Number(localWalk.distance) || 0;

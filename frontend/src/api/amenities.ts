@@ -1,4 +1,7 @@
 import { MapIconEntry } from '../components/Map/config/mapIcons';
+import { useSettings } from '../context/SettingsContext';
+
+//const BASE_URL = 'http://10.0.2.2:5156';
 
 // Name fields vary per amenity type, so this covers all of them.
 type AmenityRecord = {

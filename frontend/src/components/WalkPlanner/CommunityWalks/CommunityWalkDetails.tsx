@@ -1,12 +1,14 @@
 import { Walk } from "@/src/types/walkPlannerTypes";
 import { Download } from "lucide-react-native";
 import { Text, View } from "react-native";
+import { useSettings, formatWalkTime } from "@/src/context/SettingsContext";
 
 interface CommunityWalkDetailsProps {
     walk: Walk
 }
 
 export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
+  const { walkingSpeed } = useSettings();
   const shownTags = walk.tags.slice(0, 2);
   const extraCount = walk.tags.length - shownTags.length;
 
@@ -16,7 +18,7 @@ export const CommunityWalkDetails = ({ walk }: CommunityWalkDetailsProps) => {
         {walk.title}
       </Text>
       <Text className="text-xs text-text-700 dark:text-dark-text-600 font-medium mb-2">
-        {walk.distanceKm} km • {walk.durationMin} min
+        {walk.distanceKm} km • {formatWalkTime(walk.distanceKm, walkingSpeed)}
       </Text>
 
       <View className="flex-row flex-wrap gap-1.5">
