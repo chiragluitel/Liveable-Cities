@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 import LoginPage from "../login-page";
+import { useCustomWalks } from "@/src/context/CustomWalkContext";
+import { useSettings } from "@/src/context/SettingsContext";
+import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
+import { FitnessGoal } from "@/src/types/walkPlannerTypes";
 
 
 export default function ProfilePage() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [username, setUsername] = useState("");
+  const { refreshWalks } = useCustomWalks();
 
   useEffect(() => {
     checkLogin();
@@ -25,6 +30,7 @@ export default function ProfilePage() {
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    refreshWalks();
   };
 
   const handleLogout = async () => {
@@ -33,6 +39,7 @@ export default function ProfilePage() {
 
     setLoggedIn(false);
     setUsername("");
+    refreshWalks();
   };
 
   // Wait while checking AsyncStorage
@@ -88,6 +95,7 @@ export default function ProfilePage() {
         </Text>
       </Pressable>
 
+      </ScrollView>
     </View>
   );
 }

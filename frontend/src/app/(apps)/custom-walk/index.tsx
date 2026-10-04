@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, ScrollView, TouchableOpacity, View, Modal } from 'react-native';
+import { Alert, Text, ScrollView, TouchableOpacity, View, Modal } from 'react-native';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -14,6 +14,8 @@ import { colours } from '@/src/theme/colours';
 import { Filter } from 'bad-words';
 import { useSettings } from '@/src/context/SettingsContext';
 import ConfirmBox from '@/src/components/ConfirmBox';
+import { CASEY_COORDINATES } from '@/src/components/Map/config/mapConfig';
+import { getLocation } from '@/src/components/Map/config/useMapLocation';
 
 export default function WalkPlannerScreen() {
   const insets = useSafeAreaInsets();
@@ -31,11 +33,18 @@ export default function WalkPlannerScreen() {
   const [hasWellLitStreets, setHasWellLitStreets] = useState(false);
   const [hasRubbishBin, setHasRubbishBin] = useState(false);
   const [hasOffLeash, setHasOffLeash] = useState(false);
+  const [hasBbq, setHasBbq] = useState(false);
+  // Where the generated route starts; falls back to Casey if location is unavailable.
+  const [startLocation, setStartLocation] = useState({ lat: CASEY_COORDINATES.latitude, lng: CASEY_COORDINATES.longitude });
 
   const [alertVisible, setAlertVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
     
-    const { reducedMotion } = useSettings();
+    const { reducedMotion, backendURL } = useSettings();
+
+  useEffect(() => {
+    getLocation().then(loc => { if (loc) setStartLocation({ lat: loc.lat, lng: loc.lng }); });
+  }, []);
 
   useEffect(() => {
     if (params.id) {
@@ -48,18 +57,42 @@ export default function WalkPlannerScreen() {
         setHasPark(existingWalk.hasPark);
         setHasPlayground(existingWalk.hasPlayground);
         setHasWellLitStreets(existingWalk.hasWellLitStreets);
-        setHasRubbishBin(existingWalk.hasRubbishbin);
+        setHasRubbishBin(existingWalk.hasRubbishBin);
         setHasOffLeash(existingWalk.hasOffLeash);
+        setHasBbq(Boolean(existingWalk.hasBbq));
       }
     }
   }, [params.id, walks]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const filter = new Filter();
 
     if (filter.isProfane(cuswalkname)) {
       setConfirmVisible(true);
       return
+    }
+
+    const selectedFilters = [
+      hasWaterFountain ? 'fountain' : null,
+      hasDisabledToilets ? 'disabledToilets' : null,
+      hasOffLeash ? 'offLeash' : null,
+      hasBbq ? 'bbq' : null,
+    ].filter((f): f is string => Boolean(f));
+
+    // Ask the backend to generate a route matching the distance and filters.
+    let route;
+    try {
+      const res = await fetch(`${backendURL}/api/custom-walk-route`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: cuswalkname || 'Custom Walk', targetDistanceKm: distance, selectedFilters, start: startLocation }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      route = await res.json();
+    } catch (error) {
+      console.error('Failed to create custom walk route:', error);
+      Alert.alert('Route Error', 'Could not create custom walk route. Please check backend connection.');
+      return;
     }
 
     const walkData = {
@@ -73,9 +106,16 @@ export default function WalkPlannerScreen() {
       hasWellLitStreets,
       hasRubbishBin,
       hasOffLeash,
+      hasBbq,
+      selectedFilters,
+      routeDistanceMeters: route.distanceMeters,
+      routeDurationSeconds: route.durationSeconds,
+      routeDistanceText: route.distanceText,
+      routeDurationText: route.durationText,
+      routeGeoJson: route.routeGeoJson,
     };
 
-    saveWalk(walkData);
+    await saveWalk(walkData);
     router.back();
   };
 
@@ -117,39 +157,21 @@ export default function WalkPlannerScreen() {
         />
 
         <FilterSwitch
-          label="Disabled Toilets"
+          label="Toilets"
           value={hasDisabledToilets}
           onChange={setHasDisabledToilets}
         />
 
         <FilterSwitch
-          label="Park"
-          value={hasPark}
-          onChange={setHasPark}
-        />
-
-        <FilterSwitch
-          label="Playground"
-          value={hasPlayground}
-          onChange={setHasPlayground}
-        />
-
-        <FilterSwitch
-          label="Rubbish Bins"
-          value={hasRubbishBin}
-          onChange={setHasRubbishBin}
-        />
-
-        <FilterSwitch
-          label="Off Leash Zones"
+          label="Off Leash"
           value={hasOffLeash}
           onChange={setHasOffLeash}
         />
 
         <FilterSwitch
-          label="Well Lit Streets"
-          value={hasWellLitStreets}
-          onChange={setHasWellLitStreets}
+          label="BBQ"
+          value={hasBbq}
+          onChange={setHasBbq}
         />
 
         <SaveButton title='Save Custom Walk' onPress={handleSave} />

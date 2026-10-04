@@ -14,6 +14,7 @@ const ICON_COMPONENT: Record<IconName, React.ReactElement> = {
   library:  <FontAwesome6 name={FA6_ICON_NAMES.library} size={20} color="#fff" />,
   bench:    <FontAwesome6 name={FA6_ICON_NAMES.bench} size={20} color="#fff" />,
   toilet:   <FontAwesome6 name={FA6_ICON_NAMES.toilet} size={20} color="#fff" />,
+  offLeash: <FontAwesome6 name={FA6_ICON_NAMES.offLeash} size={20} color="#fff" />,
   fountain: <FontAwesome6 name={FA6_ICON_NAMES.fountain} size={20} color="#fff" />,
 };
 
@@ -49,7 +50,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   // Real amenity locations from the backend, falls back to MAP_ICONS if unreachable.
   const [amenities, setAmenities] = useState<MapIconEntry[]>(MAP_ICONS);
-  const { walkingSpeed } = useSettings();
+  const { walkingSpeed, backendURL } = useSettings();
   const { visibleIcons } = useMapFilter();
   const { width: windowWidth } = useWindowDimensions();
 
@@ -58,8 +59,8 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   }, []);
 
   useEffect(() => {
-    fetchAllAmenityIcons().then(setAmenities).catch(() => {});
-  }, []);
+    fetchAllAmenityIcons(backendURL).then(setAmenities).catch(() => {});
+  }, [backendURL]);
 
   const CARD_WIDTH = windowWidth * 0.85;
   const STACKED_CARD_WIDTH = windowWidth - 32;

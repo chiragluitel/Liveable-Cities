@@ -21,6 +21,7 @@ builder.Services.Configure<CaseyOpenDataOptions>(
     builder.Configuration.GetSection(CaseyOpenDataOptions.SectionName));
 
 // Single typed HttpClient shared by every entity service.
+builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<CaseyOpenDataClient>((serviceProvider, http) =>
 {
     var options = serviceProvider.GetRequiredService<IOptions<CaseyOpenDataOptions>>().Value;
@@ -62,7 +63,7 @@ if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     await scope.ServiceProvider.GetRequiredService<CaseyDbContext>()
-        .Database.MigrateAsync();
+        .Database.EnsureCreatedAsync();
 }
 
 // Configure the HTTP request pipeline.

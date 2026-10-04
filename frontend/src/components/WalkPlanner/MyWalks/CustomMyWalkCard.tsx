@@ -1,19 +1,16 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Footprints, Droplets, Accessibility, Leaf, Star, Trash2, Heart, Lightbulb, Download } from 'lucide-react-native';
+import { Footprints, Droplets, Accessibility, Heart, Flame, Download } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
 
 
 const FILTER_DEFS = [
-    { key: 'hasWaterFountain', label: 'Fountain', Icon: Droplets },
-    { key: 'hasDisabledToilets', label: 'Accessible', Icon: Accessibility },
-    { key: 'hasPark', label: 'Park', Icon: Leaf },
-    { key: 'hasPlayground', label: 'Playground', Icon: Star },
-    { key: 'hasRubbishBin', label: 'Bins', Icon: Trash2 },
+    { key: 'hasWaterFountain', label: 'Water Fountain', Icon: Droplets },
+    { key: 'hasDisabledToilets', label: 'Toilets', Icon: Accessibility },
     { key: 'hasOffLeash', label: 'Off Leash', Icon: Heart },
-    { key: 'hasWellLitStreets', label: 'Lit Streets', Icon: Lightbulb },
+    { key: 'hasBbq', label: 'BBQ', Icon: Flame },
 ];
 
 
@@ -29,7 +26,8 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
     const { walkingSpeed } = useSettings();
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
-    const shownTags = activeTags.slice(0, 2);
+    // Show fewer tags when there are many so they stay on one line.
+    const shownTags = activeTags.slice(0, activeTags.length > 2 ? 1 : 2);
     const extraCount = activeTags.length - shownTags.length;
 
     return (
@@ -51,16 +49,17 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                 <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
                     {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
                 </Text>
-                {walk.fromCommunity && (
-                    <View className="flex-row items-center self-start bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1 mb-2">
-                        <Download size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} />
-                        <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
-                            From Community Hub
-                        </Text>
-                    </View>
-                )}
 
-                <View className="flex-row flex-wrap gap-1.5">
+                {/* Fixed-height single row so every card is the same height, with or without tags. */}
+                <View className="flex-row items-center gap-1.5 h-[22px] overflow-hidden">
+                    {walk.fromCommunity && (
+                        <View className="flex-row items-center bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1">
+                            <Download size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} />
+                            <Text className="text-[10px] font-semibold text-text-600 dark:text-dark-text-600 uppercase">
+                                From Community Hub
+                            </Text>
+                        </View>
+                    )}
                     {shownTags.map(({ key, label, Icon }) => (
                         <View key={key} className="flex-row items-center bg-primary-50 dark:bg-dark-primary-300 rounded-md px-2 py-1 gap-1">
                             <Icon size={10} color={isLight ? colours.text[600] : colours.dark.text[600]} strokeWidth={2} />
