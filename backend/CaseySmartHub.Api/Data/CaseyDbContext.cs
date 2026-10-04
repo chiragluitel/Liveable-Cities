@@ -18,6 +18,8 @@ public sealed class CaseyDbContext : DbContext
     public DbSet<Bbq> Bbqs => Set<Bbq>();
     public DbSet<CustomWalk> CustomWalks => Set<CustomWalk>();
 
+    public DbSet<User> Users {get; set;}
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresExtension("postgis");

@@ -1,19 +1,54 @@
-import {ScrollView, View} from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
-import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
-import SettingsGroup from "@/src/components/Settings/SettingsGroup";
-import Dropdown from "@/src/components/Dropdown/Dropdown";
-import DropdownItem from "@/src/components/Dropdown/DropdownItem";
-import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
-import { FitnessSection } from "@/src/components/WalkPlanner/FitnessGoals/FitnessSection";
-import { FitnessGoal } from "@/src/types/walkPlannerTypes";
+import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
+import LoginPage from "../login-page";
+
 
 export default function ProfilePage() {
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [username, setUsername] = useState("");
 
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+  const checkLogin = async () => {
+    const loginStatus = await AsyncStorage.getItem("loggedIn");
+    const storedUsername = await AsyncStorage.getItem("username");
+
+    setLoggedIn(loginStatus === "true");
+
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("loggedIn");
+    await AsyncStorage.removeItem("username");
+
+    setLoggedIn(false);
+    setUsername("");
+  };
+
+  // Wait while checking AsyncStorage
+  if (loggedIn === null) {
+    return null;
+  }
+
+  // User is not logged in
+  if (!loggedIn) {
+    return <LoginPage onLogin={checkLogin} />;
+  }
+
+  // User is logged in
   const user = {
-    name: "Test User",
-    email: "test@gmail.com"
+    name: username,
+    email: "",
   };
 
   const { 
@@ -42,32 +77,17 @@ export default function ProfilePage() {
         email={user.email}
       />
 
-      <FitnessSection goals={fitnessGoals} />
+      <ProfileFitnessGoal />
 
-      <SettingsGroup title="Fitness Goals">
-        <Dropdown title="Weekly Walk Goal" valueKey="walkGoal" initialSelected="5" actionFunc={setWalkGoal}  hideSeperator={true}>
-            <DropdownItem title="5 walks" value="5" />
-            <DropdownItem title="10 walks" value="10" />
-            <DropdownItem title="15 walks" value="15" />
-            <DropdownItem title="20 walks" value="20" />
-            <DropdownItem title="25 walks" value="25" />
-            <DropdownItem title="30 walks" value="30" />
-            <DropdownItem title="35 walks" value="35" />
-            <DropdownItem title="40 walks" value="40" hideSeperator={true} />
-        </Dropdown>
-      </SettingsGroup>
+      <Pressable
+        onPress={handleLogout}
+        className="mt-6 bg-gray-500 rounded-lg py-4 items-center"
+      >
+        <Text className="text-white font-bold">
+          Log out
+        </Text>
+      </Pressable>
 
-      <SettingsGroup title="Preferences">
-        <Dropdown title="Walking Speed" valueKey="walkSpeed" initialSelected={walkingSpeed} hideSeperator={true} actionFunc={(value: string) => setWalkingSpeed(value as WalkingSpeed)}>
-          <DropdownItem title="Slow (2km/h)" value="Slow" />
-          <DropdownItem title="Average (4km/h)" value="Average" />
-          <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
-        </Dropdown>
-      </SettingsGroup>
-
-      </ScrollView>
-
-        
     </View>
   );
-};
+}

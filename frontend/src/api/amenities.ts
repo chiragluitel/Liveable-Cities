@@ -1,5 +1,4 @@
 import { MapIconEntry } from '../components/Map/config/mapIcons';
-import { API_BASE_URL } from './apiConfig';
 
 // Name fields vary per amenity type, so this covers all of them.
 type AmenityRecord = {
@@ -28,8 +27,8 @@ function placeNameFor(name: MapIconEntry['name'], r: AmenityRecord): string | un
   }
 }
 
-async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Promise<MapIconEntry[]> {
-  const res = await fetch(`${API_BASE_URL}${endpoint}`);
+async function fetchIconsFor(base_url: string, endpoint: string, name: MapIconEntry['name']): Promise<MapIconEntry[]> {
+  const res = await fetch(`${base_url}${endpoint}`);
   const data: AmenityResponse = await res.json();
   return data.results.map(r => ({
     name,
@@ -39,9 +38,9 @@ async function fetchIconsFor(endpoint: string, name: MapIconEntry['name']): Prom
   }));
 }
 
-async function fetchOffLeashIcons(): Promise<MapIconEntry[]> {
+async function fetchOffLeashIcons(base_url: string): Promise<MapIconEntry[]> {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/casey-open-data/places?filters=offLeash&limit=100`);
+    const res = await fetch(`${base_url}/api/casey-open-data/places?filters=offLeash&limit=100`);
     if (!res.ok) return [];
     const places = await res.json();
     return places.map((p: any) => ({
@@ -55,14 +54,14 @@ async function fetchOffLeashIcons(): Promise<MapIconEntry[]> {
   }
 }
 
-export async function fetchAllAmenityIcons(): Promise<MapIconEntry[]> {
+export async function fetchAllAmenityIcons(base_url: string): Promise<MapIconEntry[]> {
   const results = await Promise.all([
-    fetchIconsFor('/api/GetBenches', 'bench'),
-    fetchIconsFor('/api/GetPublicToilets', 'toilet'),
-    fetchIconsFor('/api/GetLibraries', 'library'),
-    fetchIconsFor('/api/GetBbqs', 'bbq'),
-    fetchIconsFor('/api/GetDrinkingFountains', 'fountain'),
-    fetchOffLeashIcons(),
+    fetchIconsFor(base_url, '/api/GetBenches', 'bench'),
+    fetchIconsFor(base_url, '/api/GetPublicToilets', 'toilet'),
+    fetchIconsFor(base_url, '/api/GetLibraries', 'library'),
+    fetchIconsFor(base_url, '/api/GetBbqs', 'bbq'),
+    fetchIconsFor(base_url, '/api/GetDrinkingFountains', 'fountain'),
+    fetchOffLeashIcons(base_url),
   ]);
   return results.flat();
 }

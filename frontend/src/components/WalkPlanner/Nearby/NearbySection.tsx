@@ -50,7 +50,7 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   // Real amenity locations from the backend, falls back to MAP_ICONS if unreachable.
   const [amenities, setAmenities] = useState<MapIconEntry[]>(MAP_ICONS);
-  const { walkingSpeed } = useSettings();
+  const { walkingSpeed, backendURL } = useSettings();
   const { visibleIcons } = useMapFilter();
   const { width: windowWidth } = useWindowDimensions();
 
@@ -59,8 +59,8 @@ export function NearbySection({ onNearbyPress }: NearbySectionProps) {
   }, []);
 
   useEffect(() => {
-    fetchAllAmenityIcons().then(setAmenities).catch(() => {});
-  }, []);
+    fetchAllAmenityIcons(backendURL).then(setAmenities).catch(() => {});
+  }, [backendURL]);
 
   const CARD_WIDTH = windowWidth * 0.85;
   const STACKED_CARD_WIDTH = windowWidth - 32;

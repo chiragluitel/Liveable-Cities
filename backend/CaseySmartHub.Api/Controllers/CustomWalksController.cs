@@ -1,156 +1,63 @@
-using System.Collections.Concurrent;
-using CaseySmartHub.Api.Data;
 using CaseySmartHub.Api.Models.Entities;
+using CaseySmartHub.Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CaseySmartHub.Api.Controllers;
 
 [ApiController]
-[Route("api/custom-walks")]
 public sealed class CustomWalksController : ControllerBase
 {
-    private static readonly ConcurrentDictionary<string, CustomWalk> InMemoryWalks = new();
-    private readonly CaseyDbContext _dbContext;
+    private readonly ICustomWalkService _service;
     private readonly ILogger<CustomWalksController> _logger;
 
-    public CustomWalksController(CaseyDbContext dbContext, ILogger<CustomWalksController> logger)
+    public CustomWalksController(ICustomWalkService service, ILogger<CustomWalksController> logger)
     {
-        _dbContext = dbContext;
+        _service = service;
         _logger = logger;
     }
 
-    private bool IsDatabaseAvailable()
+    [HttpGet("api/CustomWalks")]
+    [ProducesResponseType(typeof(IReadOnlyList<CustomWalk>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<CustomWalk>>> GetCustomWalks(
+        [FromQuery] string userId,
+        CancellationToken cancellationToken)
     {
-        try
-        {
-            var connStr = _dbContext.Database.GetDbConnection().ConnectionString;
-            return DatabaseAvailability.CanConnect(connStr);
-        }
-        catch
-        {
-            return false;
-        }
+        var walks = await _service.GetByUserIdAsync(userId, cancellationToken);
+        return Ok(walks);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomWalk>>> GetCustomWalks(CancellationToken cancellationToken)
+    [HttpPost("api/CustomWalks")]
+    [ProducesResponseType(typeof(CustomWalk), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CustomWalk>> CreateCustomWalk(
+        [FromBody] CustomWalk walk,
+        CancellationToken cancellationToken)
     {
-        if (IsDatabaseAvailable())
-        {
-            try
-            {
-                var walks = await _dbContext.CustomWalks
-                    .AsNoTracking()
-                    .OrderByDescending(w => w.CreatedAt)
-                    .ToListAsync(cancellationToken);
-
-                return Ok(walks);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Database query failed ({Message}). Serving custom walks from in-memory fallback.", ex.Message);
-            }
-        }
-
-        return Ok(InMemoryWalks.Values.OrderByDescending(w => w.CreatedAt).ToList());
+        walk.Id = 0;
+        var created = await _service.CreateAsync(walk, cancellationToken);
+        return CreatedAtAction(nameof(GetCustomWalks), new { userId = created.UserId }, created);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<CustomWalk>> GetCustomWalkById(string id, CancellationToken cancellationToken)
+    [HttpPut("api/CustomWalks/{id:int}")]
+    [ProducesResponseType(typeof(CustomWalk), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<CustomWalk>> UpdateCustomWalk(
+        int id,
+        [FromBody] CustomWalk walk,
+        CancellationToken cancellationToken)
     {
-        if (IsDatabaseAvailable())
-        {
-            try
-            {
-                var walk = await _dbContext.CustomWalks
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
-
-                if (walk is not null)
-                {
-                    return Ok(walk);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Database lookup failed ({Message}). Falling back to in-memory store.", ex.Message);
-            }
-        }
-
-        if (InMemoryWalks.TryGetValue(id, out var inMem))
-        {
-            return Ok(inMem);
-        }
-
-        return NotFound(new { message = $"Custom walk with ID {id} was not found." });
+        var updated = await _service.UpdateAsync(id, walk, cancellationToken);
+        if (updated is null) return NotFound();
+        return Ok(updated);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<CustomWalk>> SaveCustomWalk([FromBody] CustomWalk walk, CancellationToken cancellationToken)
+    [HttpDelete("api/CustomWalks/{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteCustomWalk(int id, CancellationToken cancellationToken)
     {
-        if (walk is null)
-        {
-            return BadRequest(new { message = "Walk data is required." });
-        }
-
-        if (string.IsNullOrWhiteSpace(walk.Id))
-        {
-            walk.Id = Guid.NewGuid().ToString();
-        }
-
-        // Always update in-memory cache as write-through fallback
-        InMemoryWalks[walk.Id] = walk;
-
-        if (IsDatabaseAvailable())
-        {
-            try
-            {
-                var existing = await _dbContext.CustomWalks.FindAsync([walk.Id], cancellationToken);
-
-                if (existing is not null)
-                {
-                    _dbContext.Entry(existing).CurrentValues.SetValues(walk);
-                    existing.SelectedFilters = walk.SelectedFilters;
-                }
-                else
-                {
-                    await _dbContext.CustomWalks.AddAsync(walk, cancellationToken);
-                }
-
-                await _dbContext.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Could not persist walk {WalkId} to PostgreSQL ({Message}). Saved to in-memory fallback.", walk.Id, ex.Message);
-            }
-        }
-
-        return Ok(walk);
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteCustomWalk(string id, CancellationToken cancellationToken)
-    {
-        InMemoryWalks.TryRemove(id, out _);
-
-        if (IsDatabaseAvailable())
-        {
-            try
-            {
-                var existing = await _dbContext.CustomWalks.FindAsync([id], cancellationToken);
-                if (existing is not null)
-                {
-                    _dbContext.CustomWalks.Remove(existing);
-                    await _dbContext.SaveChangesAsync(cancellationToken);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Could not delete walk {WalkId} from PostgreSQL ({Message}).", id, ex.Message);
-            }
-        }
-
+        var deleted = await _service.DeleteAsync(id, cancellationToken);
+        if (!deleted) return NotFound();
         return NoContent();
     }
 }

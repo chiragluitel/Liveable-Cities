@@ -22,8 +22,8 @@ const FILTER_DEFS = [
 
 interface CustomWalkDetailProps {
     walk: any;
-    onEdit: (walkId: string) => void;
-    onDelete: (walkId: string) => void;
+    onEdit: (walkId: number) => void;
+    onDelete: (walkId: number) => void;
 }
 
 

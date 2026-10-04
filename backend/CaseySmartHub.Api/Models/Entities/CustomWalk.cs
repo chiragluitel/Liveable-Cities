@@ -2,12 +2,10 @@ namespace CaseySmartHub.Api.Models.Entities;
 
 public sealed class CustomWalk
 {
-    public string Id { get; set; } = string.Empty;
-
-    public string Title { get; set; } = string.Empty;
-
+    public int Id { get; set; }
+    public string UserId { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public double Distance { get; set; }
-
     public bool HasWaterFountain { get; set; }
     public bool HasDisabledToilets { get; set; }
     public bool HasPark { get; set; }
