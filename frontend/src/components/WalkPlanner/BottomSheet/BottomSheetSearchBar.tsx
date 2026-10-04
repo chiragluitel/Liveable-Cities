@@ -1,6 +1,6 @@
 import { TextInput as RNTextInput, Pressable, View } from "react-native";
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import { Mic, Search, XCircle } from "lucide-react-native";
+import { Search, XCircle } from "lucide-react-native";
 import { SearchLogicReturnObject } from "@/src/hooks/useSearchLogic";
 import { useColorScheme } from "nativewind";
 import { colours } from "@Theme/colours";
@@ -36,13 +36,9 @@ export const BottomSheetSearchBar = ({ searchState, onFocusAction, placeholder =
                 returnKeyType="search"
                 clearButtonMode="never"
             />
-            {query.length > 0 ? (
+            {query.length > 0 && (
                 <Pressable onPress={clearSearch} className="p-1 rounded-full active:opacity-50">
                     <XCircle size={18} color={isLight ? colours.text[500] : colours.dark.text[500]} />
-                </Pressable>
-            ) : (
-                <Pressable className="p-1 rounded-full active:opacity-50">
-                    <Mic size={20} color={isLight ? colours.text[500] : colours.dark.text[500]} />
                 </Pressable>
             )}
         </View>

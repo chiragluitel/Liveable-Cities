@@ -69,7 +69,7 @@ function buildMapHTML(): string {
     var routeStore = {}; // id → [casing, line, startDot, endDot]
     var routeRequestId = 0; // ignore stale requests
 
-    function drawRoute(id, points) {
+    function drawRoute(id, points, saved) {
       // only one route on screen at a time
       clearRoutes();
       var thisRequestId = ++routeRequestId;
@@ -91,6 +91,14 @@ function buildMapHTML(): string {
         map.fitBounds(line.getBounds(), { padding: [40, 40] });
         routeStore[id] = [casing, line, start].concat(end ? [end] : []);
       }
+      // Saved custom walks already have their route, so draw it without asking the router.
+      var feature = saved && saved.routeGeoJson && saved.routeGeoJson.features && saved.routeGeoJson.features[0];
+      if (feature) {
+        latlngs = feature.geometry.coordinates.map(function(c){return [c[1],c[0]];});
+        if (saved.distanceText) sendToRN({ type: 'ROUTE_INFO', id: id, distance: saved.distanceText });
+        addLayers(latlngs, casingStyle, lineStyle);
+        return;
+      }
       var controller = new AbortController();
       var timedOut = false;
       var timeoutId = setTimeout(function() {
@@ -104,7 +112,8 @@ function buildMapHTML(): string {
           if (thisRequestId !== routeRequestId) return; // a newer request already won
           var route = data.routes[0];
           var distKm = (route.distance / 1000).toFixed(1) + ' km';
-          sendToRN({ type: 'ROUTE_INFO', id: id, distance: distKm });
+          // Shape is sent too so a route to an amenity can be saved to My Walks.
+          sendToRN({ type: 'ROUTE_INFO', id: id, distance: distKm, routeGeoJson: { type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: route.geometry }] } });
           addLayers(route.geometry.coordinates.map(function(c){return [c[1],c[0]];}), casingStyle, lineStyle);
         })
         .catch(function(){
@@ -236,7 +245,7 @@ function buildMapHTML(): string {
           setTheme(cmd.isDark);
           break;
         case 'DRAW_ROUTE':
-          drawRoute(cmd.id, cmd.points);
+          drawRoute(cmd.id, cmd.points, { routeGeoJson: cmd.routeGeoJson, distanceText: cmd.distanceText });
           break;
         case 'CLEAR_ROUTES':
           clearRoutes();

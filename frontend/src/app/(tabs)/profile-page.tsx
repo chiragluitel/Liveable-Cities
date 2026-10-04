@@ -6,6 +6,7 @@ import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
 import LoginPage from "../login-page";
+import { useCustomWalks } from "@/src/context/CustomWalkContext";
 import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import { FitnessGoal } from "@/src/types/walkPlannerTypes";
 import WeatherWidget from "@/src/components/HomePage/Weather/WeatherWidget";
@@ -18,6 +19,8 @@ import DropdownItem from "@/src/components/Dropdown/DropdownItem";
 export default function ProfilePage() {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [username, setUsername] = useState("");
+  const { refreshWalks } = useCustomWalks();
+  const { walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks } = useSettings();
 
   useEffect(() => {
     checkLogin();
@@ -32,6 +35,7 @@ export default function ProfilePage() {
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    refreshWalks();
   };
 
   const handleLogout = async () => {
@@ -40,6 +44,7 @@ export default function ProfilePage() {
 
     setLoggedIn(false);
     setUsername("");
+    refreshWalks();
   };
 
   // Wait while checking AsyncStorage
@@ -58,10 +63,6 @@ export default function ProfilePage() {
     email: "",
   };
 
-  const { 
-    walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks
-  } = useSettings();
-  
   const fitnessGoals: FitnessGoal[] = [
       {
           id: 'g1',

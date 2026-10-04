@@ -1,7 +1,7 @@
-import { Beaker } from "lucide-react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//const BASE_URL = 'http://10.0.2.2:5156';
-const GABRIEL_USER_ID = 'gabriel-savannah';
+// Walks belong to the logged-in user; walks made while logged out are kept under "guest".
+const getUserId = async () => (await AsyncStorage.getItem('username')) || 'guest';
 
 type CustomWalkPayload = {
   userId: string;
@@ -14,6 +14,16 @@ type CustomWalkPayload = {
   hasWellLitStreets: boolean;
   hasRubbishBin: boolean;
   hasOffLeash: boolean;
+  hasBbq: boolean;
+  selectedFilters: string[];
+  routeDistanceMeters?: number;
+  routeDurationSeconds?: number;
+  routeDistanceText?: string;
+  routeDurationText?: string;
+  routeGeoJson: string | null;
+  fromCommunity: boolean;
+  communityWalkId?: string;
+  routeId?: string;
 };
 
 type CustomWalkResponse = CustomWalkPayload & { id: number };
@@ -29,6 +39,16 @@ export type CustomWalk = {
   hasWellLitStreets: boolean;
   hasRubbishBin: boolean;
   hasOffLeash: boolean;
+  hasBbq?: boolean;
+  selectedFilters?: string[];
+  routeDistanceMeters?: number;
+  routeDurationSeconds?: number;
+  routeDistanceText?: string;
+  routeDurationText?: string;
+  routeGeoJson?: any;
+  fromCommunity?: boolean;
+  communityWalkId?: string;
+  routeId?: string;
 };
 
 function toCustomWalk(r: CustomWalkResponse): CustomWalk {
@@ -43,12 +63,22 @@ function toCustomWalk(r: CustomWalkResponse): CustomWalk {
     hasWellLitStreets: r.hasWellLitStreets,
     hasRubbishBin: r.hasRubbishBin,
     hasOffLeash: r.hasOffLeash,
+    hasBbq: r.hasBbq,
+    selectedFilters: r.selectedFilters ?? [],
+    routeDistanceMeters: r.routeDistanceMeters,
+    routeDurationSeconds: r.routeDurationSeconds,
+    routeDistanceText: r.routeDistanceText,
+    routeDurationText: r.routeDurationText,
+    routeGeoJson: r.routeGeoJson ? JSON.parse(r.routeGeoJson) : undefined,
+    fromCommunity: r.fromCommunity,
+    communityWalkId: r.communityWalkId ?? undefined,
+    routeId: r.routeId ?? undefined,
   };
 }
 
-function toPayload(walk: Omit<CustomWalk, 'id'>): CustomWalkPayload {
+function toPayload(walk: Omit<CustomWalk, 'id'>, userId: string): CustomWalkPayload {
   return {
-    userId: GABRIEL_USER_ID,
+    userId,
     name: walk.cuswalkname,
     distance: walk.distance,
     hasWaterFountain: walk.hasWaterFountain,
@@ -58,11 +88,23 @@ function toPayload(walk: Omit<CustomWalk, 'id'>): CustomWalkPayload {
     hasWellLitStreets: walk.hasWellLitStreets,
     hasRubbishBin: walk.hasRubbishBin,
     hasOffLeash: walk.hasOffLeash,
+    hasBbq: Boolean(walk.hasBbq),
+    selectedFilters: walk.selectedFilters ?? [],
+    routeDistanceMeters: walk.routeDistanceMeters,
+    routeDurationSeconds: walk.routeDurationSeconds,
+    routeDistanceText: walk.routeDistanceText,
+    routeDurationText: walk.routeDurationText,
+    routeGeoJson: walk.routeGeoJson
+      ? (typeof walk.routeGeoJson === 'string' ? walk.routeGeoJson : JSON.stringify(walk.routeGeoJson))
+      : null,
+    fromCommunity: Boolean(walk.fromCommunity),
+    communityWalkId: walk.communityWalkId,
+    routeId: walk.routeId,
   };
 }
 
 export async function fetchCustomWalks(base_url: string): Promise<CustomWalk[]> {
-  const res = await fetch(`${base_url}/api/CustomWalks?userId=${GABRIEL_USER_ID}`);
+  const res = await fetch(`${base_url}/api/CustomWalks?userId=${encodeURIComponent(await getUserId())}`);
   const data: CustomWalkResponse[] = await res.json();
   return data.map(toCustomWalk);
 }
@@ -71,7 +113,7 @@ export async function createCustomWalk(base_url: string, walk: Omit<CustomWalk, 
   const res = await fetch(`${base_url}/api/CustomWalks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(toPayload(walk)),
+    body: JSON.stringify(toPayload(walk, await getUserId())),
   });
   const data: CustomWalkResponse = await res.json();
   return toCustomWalk(data);
@@ -81,7 +123,7 @@ export async function updateCustomWalk(base_url: string, id: number, walk: Omit<
   const res = await fetch(`${base_url}/api/CustomWalks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(toPayload(walk)),
+    body: JSON.stringify(toPayload(walk, await getUserId())),
   });
   const data: CustomWalkResponse = await res.json();
   return toCustomWalk(data);

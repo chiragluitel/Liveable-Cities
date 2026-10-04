@@ -3,3 +3,6 @@
 
 .env
 !.env.example
+backend/.DS_Store
+backend/CaseySmartHub.Api/.DS_Store
+.DS_Store

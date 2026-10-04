@@ -16,8 +16,11 @@ export const CustomWalkProvider = ({ children }: { children: React.ReactNode }) 
   const [walks, setWalks] = useState<CustomWalk[]>([]);
   const {backendURL} = useSettings();
 
+  // Reloaded on login/logout so the list matches the current user.
+  const refreshWalks = () => fetchCustomWalks(backendURL).then(setWalks).catch(console.error);
+
   useEffect(() => {
-    fetchCustomWalks(backendURL).then(setWalks).catch(console.error);
+    refreshWalks();
   }, []);
 
   const saveWalk = async (newWalk: any) => {
@@ -38,7 +41,7 @@ export const CustomWalkProvider = ({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <CustomWalkContext.Provider value={{ walks, saveWalk, deleteWalk }}>
+    <CustomWalkContext.Provider value={{ walks, saveWalk, deleteWalk, refreshWalks }}>
       {children}
     </CustomWalkContext.Provider>
   );

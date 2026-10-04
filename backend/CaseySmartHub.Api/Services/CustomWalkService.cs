@@ -41,6 +41,16 @@ public sealed class CustomWalkService : ICustomWalkService
         existing.HasWellLitStreets = walk.HasWellLitStreets;
         existing.HasRubbishBin = walk.HasRubbishBin;
         existing.HasOffLeash = walk.HasOffLeash;
+        existing.HasBbq = walk.HasBbq;
+        existing.SelectedFilters = walk.SelectedFilters;
+        existing.RouteDistanceMeters = walk.RouteDistanceMeters;
+        existing.RouteDurationSeconds = walk.RouteDurationSeconds;
+        existing.RouteDistanceText = walk.RouteDistanceText;
+        existing.RouteDurationText = walk.RouteDurationText;
+        existing.RouteGeoJson = walk.RouteGeoJson;
+        existing.FromCommunity = walk.FromCommunity;
+        existing.CommunityWalkId = walk.CommunityWalkId;
+        existing.RouteId = walk.RouteId;
 
         await _db.SaveChangesAsync(cancellationToken);
         return existing;
