@@ -102,8 +102,12 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
       </td>
     </tr>
     <tr>
-      <td><img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" /></td>
-      <td><img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" /></td>
+      <td>
+[<img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" />](https://www.apple.com/au/app-store/)
+      </td>
+      <td>
+[<img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" />](https://play.google.com)
+        </td>
     </tr>
   </tbody>
 </table>
