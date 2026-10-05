@@ -3,8 +3,11 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/images/icon-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset=".github/images/icon.svg">
-  <img alt="Casey Walks icon showing a walking figure surrouned by a split ring" src=".github/images/icon.svg">
+  <img width="200" alt="Casey Walks icon showing a walking figure surrouned by a split ring" src=".github/images/icon.svg">
 </picture>
+
+<br />
+<br />
 
 [![React Native: 0.81.5](https://img.shields.io/badge/React_Native-0.81.5-blue?style=for-the-badge&logo=React)](https://reactnative.dev)
 [![Expo: SDK 54](https://img.shields.io/badge/Expo-SDK_54-blue?style=for-the-badge&logo=Expo)](https://expo.dev)
