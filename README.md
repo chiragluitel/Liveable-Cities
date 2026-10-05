@@ -22,9 +22,11 @@
 <div align="center">
     <h1>Casey Walks</h1>
     <h4>A simple walk planner for the City of Casey made for the Livable Cities Audit Swinburne capstone project.</h4>
-    
-[<img src=".github/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Apple App Store download link" height="40" />](https://www.apple.com/au/app-store/)
-[<img src=".github/images/GetItOnGooglePlay_Badge_Web_color_English.svg" alt="Google Play Store download link" height="40" />](https://play.google.com)
+
+<!--
+[<img src=".github/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Apple App Store download link" height="40" />](APP STORE URL HERE)
+[<img src=".github/images/GetItOnGooglePlay_Badge_Web_color_English.svg" alt="Google Play Store download link" height="40" />](PLAY STORE URL HERE)
+-->
 </div>
 
 <!-- Table of contents -->
@@ -83,6 +85,7 @@ This app was created for a Swinburne University of Technology capstone project w
 - Constant internet access (Wi-Fi or mobile data) while using the app
 
 ### Installing
+<!--
 The app can be installed from the Google Play Store or the Apple App Store. Click the App Store or Play Store badges at the top of the README to go to the store pages or scan the QR codes below:
 
 <table id="qr-code-table">
@@ -90,27 +93,37 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
     <tr>
       <td align="center">
 
-[Apple App Store](https://www.apple.com/au/app-store/)
+[Apple App Store](APP STORE URL HERE)
       </td>
       <td align="center">
-[Google Play Store](https://play.google.com)
+[Google Play Store](GOOGLE PLAY URL HERE)
       </td>
     </tr>
     <tr>
       <td>
-[<img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" />](https://www.apple.com/au/app-store/)
+[<img src=".github/images/apple-app-store-qr-code.svg" alt="example QR code" width="250" />](APP STORE URL HERE)
       </td>
       <td>
-[<img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" />](https://play.google.com)
+[<img src=".github/images/google-play-qr-code.svg" alt="example QR code" width="250" />](GOOGLE PLAY URL HERE)
         </td>
     </tr>
   </tbody>
 </table>
 
-Additionally, the application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
+
+Additionally, t
+-->
+The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
 ## Usage
 `TODO`
+<!--
+- exploring map
+- creating custom walk
+- community walks
+- weekly walks
+- profile and settings
+-->
 
 ## Build
 > Building for iOS can only be done on macOS
