@@ -85,11 +85,6 @@ This app was created for a Swinburne University of Technology capstone project w
 ### Installing
 The app can be installed from the Google Play Store or the Apple App Store. Click the App Store or Play Store badges at the top of the README to go to the store pages or scan the QR codes below:
 
-<style>
-  table#qr-code-table td {
-    border: none;
-  }
-</style>
 <table id="qr-code-table">
   <tbody>
     <tr>
