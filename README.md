@@ -22,12 +22,9 @@
 <div align="center">
     <h1>Casey Walks</h1>
     <h4>A simple walk planner for the City of Casey made for the Livable Cities Audit Swinburne capstone project.</h4>
-    <a href="https://www.apple.com/au/app-store/">
-        <img src=".github/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Apple App Store download link" height="50" />
-    </a>
-    <a href="https://play.google.com">
-        <img src=".github/images/GetItOnGooglePlay_Badge_Web_color_English.svg" alt="Google Play Store download link" height="50" />
-    </a>
+    
+[<img src=".github/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Apple App Store download link" height="40" />](https://www.apple.com/au/app-store/)
+[<img src=".github/images/GetItOnGooglePlay_Badge_Web_color_English.svg" alt="Google Play Store download link" height="40" />](https://play.google.com)
 </div>
 
 <!-- Table of contents -->
@@ -86,11 +83,30 @@ This app was created for a Swinburne University of Technology capstone project w
 - Constant internet access (Wi-Fi or mobile data) while using the app
 
 ### Installing
-The app can be installed from the Google Play Store or the Apple App Store:  
-- `app store links + qr codes`
+The app can be installed from the Google Play Store or the Apple App Store. Click the App Store or Play Store badges at the top of the README to go to the store pages or scan the QR codes below:
 
-[<img src=".github/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Apple App Store download link" height="40" />](https://www.apple.com/au/app-store/)
-[<img src=".github/images/GetItOnGooglePlay_Badge_Web_color_English.svg" alt="Google Play Store download link" height="40" />](https://play.google.com)
+<style>
+  table#qr-code-table td {
+    border: none;
+  }
+</style>
+<table id="qr-code-table">
+  <tbody>
+    <tr>
+      <td align="center">
+
+[Apple App Store](https://www.apple.com/au/app-store/)
+      </td>
+      <td align="center">
+[Google Play Store](https://play.google.com)
+      </td>
+    </tr>
+    <tr>
+      <td><img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" /></td>
+      <td><img src=".github/images/examples-qr-code.svg" alt="example QR code" width="250" /></td>
+    </tr>
+  </tbody>
+</table>
 
 Additionally, the application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
