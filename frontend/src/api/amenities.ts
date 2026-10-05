@@ -41,6 +41,22 @@ async function fetchIconsFor(base_url: string, endpoint: string, name: MapIconEn
   }));
 }
 
+async function fetchOffLeashIcons(base_url: string): Promise<MapIconEntry[]> {
+  try {
+    const res = await fetch(`${base_url}/api/casey-open-data/places?filters=offLeash&limit=100`);
+    if (!res.ok) return [];
+    const places = await res.json();
+    return places.map((p: any) => ({
+      name: 'offLeash' as const,
+      lat: p.lat,
+      lng: p.lng,
+      placeName: p.name,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchAllAmenityIcons(base_url: string): Promise<MapIconEntry[]> {
   const results = await Promise.all([
     fetchIconsFor(base_url, '/api/GetBenches', 'bench'),
@@ -48,6 +64,7 @@ export async function fetchAllAmenityIcons(base_url: string): Promise<MapIconEnt
     fetchIconsFor(base_url, '/api/GetLibraries', 'library'),
     fetchIconsFor(base_url, '/api/GetBbqs', 'bbq'),
     fetchIconsFor(base_url, '/api/GetDrinkingFountains', 'fountain'),
+    fetchOffLeashIcons(base_url),
   ]);
   return results.flat();
 }

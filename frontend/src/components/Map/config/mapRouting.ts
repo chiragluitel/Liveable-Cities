@@ -6,6 +6,9 @@ export type MapRoutePoint = {
 export type MapRoute = {
   id: string;
   points: MapRoutePoint[];
+  // Saved custom walks carry their generated route.
+  routeGeoJson?: any;
+  distanceText?: string;
 };
 
 export const MAP_ROUTES: MapRoute[] = [

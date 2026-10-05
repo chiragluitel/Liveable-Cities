@@ -1,3 +1,7 @@
+// ###############################
+// ###   THIS FILE IS UNUSED   ###
+// ###############################
+
 import {useRouter} from "expo-router";
 import { StatusBar } from "expo-status-bar"
 import { Text, View, ScrollView } from "react-native";
