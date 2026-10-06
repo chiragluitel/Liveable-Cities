@@ -70,13 +70,13 @@ This app was created for a Swinburne University of Technology capstone project w
 - Weekly walks count tracker and goal
 - Account creation for publicly sharing custom walks
 
-
+<!--
 ### Screenshots
 - main map page w/ bottom sheet at normal (light, dark)
 - main map page w/ bottom sheet at up + 2 custom walks (light, dark)
 - main map page w/ bottom sheet at up showing nearby + community walks (light, dark)
 - profile page logged in (light, dark)
-
+-->
 
 ## Getting Started
 ### Requirements
@@ -84,6 +84,7 @@ This app was created for a Swinburne University of Technology capstone project w
 - Constant internet access (Wi-Fi or mobile data) while using the app
 
 ### Installing
+<!--
 The app can be installed from the Google Play Store or the Apple App Store. Click the App Store or Play Store badges at the top of the README to go to the store pages or scan the QR codes below:
 
 <table id="qr-code-table">
@@ -109,7 +110,9 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
 </table>
 
 
-Additionally, the application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
+Additionally, t
+-->
+The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
 ## Usage
 ### Exploring the map
@@ -145,6 +148,7 @@ The settings page contains:
 > Building for iOS can only be done on macOS
 
 > Using Docker is recommended if your system is supported
+
 ### Prerequisites
 #### With Docker
 - Docker Desktop
