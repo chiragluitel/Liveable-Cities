@@ -70,14 +70,13 @@ This app was created for a Swinburne University of Technology capstone project w
 - Weekly walks count tracker and goal
 - Account creation for publicly sharing custom walks
 
+
 ### Screenshots
-`TODO`
-<!--
 - main map page w/ bottom sheet at normal (light, dark)
 - main map page w/ bottom sheet at up + 2 custom walks (light, dark)
 - main map page w/ bottom sheet at up showing nearby + community walks (light, dark)
 - profile page logged in (light, dark)
--->
+
 
 ## Getting Started
 ### Requirements
@@ -85,7 +84,6 @@ This app was created for a Swinburne University of Technology capstone project w
 - Constant internet access (Wi-Fi or mobile data) while using the app
 
 ### Installing
-<!--
 The app can be installed from the Google Play Store or the Apple App Store. Click the App Store or Play Store badges at the top of the README to go to the store pages or scan the QR codes below:
 
 <table id="qr-code-table">
@@ -111,19 +109,37 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
 </table>
 
 
-Additionally, t
--->
-The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
+Additionally, the application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
 ## Usage
-`TODO`
-<!--
-- exploring map
-- creating custom walk
-- community walks
-- weekly walks
-- profile and settings
--->
+### Exploring the map
+The main screen shows nearby amenities on an interactive map, supporting standard guestures, along with a recenter and zoom buttons. The filter button opens a list of all possible amenity types and allows users to change which amenity types are visible on the map and in the nearby section.
+
+The bottom sheet provides a search bar, custom walk route list and creation button, nearby amenities list, community walks list, and a report problem button.
+
+### Creating a custom walk
+Users can create custom walking routes with the `Create a Custom Walk` button. The walk creation page allows users to enter a title, desired length, and select which amenities the walk should try and include.
+
+Created walks can be edited, deleted, shared publily with the community.
+
+### Community walks
+A collection of existing walking routes and publicly uploaded custom walks from the community are available for users to view and add to their private walks list.
+
+Users can share their custom walks, however they should keep in mind to not share walks near any sensitive locations. While an account is required to be able to upload and share custom walks, usernames are not shared.
+
+### Tracking weekly walks
+Users are able to keep track of how many walks they have completed each week. The goal can be set on the profile page and the count can be increased by a button on any of the walking route pages. This count will reset at the start of each week on Monday.
+
+### Profile and settings
+The profile page contains basic local weather information, the current weekly walk count, and settings for the walk count goal and walking speed (used for walk duration estimates). Users can also create and manage their account on this page.
+
+The settings page contains:
+- A theme selection (Auto, Light, or Dark)
+- A reduced motion toggle
+- Information about the project with relavent links
+- A short privacy notice
+- Version information
+- A button to delete all locally stored data
 
 ## Build
 > Building for iOS can only be done on macOS
