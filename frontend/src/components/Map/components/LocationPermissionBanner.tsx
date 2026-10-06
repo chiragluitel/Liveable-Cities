@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapPin } from 'lucide-react-native';
 import { colours } from '@Theme/colours';
 import { useColorScheme } from 'nativewind';
-import RNRestart from 'react-native-restart';
 
 export default function LocationPermissionBanner() {
   const [visible, setVisible] = useState(false);
@@ -45,8 +44,6 @@ export default function LocationPermissionBanner() {
       }
     } else if (status !== 'granted') {
       Linking.openSettings();
-      await new Promise(f => setTimeout(f, 20));
-      RNRestart.restart();
     }
   }
 
