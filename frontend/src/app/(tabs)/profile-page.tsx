@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { View, Text, Pressable, ScrollView, TouchableOpacity } from "react-native";
+import { useState, useCallback } from "react";
+import { useFocusEffect } from "expo-router";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ProfileHeader from "@Components/ProfilePage/ProfileHeader";
 import ProfileInfo from "@Components/ProfilePage/ProfileInfo";
 import ProfileFitnessGoal from "@/src/components/ProfilePage/ProfileFitnessGoal";
-import LoginPage from "../login-page";
 import { useCustomWalks } from "@/src/context/CustomWalkContext";
 import { useSettings, WalkingSpeed } from "@/src/context/SettingsContext";
 import { FitnessGoal } from "@/src/types/walkPlannerTypes";
@@ -22,19 +22,19 @@ export default function ProfilePage() {
   const { refreshWalks } = useCustomWalks();
   const { walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks } = useSettings();
 
-  useEffect(() => {
-    checkLogin();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      checkLogin();
+    }, [])
+  );
 
   const checkLogin = async () => {
     const loginStatus = await AsyncStorage.getItem("loggedIn");
     const storedUsername = await AsyncStorage.getItem("username");
 
     setLoggedIn(loginStatus === "true");
+    setUsername(storedUsername ?? "");
 
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
     refreshWalks();
   };
 
@@ -52,14 +52,9 @@ export default function ProfilePage() {
     return null;
   }
 
-  // User is not logged in
-  if (!loggedIn) {
-    return <LoginPage onLogin={checkLogin} />;
-  }
-
-  // User is logged in
+  // is use is logged in, display username, else Guest
   const user = {
-    name: username,
+    name: loggedIn? username : "Guest",
     email: "",
   };
 
@@ -108,14 +103,17 @@ export default function ProfilePage() {
           </Dropdown>
         </SettingsGroup>
 
-        <TouchableOpacity
-          onPress={handleLogout}
-          className="w-[90%] mt-6 mb-5 bg-gray-500 rounded-lg py-4 items-center"
-        >
-          <Text className="text-white font-bold">
-            Log out
-          </Text>
-        </TouchableOpacity>
+        {/* logout option if the user is logged in only */}
+        {loggedIn && (
+          <TouchableOpacity
+            onPress={handleLogout}
+            className="w-[90%] mt-6 mb-5 bg-gray-500 rounded-lg py-4 items-center"
+          >
+            <Text className="text-white font-bold">
+              Log out
+            </Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
