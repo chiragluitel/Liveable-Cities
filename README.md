@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/images/icon-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset=".github/images/icon.svg">
-  <img width="200" alt="Casey Walks icon showing a walking figure surrouned by a split ring" src=".github/images/icon.svg">
+  <img width="200" alt="Casey Walks icon showing a walking figure surrounded by a split ring" src=".github/images/icon.svg">
 </picture>
 
 <br />
@@ -109,29 +109,28 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
   </tbody>
 </table>
 
-
 Additionally, t
 -->
 The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
 
 ## Usage
 ### Exploring the map
-The main screen shows nearby amenities on an interactive map, supporting standard guestures, along with a recenter and zoom buttons. The filter button opens a list of all possible amenity types and allows users to change which amenity types are visible on the map and in the nearby section.
+The main screen shows nearby amenities on an interactive map, supporting standard gestures, along with a recenter and zoom buttons. The filter button opens a list of all possible amenity types and allows users to change which amenity types are visible on the map and in the nearby section.
 
 The bottom sheet provides a search bar, custom walk route list and creation button, nearby amenities list, community walks list, and a report problem button.
 
 ### Creating a custom walk
 Users can create custom walking routes with the `Create a Custom Walk` button. The walk creation page allows users to enter a title, desired length, and select which amenities the walk should try and include.
 
-Created walks can be edited, deleted, shared publily with the community.
+Created walks can be edited, deleted, shared publicly with the community.
 
 ### Community walks
 A collection of existing walking routes and publicly uploaded custom walks from the community are available for users to view and add to their private walks list.
 
-Users can share their custom walks, however they should keep in mind to not share walks near any sensitive locations. While an account is required to be able to upload and share custom walks, usernames are not shared.
+Users can share their custom walks; however, they should keep in mind to not share walks near any sensitive locations. While an account is required to be able to upload and share custom walks, usernames are not shared.
 
 ### Tracking weekly walks
-Users are able to keep track of how many walks they have completed each week. The goal can be set on the profile page and the count can be increased by a button on any of the walking route pages. This count will reset at the start of each week on Monday.
+Users are able to keep track of how many walks they have completed each week. The goal can be set on the profile page, and the count can be increased by a button on any of the walking route pages. This count will reset at the start of each week on Monday.
 
 ### Profile and settings
 The profile page contains basic local weather information, the current weekly walk count, and settings for the walk count goal and walking speed (used for walk duration estimates). Users can also create and manage their account on this page.
@@ -139,7 +138,7 @@ The profile page contains basic local weather information, the current weekly wa
 The settings page contains:
 - A theme selection (Auto, Light, or Dark)
 - A reduced motion toggle
-- Information about the project with relavent links
+- Information about the project with relevant links
 - A short privacy notice
 - Version information
 - A button to delete all locally stored data
@@ -186,7 +185,7 @@ If using Docker, <ins>**stop the development server**</ins> and continue to the 
 
 #### Without Docker
 1. Install PostgeSQL 17 with `winget install PostgeSQL.PostgreSQL.17`
-2. Install PostGIS 3.5 with the PostgreSQL Application Stack Builder (`Spacial Extensions -> PostGIS 3.5`)
+2. Install PostGIS 3.5 with the PostgreSQL Application Stack Builder (`Spatial Extensions -> PostGIS 3.5`)
 3. Create a new database in the PostgreSQL server
 4. Create a new Login/Group role
 5. Update the new database to allow the new login to have full permissions
@@ -212,3 +211,4 @@ Generative AI tools were used to assist with the development of this project, pr
 This project was developed for a Swinburne University of Technology capstone project in collaboration with the City of Casey.
 
 We would like to thank both the City of Casey for maintaining their Open Data Portal and submitting this project as part of the Swinburne capstone program. We also thank Swinburne University of Technology for providing us the opportunity to work on this project and gain real world software development experience.
+
