@@ -45,8 +45,8 @@ export default function ClearDataButton() {
           onPressOut={() => setAlertVisible(false)}
         >
           <AlertBox 
-            title="Delete All Data?" 
-            message="This action cannot be undone." 
+            title="Delete All Local Data?" 
+            message="This action cannot be undone. This will not delete your account or created/saved walks." 
             cancelFunc={() => setAlertVisible(false)} 
             confirmFunc={deleteData}
           />
@@ -66,8 +66,8 @@ export default function ClearDataButton() {
           onPressOut={() => setConfrimVisible(false)}
         >
           <ConfirmBox 
-            title="All Data Deleted" 
-            message="All data has been deleted." 
+            title="All Local Data Deleted" 
+            message="All local data has been deleted." 
             confirmFunc={() => {setConfrimVisible(false); RNRestart.restart();}}
           />
         </TouchableOpacity>
@@ -79,7 +79,7 @@ export default function ClearDataButton() {
         underlayColor={isLight ? colours.background[400] : colours.dark.background[50]}
         >
         <View className="bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
-          <Text style={{fontSize: 17}} className="text-warning-600 dark:text-dark-warning-600">Clear All Data</Text>
+          <Text style={{fontSize: 17}} className="text-warning-600 dark:text-dark-warning-600">Clear all local data</Text>
         </View>
       </TouchableHighlight>
     </View>
