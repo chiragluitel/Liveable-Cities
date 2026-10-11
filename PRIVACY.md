@@ -1,5 +1,5 @@
 # Privacy Notice - Casey Walks
-**Last updated**: 1/10/2026
+**Last updated**: 11/10/2026
 
 **Project**: Swinburne University of Technology capstone 'Livable Cities' project in collaboration with the City of Casey
 
@@ -69,9 +69,7 @@ Account information is used for authentication and account management. It is not
 Location information is transmitted to the backend for route calculation and is will be discarded after that calculation.
 
 ## 10. Privacy Enquiries and Complaints
-Users with questions, concerns, or requests regarding the handling of their personal information may contact:
-
-`contact details here`
+Users with questions, concerns, or requests regarding the handling of their personal information can open a new issue on the GitHub. Users should be mindful of providing personal information in any issues opens as they are public. We do not guarantee a response to any issues opened. 
 
 ## 11. Changes to This Notice
 This notice may be updated if the application's functionality of information-handling practices change.
