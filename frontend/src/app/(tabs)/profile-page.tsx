@@ -32,9 +32,6 @@ export default function ProfilePage() {
     const loginStatus = await AsyncStorage.getItem("loggedIn");
     const storedUsername = await AsyncStorage.getItem("username");
 
-    console.log(loginStatus)
-    console.log(storedUsername)
-
     setLoggedIn(loginStatus === "true");
     setUsername(storedUsername ?? "");
 
