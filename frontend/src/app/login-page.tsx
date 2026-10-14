@@ -200,9 +200,9 @@ export default function LoginPage({
           setError("");
           setConfirmPassword("");
         }}
-        className="mt-5 items-center"
+        className="mt-3 items-center p-4"
       >
-        <Text className="text-primary-500 font-semibold">
+        <Text className="text-primary-500 font-semibold underline">
           {isRegistering
             ? "Already have an account? Login"
             : "Don't have an account? Create one"}

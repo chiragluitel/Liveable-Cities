@@ -236,18 +236,7 @@ export default function WalkPlannerScreen() {
         animationType="slide"
         onRequestClose={() => setShowLogin(false)}
       >
-        <View className="flex-1 bg-background-50 dark:bg-dark-background-100">
-
-          <View className="flex-row justify-end px-5 pt-5">
-            <TouchableOpacity
-              onPress={() => setShowLogin(false)}
-            >
-              <Text className="text-primary-500 font-semibold">
-                Cancel
-              </Text>
-            </TouchableOpacity>
-          </View>
-
+        <View className="flex-1 bg-background-50 dark:bg-dark-background-50 p-safe">
           <LoginPage
             onLogin={async () => {
               setLoggedIn(true);
