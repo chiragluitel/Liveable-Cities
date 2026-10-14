@@ -98,7 +98,7 @@ export default function LoginPage({
       const data = await response.json();
 
       await AsyncStorage.setItem("loggedIn", "true");
-      await AsyncStorage.setItem("username", "data.username");
+      await AsyncStorage.setItem("username", data.username);
 
       onLogin();
 

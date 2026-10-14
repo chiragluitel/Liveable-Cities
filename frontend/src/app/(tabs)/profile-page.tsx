@@ -32,6 +32,9 @@ export default function ProfilePage() {
     const loginStatus = await AsyncStorage.getItem("loggedIn");
     const storedUsername = await AsyncStorage.getItem("username");
 
+    console.log(loginStatus)
+    console.log(storedUsername)
+
     setLoggedIn(loginStatus === "true");
     setUsername(storedUsername ?? "");
 
@@ -52,9 +55,9 @@ export default function ProfilePage() {
     return null;
   }
 
-  // is use is logged in, display username, else Guest
+  // is use is logged in, display username, else dont show a username
   const user = {
-    name: loggedIn? username : "Guest",
+    name: loggedIn? username : "",
     email: "",
   };
 
@@ -74,11 +77,6 @@ export default function ProfilePage() {
       <ScrollView contentContainerStyle={{alignItems: "center"}}>
 
         <WeatherWidget />
-
-        <ProfileInfo
-          name={user.name}
-          email={user.email}
-        />
 
         <FitnessSection goals={fitnessGoals} />
 
