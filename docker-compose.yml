@@ -29,6 +29,7 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - ASPNETCORE_ENVIRONMENT=Development
+      - OpenRouteService__ApiKey=${OPENROUTESERVICE_API_KEY}
 
   db:
     image: postgis/postgis:17-3.5
