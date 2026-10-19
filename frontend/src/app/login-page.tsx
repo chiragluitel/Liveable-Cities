@@ -2,15 +2,17 @@ import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { ChevronLeft } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
-import { colours } from "@/src/theme/colours";import AsyncStorage from "@react-native-async-storage/async-storage";
+import { colours } from "@/src/theme/colours";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSettings } from "../context/SettingsContext";
+import { Stack, useRouter } from "expo-router";
 
 export default function LoginPage({
   onLogin,
   onBack,
 }: {
   onLogin: () => void;
-  onBack: () => void;
+  onBack?: () => void;
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,18 @@ export default function LoginPage({
 
   const {backendURL} = useSettings();
   const {colorScheme} = useColorScheme();
+
+  const router = useRouter();
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/" as any);
+    }
+  };
 
   const handleLogin = async () => {
     setError("");
@@ -112,10 +126,12 @@ export default function LoginPage({
    return (
     <View className="flex-1 bg-background-50 dark:bg-dark-background-50">
 
+    <Stack.Screen options = {{headerShown: false}} />
+
     {/* Back button */}
-    <View className="px-4 pt-5 pb-3">
+    <View className="px-4 pt-12 pb-3">
       <TouchableOpacity
-        onPress={onBack}
+        onPress={handleBack}
         className="flex-row items-center gap-1.5 py-2 px-3 rounded-full bg-accent-200 dark:bg-dark-accent active:opacity-70 self-start"
       >
         <ChevronLeft

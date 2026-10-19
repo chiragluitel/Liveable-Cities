@@ -54,14 +54,35 @@ export default function WalkPlannerScreen() {
 
   //for login
   useEffect(() => {
-    checkLogin();
-  }, []);
+  let active = true;
 
   const checkLogin = async () => {
-    const loginStatus = await AsyncStorage.getItem("loggedIn");
+    try {
+      const loginStatus = await AsyncStorage.getItem('loggedIn');
 
-    setLoggedIn(loginStatus === "true");
+      if (!active) return;
+
+      if (loginStatus !== 'true') {
+        router.replace('/login-page' as any);
+        return;
+      }
+
+      setLoggedIn(true);
+    } catch (error) {
+      console.error('Failed to check login status:', error);
+
+      if (active) {
+        router.replace('/login-page' as any);
+      }
+    }
   };
+
+  checkLogin();
+
+  return () => {
+    active = false;
+  };
+}, [router]);
 
   useEffect(() => {
     if (params.id) {
@@ -144,7 +165,7 @@ export default function WalkPlannerScreen() {
       const loginStatus = await AsyncStorage.getItem("loggedIn");
 
       if (loginStatus !== "true") {
-        setShowLogin(true);
+        router.replace('/login-page' as any);
 
         return;
       }
@@ -231,7 +252,7 @@ export default function WalkPlannerScreen() {
         </TouchableOpacity>
       </Modal>
 
-      <Modal
+      {/* <Modal
         visible={showLogin}
         animationType="slide"
         onRequestClose={() => setShowLogin(false)}
@@ -248,7 +269,7 @@ export default function WalkPlannerScreen() {
           />
 
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 }
