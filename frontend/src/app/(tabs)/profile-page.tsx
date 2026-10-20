@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,6 +21,8 @@ export default function ProfilePage() {
   const [username, setUsername] = useState("");
   const { refreshWalks } = useCustomWalks();
   const { walkingSpeed, setWalkingSpeed, setWalkGoal, walkGoal, weeklyWalks } = useSettings();
+
+  const router = useRouter();
 
   useFocusEffect(
     useCallback(() => {
@@ -97,6 +99,18 @@ export default function ProfilePage() {
             <DropdownItem title="Fast (6km/h)" value="Fast" hideSeperator={true} />
           </Dropdown>
         </SettingsGroup>
+
+        {/* login option for guest users */}
+        {!loggedIn && (
+          <TouchableOpacity
+            onPress={() => router.push("/login-page" as any)}
+            className="w-[90%] mt-6 mb-5 bg-gray-500 rounded-lg py-4 items-center"
+          >
+            <Text className="text-white font-bold">
+              Log in
+            </Text>{/*  */}
+          </TouchableOpacity>
+        )}
 
         {/* logout option if the user is logged in only */}
         {loggedIn && (
