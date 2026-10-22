@@ -31,11 +31,14 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const [shared, setShared] = useState(false);
     const { walkingSpeed } = useSettings();
     const { shareWalk } = useCommunityWalks();
-    const timeText = formatWalkTime(walk.distance, walkingSpeed);
+    const distanceText = walk.routeDistanceText || `${walk.distance} km`;
+    const timeText =
+        walk.routeDurationText ||
+        formatWalkTime(walk.distance, walkingSpeed);
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
-    // 2 buttons split the row 50/50; 3 sit at a third each (a 4th would wrap below)
-    const buttonWidth = walk.fromCommunity ? '48%' : '31%';
+    // 2 buttons split the row 50/50
+    const buttonWidth = '48%';
 
     const { reducedMotion, addToWeeklyWalks } = useSettings();
 
@@ -47,7 +50,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </Text>
                 <Text className="text-[17px] mb-3">
                     <Text className="text-accent-600 dark:text-dark-accent-700">
-                        {walk.distance} km, {timeText}
+                        {distanceText}, {timeText}
                     </Text>
                 </Text>
                 {walk.fromCommunity && (
@@ -119,7 +122,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 </TouchableOpacity>
             </Modal>
 
-            {/* Up to 3 buttons per row, any 4th wraps onto the next row */}
+            {/* 2 buttons per row */}
             <View className="flex-row flex-wrap mb-5" style={{ columnGap: 10, rowGap: 10 }}>
                 <TouchableOpacity
                     className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
@@ -129,17 +132,6 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                     <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                     <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
                 </TouchableOpacity>
-
-                {!walk.fromCommunity && (
-                    <TouchableOpacity
-                        className="bg-primary-100 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
-                        style={{ width: buttonWidth }}
-                        onPress={() => onEdit(walk.id)}
-                    >
-                        <Ionicons name="pencil-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
-                        <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2 text-wrap text-center px-1">Edit Walk</Text>
-                    </TouchableOpacity>
-                )}
 
                 <TouchableOpacity
                     className="rounded-[18px] py-[18px] justify-center items-center"

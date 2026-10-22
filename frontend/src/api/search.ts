@@ -1,6 +1,6 @@
 import { Places } from '@Types/walkPlannerTypes';
 
-const BASE_URL = 'http://10.0.2.2:5156';
+//const BASE_URL = 'http://10.0.2.2:5156';
 
 type PlaceSearchRecord = {
   id: string;
@@ -31,11 +31,12 @@ function toPlace(r: PlaceSearchRecord): Places {
 }
 
 export async function searchPlaces(
+  base_url: string,
   query: string,
   signal?: AbortSignal,
 ): Promise<Places[]> {
   const res = await fetch(
-    `${BASE_URL}/api/Search?q=${encodeURIComponent(query)}`,
+    `${base_url}/api/Search?q=${encodeURIComponent(query)}`,
     { signal },
   );
 

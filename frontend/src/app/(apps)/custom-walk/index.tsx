@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Text, ScrollView, TouchableOpacity, View, Modal } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginPage from '../../login-page';
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router';
 import { ChevronLeft } from 'lucide-react-native';
 import { useCustomWalks } from '../../../context/CustomWalkContext';
@@ -39,12 +41,48 @@ export default function WalkPlannerScreen() {
 
   const [alertVisible, setAlertVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
+
+    // for login
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
     
     const { reducedMotion, backendURL } = useSettings();
 
   useEffect(() => {
     getLocation().then(loc => { if (loc) setStartLocation({ lat: loc.lat, lng: loc.lng }); });
   }, []);
+
+  //for login
+  useEffect(() => {
+  let active = true;
+
+  const checkLogin = async () => {
+    try {
+      const loginStatus = await AsyncStorage.getItem('loggedIn');
+
+      if (!active) return;
+
+      if (loginStatus !== 'true') {
+        router.replace('/login-page' as any);
+        return;
+      }
+
+      setLoggedIn(true);
+    } catch (error) {
+      console.error('Failed to check login status:', error);
+
+      if (active) {
+        router.replace('/login-page' as any);
+      }
+    }
+  };
+
+  checkLogin();
+
+  return () => {
+    active = false;
+  };
+}, [router]);
 
   useEffect(() => {
     if (params.id) {
@@ -64,7 +102,9 @@ export default function WalkPlannerScreen() {
     }
   }, [params.id, walks]);
 
-  const handleSave = async () => {
+  //modified for login (was previously handleSave())
+  const saveWalkToAccount = async () => {
+
     const filter = new Filter();
 
     if (filter.isProfane(cuswalkname)) {
@@ -117,6 +157,20 @@ export default function WalkPlannerScreen() {
 
     await saveWalk(walkData);
     router.back();
+  };
+
+  //added for login
+    const handleSave = async () => {
+      //for login
+      const loginStatus = await AsyncStorage.getItem("loggedIn");
+
+      if (loginStatus !== "true") {
+        router.replace('/login-page' as any);
+
+        return;
+      }
+
+      await saveWalkToAccount();
   };
 
   const { colorScheme } = useColorScheme();
@@ -197,6 +251,25 @@ export default function WalkPlannerScreen() {
           />
         </TouchableOpacity>
       </Modal>
+
+      {/* <Modal
+        visible={showLogin}
+        animationType="slide"
+        onRequestClose={() => setShowLogin(false)}
+      >
+        <View className="flex-1 bg-background-50 dark:bg-dark-background-50 p-safe">
+          <LoginPage
+            onLogin={async () => {
+              setLoggedIn(true);
+              setShowLogin(false);
+
+              await saveWalkToAccount();
+            }}
+            onBack={() => setShowLogin(false)}
+          />
+
+        </View>
+      </Modal> */}
     </View>
   );
 }

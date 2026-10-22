@@ -51,6 +51,20 @@ export default function Information() {
           <WebLinkButton text="City of Casey Open Data Portal" link="https://data.casey.vic.gov.au/pages/home/" />
           <WebLinkButton text="City of Casey Home Page" link="https://www.casey.vic.gov.au/" />
         </SettingsGroup>
+
+        <SettingsGroup title="Privacy Notice">
+          <View className="w-full bg-background-100 dark:bg-dark-background-100 rounded-[10] p-[15]">
+            <Text style={{fontSize: 17}} className="text-text dark:text-dark-text">
+              This app uses your location data temporarily to calculate walking routes. Your location is discarded after route calculation.
+              {"\n\n"}
+              If you create an account, your username and securely hashed password are stored to authenticate you and allow you to upload custom walking routes.
+              Uploaded routes are publicly visible to anyone using the app.
+              {"\n\n"}
+              For full details about how information is handled, see the full Privacy Notice linked below.
+            </Text>
+          </View>
+          <WebLinkButton text="Full Privacy Notice" link="https://github.com/chiragluitel/Liveable-Cities" />
+        </SettingsGroup>
       </ScrollView>
     </View>
   );

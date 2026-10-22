@@ -1,8 +1,7 @@
 import { Walk } from "@/src/types/walkPlannerTypes";
-import { useWindowDimensions, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
 import { HorizontalCarousel } from "@Components/Shared/HorizontalCarousel";
 import { MyWalkCard } from "../MyWalks/MyWalkCard";
-import { ClickableHeader } from "@Components/Shared/ClickableHeader";
 import { CommunityWalkCard } from "./CommunityWalkCard";
 
 interface CommunityWalkSectionProps {
@@ -25,7 +24,7 @@ const  CommunityWalkSection = ({walks, onHeaderPress, onWalkPress}: CommunityWal
 
     return (
         <View className="mt-6 mb-4">
-            <ClickableHeader header="Community Walks" onHeaderPress={onHeaderPress} />
+            <Text className="text-xl font-bold text-text dark:text-dark-text px-4 mb-3">Community Walks</Text>
             {walks.length <= 3 ? (
                 // Few enough to fit without scrolling, so stack full-width instead of a carousel.
                 <View className="px-4 gap-3">
