@@ -30,7 +30,7 @@ interface SettingsContextValue {
   addToWeeklyWalks: () => void;
   backendURL: string;
 }
-const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL ?? "http://168.138.12.59:5156";
+const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL ?? "https://168-138-12-59.sslip.io";
 
 const SettingsContext = createContext<SettingsContextValue>({
   walkingSpeed: 'Average',
