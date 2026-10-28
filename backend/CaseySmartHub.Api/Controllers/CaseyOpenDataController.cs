@@ -19,10 +19,10 @@ public class CaseyOpenDataController : ControllerBase
         ["dogFriendly"] = new("dog-friendly-spaces", "offLeash", "Off-leash dog park"),
         ["toilet"] = new("public_toilet_block_pt_t1eam", "toilet", "Toilet"),
         ["disabledToilets"] = new("public_toilet_block_pt_t1eam", "toilet", "Toilet"),
-        ["fountain"] = new("drinking_fountain_pt_t1eam", "fountain", "Water Fountain"),
-        ["drinkingFountain"] = new("drinking_fountain_pt_t1eam", "fountain", "Water Fountain"),
-        ["bench"] = new("bench_seat_pt_t1eam", "bench", "Bench"),
-        ["library"] = new("library_pt_t1eam", "library", "Library")
+        ["fountain"] = new("drinkingfountains_pt_t1eam", "fountain", "Water Fountain"),
+        ["drinkingFountain"] = new("drinkingfountains_pt_t1eam", "fountain", "Water Fountain"),
+        ["bench"] = new("benches_seats_pt_t1eam", "bench", "Bench"),
+        ["library"] = new("libraries-copy", "library", "Library")
     };
 
     public CaseyOpenDataController(IHttpClientFactory httpClientFactory, ILogger<CaseyOpenDataController> logger)

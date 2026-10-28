@@ -9,6 +9,7 @@ type Walk = {
   id: number;
   cuswalkname?: string;
   distance?: number;
+  routeDistanceText?: string;
 };
 
 type CustomWalkCardProps = {
@@ -28,7 +29,7 @@ export default function CustomWalkCard({ walk, onDelete, onPress }: CustomWalkCa
         </Text>
 
         <Text className="text-base text-text dark:text-dark-text-500">
-          {walk.distance} km
+          {walk.routeDistanceText || `${walk.distance} km`}
         </Text>
       </View>
 
