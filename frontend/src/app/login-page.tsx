@@ -5,13 +5,13 @@ import { useColorScheme } from "nativewind";
 import { colours } from "@/src/theme/colours";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSettings } from "../context/SettingsContext";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
 export default function LoginPage({
   onLogin,
   onBack,
 }: {
-  onLogin: () => void;
+  onLogin?: () => void;
   onBack?: () => void;
 }) {
   const [username, setUsername] = useState("");
@@ -25,10 +25,29 @@ export default function LoginPage({
   const {colorScheme} = useColorScheme();
 
   const router = useRouter();
+  const { returnTo, cancelTo } = useLocalSearchParams<{
+    returnTo?: string;
+    cancelTo?: string;
+  }>();
+
+  // When opened as a route there is no onLogin prop, so navigate instead
+  const finishLogin = () => {
+    if (onLogin) {
+      onLogin();
+    } else if (returnTo) {
+      router.replace(returnTo as any);
+    } else if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/" as any);
+    }
+  };
 
   const handleBack = () => {
     if (onBack) {
       onBack();
+    } else if (cancelTo) {
+      router.replace(cancelTo as any);
     } else if (router.canGoBack()) {
       router.back();
     } else {
@@ -67,9 +86,9 @@ export default function LoginPage({
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("username", data.username);
 
-      onLogin();
-
       console.log("Login successful:", data);
+
+      finishLogin();
     } catch (error) {
       console.error(error);
       setError("Unable to connect to the server.");
@@ -114,9 +133,9 @@ export default function LoginPage({
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("username", data.username);
 
-      onLogin();
-
       console.log("Registration successful: ", data);
+
+      finishLogin();
     } catch (error) {
       console.error(error);
       setError("Unable to connect to the server.");

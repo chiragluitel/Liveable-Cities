@@ -41,7 +41,7 @@ const WalkPlannerHomePage = () => {
 		mapRef.current?.routeTo(item.lat, item.lng);
 	}, []);
 
-	const handleRouteInfo = useCallback((id: string, distance: string) => {
+	const handleRouteInfo = useCallback((id: string, distance: string, routeGeoJson?: any) => {
 		if (id === 'nav-route') {
 			const km = parseFloat(distance);
 			const speedKmh = SPEED_KMH[walkingSpeed];
@@ -49,7 +49,7 @@ const WalkPlannerHomePage = () => {
 			const timeText = totalMin < 60
 				? `~${totalMin} min walk`
 				: `~${Math.floor(totalMin / 60)} hr ${totalMin % 60 > 0 ? totalMin % 60 + ' min ' : ''}walk`;
-			bottomSheetRef.current?.updateNavInfo(distance, timeText);
+			bottomSheetRef.current?.updateNavInfo(distance, timeText, routeGeoJson);
 		}
 	}, [walkingSpeed]);
 
