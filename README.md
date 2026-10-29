@@ -79,16 +79,16 @@ This app was created for a Swinburne University of Technology capstone project w
 - profile page logged in (light, dark)
 -->
 <div>
-    <img wdith="25%" alt="" src=".github/images/screenshots/light_main.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/dark_main.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/light_main_full.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/dark_main_full.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/light_custom.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/dark_custom.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/light_community.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/dark_community.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/light_profile.png" />
-    <img wdith="25%" alt="" src=".github/images/screenshots/dark_profile.png" />
+    <img wdith="25%" alt="Slice 1" src=".github/images/screenshots/light_main.png" />
+    <img wdith="25%" alt="Slice 2" src=".github/images/screenshots/dark_main.png" />
+    <img wdith="25%" alt="Slice 3" src=".github/images/screenshots/light_main_full.png" />
+    <img wdith="25%" alt="Slice 4" src=".github/images/screenshots/dark_main_full.png" />
+    <img wdith="25%" alt="Slice 5" src=".github/images/screenshots/light_custom.png" />
+    <img wdith="25%" alt="Slice 6" src=".github/images/screenshots/dark_custom.png" />
+    <img wdith="25%" alt="Slice 7" src=".github/images/screenshots/light_community.png" />
+    <img wdith="25%" alt="Slice 8" src=".github/images/screenshots/dark_community.png" />
+    <img wdith="25%" alt="Slice 9" src=".github/images/screenshots/light_profile.png" />
+    <img wdith="25%" alt="Slice 10" src=".github/images/screenshots/dark_profile.png" />
 </div>
 
 ## Getting Started
