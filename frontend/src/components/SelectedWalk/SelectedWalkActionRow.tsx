@@ -5,6 +5,10 @@ import { useColorScheme } from "nativewind";
 import { colours } from "@Theme/colours";
 import AlertBox from "@Components/AlertBox";
 import { useSettings } from "@/src/context/SettingsContext";
+import { useRequireLogin } from "@/src/hooks/useRequireLogin";
+//login feature imports
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useRouter, usePathname} from "expo-router";
 
 type SelectedWalkActionRowProps = {
   onEdit?: () => void;
@@ -17,8 +21,34 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
   const { colorScheme } = useColorScheme();
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleImport = async () => {
+  try {
+    const loginStatus = await AsyncStorage.getItem("loggedIn");
+
+    if (loginStatus !== "true") {
+      // User is not logged in, redirect to login page
+      router.push({
+        pathname: "/login-page",
+        params: {
+          returnTo: pathname, // Pass the current page's pathname to return after login
+          cancelTo: pathname, // Pass the current page's pathname to cancel and return
+        },
+      } as any);
+
+      return; // Exit the function to prevent further execution
+    }
+
+    onImport?.();
+  } catch (error) {
+    console.error("Error checking login status:", error);
+  }
+};
 
   const { reducedMotion, addToWeeklyWalks } = useSettings();
+  const requireLogin = useRequireLogin();
 
   if (onEdit && onDelete) {
     return (
@@ -76,7 +106,7 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
         <Pressable
           className="bg-primary-100 dark:bg-dark-accent-100 rounded-[18px] py-[18px] justify-center items-center"
           style={[{ width: '48%' }, alreadyDownloaded ? { opacity: 0.5 } : undefined]}
-          onPress={onImport}
+          onPress={() => requireLogin(onImport)}
           disabled={alreadyDownloaded}
         >
           <Ionicons name="download-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
@@ -87,7 +117,7 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
         <TouchableOpacity
           className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
           style={{ width: '48%' }}
-          onPress={() => addToWeeklyWalks()}
+          onPress={() => requireLogin(addToWeeklyWalks)}
         >
           <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
           <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
@@ -101,7 +131,7 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
       <TouchableOpacity
           className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
           style={{ width: '48%' }}
-          onPress={() => addToWeeklyWalks()}
+          onPress={() => requireLogin(addToWeeklyWalks)}
         >
           <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
           <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
