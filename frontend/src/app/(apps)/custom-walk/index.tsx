@@ -135,19 +135,23 @@ export default function WalkPlannerScreen() {
       return;
     }
 
+    // Filters the route couldn't include are left off the saved walk so its tags match the route.
+    const missingFilters: string[] = route.missingFilters ?? [];
+    const isIncluded = (filter: string) => !missingFilters.includes(filter);
+
     const walkData = {
       id: params.id,
       cuswalkname,
       distance,
-      hasWaterFountain,
-      hasDisabledToilets,
+      hasWaterFountain: hasWaterFountain && isIncluded('fountain'),
+      hasDisabledToilets: hasDisabledToilets && isIncluded('disabledToilets'),
       hasPark,
       hasPlayground,
       hasWellLitStreets,
       hasRubbishBin,
-      hasOffLeash,
-      hasBbq,
-      selectedFilters,
+      hasOffLeash: hasOffLeash && isIncluded('offLeash'),
+      hasBbq: hasBbq && isIncluded('bbq'),
+      selectedFilters: selectedFilters.filter(isIncluded),
       routeDistanceMeters: route.distanceMeters,
       routeDurationSeconds: route.durationSeconds,
       routeDistanceText: route.distanceText,
@@ -156,6 +160,13 @@ export default function WalkPlannerScreen() {
     };
 
     await saveWalk(walkData);
+
+    // e.g. the walk was extended to reach the nearest amenity of a selected type.
+    if (route.notice) {
+      Alert.alert('Walk adjusted', route.notice, [{ text: 'OK', onPress: () => router.back() }]);
+      return;
+    }
+
     router.back();
   };
 

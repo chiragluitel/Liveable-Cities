@@ -24,6 +24,8 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
     const { colorScheme } = useColorScheme();
     const isLight = colorScheme === 'light';
     const { walkingSpeed } = useSettings();
+    // Built walks show the distance of their generated route, not the distance that was asked for.
+    const distanceKm = walk.routeDistanceMeters ? walk.routeDistanceMeters / 1000 : walk.distance;
 
     const activeTags = FILTER_DEFS.filter(f => walk[f.key]);
     // Show fewer tags when there are many so they stay on one line.
@@ -47,7 +49,7 @@ export const CustomMyWalkCard = ({ walk, onPress, width }: CustomMyWalkCardProps
                     {walk.cuswalkname || 'Custom Walk'}
                 </Text>
                 <Text className="text-xs text-text-700 dark:text-dark-text-700 font-medium mb-2">
-                    {walk.distance} km • {formatWalkTime(walk.distance, walkingSpeed)}
+                    {walk.routeDistanceText || `${walk.distance} km`} • {formatWalkTime(distanceKm, walkingSpeed)}
                 </Text>
 
                 {/* Fixed-height single row so every card is the same height, with or without tags. */}
