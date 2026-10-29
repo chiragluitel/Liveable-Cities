@@ -60,6 +60,7 @@ This app was created for a Swinburne University of Technology capstone project w
     - Drinking fountains
     - Libraries
     - Public toilets
+    - Off leash areas
 - Custom walk route creation featuring:
     - Custom walk titles
     - Custom walk distance
@@ -70,13 +71,25 @@ This app was created for a Swinburne University of Technology capstone project w
 - Weekly walks count tracker and goal
 - Account creation for publicly sharing custom walks
 
-<!--
 ### Screenshots
+<!--
 - main map page w/ bottom sheet at normal (light, dark)
 - main map page w/ bottom sheet at up + 2 custom walks (light, dark)
 - main map page w/ bottom sheet at up showing nearby + community walks (light, dark)
 - profile page logged in (light, dark)
 -->
+<div>
+    <img wdith="25%" alt="" src=".github/images/screenshots/light_main.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/dark_main.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/light_main_full.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/dark_main_full.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/light_custom.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/dark_custom.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/light_community.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/dark_community.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/light_profile.png" />
+    <img wdith="25%" alt="" src=".github/images/screenshots/dark_profile.png" />
+</div>
 
 ## Getting Started
 ### Requirements
@@ -166,6 +179,7 @@ The settings page contains:
 1. Clone the repository
 2. Use the [instructions from Expo](https://docs.expo.dev/get-started/set-up-your-environment/) to install and setup the Expo development environment. We recommend using the development build without EAS.
 3. Copy `.env.example` to `.env` and fill it with the correct values
+    > Set `EXPO_PUBLIC_BACKEND_URL` to `http://[BackendIP]:5156` when running the backend locally. Use `10.0.2.2` when using the Android emulator and `127.0.0.1` for the iOS simulator
 4. Run `npm install` in the `/frontend` folder
 5. Build and install the development phone client (in the `/frontend` folder):
     - Android emulator or physical device: `npx expo run:android`
