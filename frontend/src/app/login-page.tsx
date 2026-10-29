@@ -86,8 +86,6 @@ export default function LoginPage({
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("username", data.username);
 
-      console.log("Login successful:", data);
-
       finishLogin();
     } catch (error) {
       console.error(error);
@@ -132,8 +130,6 @@ export default function LoginPage({
 
       await AsyncStorage.setItem("loggedIn", "true");
       await AsyncStorage.setItem("username", data.username);
-
-      console.log("Registration successful: ", data);
 
       finishLogin();
     } catch (error) {
