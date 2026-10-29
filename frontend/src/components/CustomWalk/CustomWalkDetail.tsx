@@ -8,6 +8,7 @@ import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
 import { useSettings, SPEED_KMH, formatWalkTime } from '@/src/context/SettingsContext';
 import { useCommunityWalks } from '@/src/context/CommunityWalksContext';
+import { useRequireLogin } from '@/src/hooks/useRequireLogin';
 
 const FILTER_DEFS = [
     { key: 'hasWaterFountain',  label: 'Water Fountain', Icon: Droplets },
@@ -41,6 +42,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
     const buttonWidth = '48%';
 
     const { reducedMotion, addToWeeklyWalks } = useSettings();
+    const requireLogin = useRequireLogin();
 
     return (
         <BottomSheetScrollView contentContainerStyle={{ paddingHorizontal: 18, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
@@ -127,7 +129,7 @@ export default function CustomWalkDetail({ walk, onEdit, onDelete }: CustomWalkD
                 <TouchableOpacity
                     className="bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] justify-center items-center"
                     style={{ width: buttonWidth }}
-                    onPress={() => addToWeeklyWalks()}
+                    onPress={() => requireLogin(addToWeeklyWalks)}
                 >
                     <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
                     <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>

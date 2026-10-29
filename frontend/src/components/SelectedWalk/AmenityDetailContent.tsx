@@ -6,6 +6,7 @@ import { useSettings, SPEED_KMH } from '@/src/context/SettingsContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@/src/theme/colours';
+import { useRequireLogin } from '@/src/hooks/useRequireLogin';
 
 function formatTime(distanceM: number, speedKmh: number): string {
   const totalMinutes = Math.round((distanceM / 1000 / speedKmh) * 60);
@@ -26,6 +27,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
   const isLight = colorScheme === 'light';
 
   const { addToWeeklyWalks } = useSettings();
+  const requireLogin = useRequireLogin();
 
   return (
     <BottomSheetScrollView
@@ -43,7 +45,7 @@ export default function AmenityDetailContent({ amenity }: { amenity: Amenity }) 
         </Text>
         <TouchableOpacity
           className="flex-1 bg-accent-200 dark:bg-dark-accent-200 rounded-[18px] py-[18px] mt-3 justify-center items-center mr-[10px]"
-          onPress={() => addToWeeklyWalks()}
+          onPress={() => requireLogin(addToWeeklyWalks)}
         >
           <Ionicons name="add-circle-outline" size={22} color={isLight ? colours.text.DEFAULT : colours.dark.text.DEFAULT} />
           <Text className="text-text dark:text-dark-text font-bold text-[15px] mt-2  text-wrap text-center px-1">Add to Weekly Walks</Text>
