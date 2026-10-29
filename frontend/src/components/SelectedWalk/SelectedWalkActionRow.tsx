@@ -6,6 +6,9 @@ import { colours } from "@Theme/colours";
 import AlertBox from "@Components/AlertBox";
 import { useSettings } from "@/src/context/SettingsContext";
 import { useRequireLogin } from "@/src/hooks/useRequireLogin";
+//login feature imports
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useRouter, usePathname} from "expo-router";
 
 type SelectedWalkActionRowProps = {
   onEdit?: () => void;
@@ -18,6 +21,31 @@ export default function SelectedWalkActionRow({ onEdit, onDelete, onImport, alre
   const { colorScheme } = useColorScheme();
   const isLight = colorScheme === "light";
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleImport = async () => {
+  try {
+    const loginStatus = await AsyncStorage.getItem("loggedIn");
+
+    if (loginStatus !== "true") {
+      // User is not logged in, redirect to login page
+      router.push({
+        pathname: "/login-page",
+        params: {
+          returnTo: pathname, // Pass the current page's pathname to return after login
+          cancelTo: pathname, // Pass the current page's pathname to cancel and return
+        },
+      } as any);
+
+      return; // Exit the function to prevent further execution
+    }
+
+    onImport?.();
+  } catch (error) {
+    console.error("Error checking login status:", error);
+  }
+};
 
   const { reducedMotion, addToWeeklyWalks } = useSettings();
   const requireLogin = useRequireLogin();
