@@ -40,6 +40,8 @@ export type CustomWalk = {
   hasRubbishBin: boolean;
   hasOffLeash: boolean;
   hasBbq?: boolean;
+  hasBench?: boolean;
+  hasLibrary?: boolean;
   selectedFilters?: string[];
   routeDistanceMeters?: number;
   routeDurationSeconds?: number;
@@ -52,6 +54,8 @@ export type CustomWalk = {
 };
 
 function toCustomWalk(r: CustomWalkResponse): CustomWalk {
+  const selectedFilters = r.selectedFilters ?? [];
+
   return {
     id: r.id,
     cuswalkname: r.name,
@@ -64,7 +68,11 @@ function toCustomWalk(r: CustomWalkResponse): CustomWalk {
     hasRubbishBin: r.hasRubbishBin,
     hasOffLeash: r.hasOffLeash,
     hasBbq: r.hasBbq,
-    selectedFilters: r.selectedFilters ?? [],
+    // Bench and library are read from selectedFilters rather than their own columns,
+    // so existing databases don't need new columns.
+    hasBench: selectedFilters.includes('bench'),
+    hasLibrary: selectedFilters.includes('library'),
+    selectedFilters,
     routeDistanceMeters: r.routeDistanceMeters,
     routeDurationSeconds: r.routeDurationSeconds,
     routeDistanceText: r.routeDistanceText,

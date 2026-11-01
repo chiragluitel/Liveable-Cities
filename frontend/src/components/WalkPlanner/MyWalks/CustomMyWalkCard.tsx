@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { Footprints, Droplets, Accessibility, Heart, Flame, Download } from 'lucide-react-native';
+import { Footprints, Droplets, Accessibility, Heart, Flame, Download, Armchair, BookOpen } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import { useSettings, formatWalkTime } from '@/src/context/SettingsContext';
@@ -11,6 +11,8 @@ const FILTER_DEFS = [
     { key: 'hasDisabledToilets', label: 'Toilets', Icon: Accessibility },
     { key: 'hasOffLeash', label: 'Off Leash', Icon: Heart },
     { key: 'hasBbq', label: 'BBQ', Icon: Flame },
+    { key: 'hasBench', label: 'Bench', Icon: Armchair },
+    { key: 'hasLibrary', label: 'Library', Icon: BookOpen },
 ];
 
 
