@@ -77,14 +77,12 @@ This app was created for a Swinburne University of Technology capstone project w
     <img width="20%" alt="Main screen dark" src=".github/images/screenshots/dark_main.png" />
     <img width="20%" alt="Main screen bottom sheet up light" src=".github/images/screenshots/light_main_full.png" />
     <img width="20%" alt="Main screen bottom sheet up dark" src=".github/images/screenshots/dark_main_full.png" />
-    <!--
-    <img width="20%" alt="Custom walk creation light" src=".github/images/screenshots/light_create_walk.png" />
-    <img width="20%" alt="Custom walk creation dark" src=".github/images/screenshots/dark_create_walk.png" />
-    -->
     <img width="20%" alt="Custom walk route light" src=".github/images/screenshots/light_custom.png" />
     <img width="20%" alt="Custom walk route dark" src=".github/images/screenshots/dark_custom.png" />
     <img width="20%" alt="Community walk route light" src=".github/images/screenshots/light_community.png" />
     <img width="20%" alt="Community walk route dark" src=".github/images/screenshots/dark_community.png" />
+    <img width="20%" alt="Custom walk creation light" src=".github/images/screenshots/light_create_walk.png" />
+    <img width="20%" alt="Custom walk creation dark" src=".github/images/screenshots/dark_create_walk.png" />
     <img width="20%" alt="Profile light" src=".github/images/screenshots/light_profile.png" />
     <img width="20%" alt="Profile dark" src=".github/images/screenshots/dark_profile.png" />
 </div>
@@ -122,7 +120,7 @@ The app can be installed from the Google Play Store or the Apple App Store. Clic
 
 Additionally, t
 -->
-The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that arise from sideloading our app.
+The application files for both Android and iOS can be downloaded from the [latest release](https://github.com/chiragluitel/Liveable-Cities/releases/latest). The Android APK can be installed without much issue, but the iOS IPA will require some form of workaround to install, such as jailbreaking your device. We are not responsible for any issues that may arise from sideloading our app.
 
 ## Usage
 ### Exploring the map
