@@ -36,6 +36,8 @@ export default function WalkPlannerScreen() {
   const [hasRubbishBin, setHasRubbishBin] = useState(false);
   const [hasOffLeash, setHasOffLeash] = useState(false);
   const [hasBbq, setHasBbq] = useState(false);
+  const [hasBench, setHasBench] = useState(false);
+  const [hasLibrary, setHasLibrary] = useState(false);
   // Where the generated route starts; falls back to Casey if location is unavailable.
   const [startLocation, setStartLocation] = useState({ lat: CASEY_COORDINATES.latitude, lng: CASEY_COORDINATES.longitude });
 
@@ -98,6 +100,8 @@ export default function WalkPlannerScreen() {
         setHasRubbishBin(existingWalk.hasRubbishBin);
         setHasOffLeash(existingWalk.hasOffLeash);
         setHasBbq(Boolean(existingWalk.hasBbq));
+        setHasBench(Boolean(existingWalk.hasBench));
+        setHasLibrary(Boolean(existingWalk.hasLibrary));
       }
     }
   }, [params.id, walks]);
@@ -117,6 +121,8 @@ export default function WalkPlannerScreen() {
       hasDisabledToilets ? 'disabledToilets' : null,
       hasOffLeash ? 'offLeash' : null,
       hasBbq ? 'bbq' : null,
+      hasBench ? 'bench' : null,
+      hasLibrary ? 'library' : null,
     ].filter((f): f is string => Boolean(f));
 
     // Ask the backend to generate a route matching the distance and filters.
@@ -237,6 +243,18 @@ export default function WalkPlannerScreen() {
           label="BBQ"
           value={hasBbq}
           onChange={setHasBbq}
+        />
+
+        <FilterSwitch
+          label="Bench"
+          value={hasBench}
+          onChange={setHasBench}
+        />
+
+        <FilterSwitch
+          label="Library"
+          value={hasLibrary}
+          onChange={setHasLibrary}
         />
 
         <SaveButton title='Save Custom Walk' onPress={handleSave} />

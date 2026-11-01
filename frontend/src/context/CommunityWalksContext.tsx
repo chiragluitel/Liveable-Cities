@@ -20,6 +20,8 @@ export const CommunityWalksProvider = ({ children }: { children: React.ReactNode
       localWalk.hasDisabledToilets && 'Toilets',
       localWalk.hasOffLeash && 'Off Leash',
       localWalk.hasBbq && 'BBQ',
+      localWalk.hasBench && 'Bench',
+      localWalk.hasLibrary && 'Library',
     ].filter(Boolean) as string[];
 
     const distanceKm = Number(localWalk.distance) || 0;
