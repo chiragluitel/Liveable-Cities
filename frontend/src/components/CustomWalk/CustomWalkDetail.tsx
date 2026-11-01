@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, Pressable } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
-import { Droplets, Accessibility, Heart, Flame } from 'lucide-react-native';
+import { Droplets, Accessibility, Heart, Flame, Armchair, BookOpen } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { colours } from '@Theme/colours';
 import AlertBox from '@Components/AlertBox';
@@ -15,6 +15,8 @@ const FILTER_DEFS = [
     { key: 'hasDisabledToilets', label: 'Toilets',    Icon: Accessibility },
     { key: 'hasOffLeash',       label: 'Off Leash',   Icon: Heart },
     { key: 'hasBbq',            label: 'BBQ',         Icon: Flame },
+    { key: 'hasBench',          label: 'Bench',       Icon: Armchair },
+    { key: 'hasLibrary',        label: 'Library',     Icon: BookOpen },
 ];
 
 interface CustomWalkDetailProps {
