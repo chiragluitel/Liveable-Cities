@@ -1,0 +1,6 @@
+168-138-12-59.sslip.io {
+    @root path /
+    respond @root "Hi, welcome to Casey Liveable Cities :)" 200
+
+    reverse_proxy backend:8080
+}
